@@ -9,6 +9,7 @@ int main(int argc, char* argv[])
 
     Document::SketchDocument document;
     document.SetFrameRate(60);
+    document.SetBackgroundColor({ 0xfc, 0xfc, 0xfc });
     document.WriteXFL(argv[1]);
 
     std::cout << "Done";

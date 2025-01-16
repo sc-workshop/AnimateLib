@@ -4,20 +4,12 @@
 
 namespace Animate::Document
 {
-	int SketchDocument::GetFrameRate() const
-	{
-		return m_frameRate;
-	}
-	void SketchDocument::SetFrameRate(int rate)
-	{
-		m_frameRate = rate;
-	}
-
 	XFL::XFLWriter SketchDocument::CreateXFLDOMWriter() const
 	{
 		DOM::FLDocument document;
 		document.xflVersion = "23.0";
 		document.frameRate = GetFrameRate();
+		document.backgroundColor = GetBackgoundColor();
 
 		return XFL::XFLWriter(document);
 	}

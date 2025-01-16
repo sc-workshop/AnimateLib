@@ -5,6 +5,8 @@
 
 #include "XFL/DOM/DOMElement.h"
 
+#include <core/math/color_rgb.h>
+
 namespace Animate::DOM
 {
 	class FLDocument : public DOMElement
@@ -214,6 +216,9 @@ namespace Animate::DOM
 		}
 
 	public:
+		static const inline wk::ColorRGB BackgroundColor_Default = { 0xFF, 0xFF, 0xFF };
+
+	public:
 		virtual ElementTag GetTag()
 		{
 			return ElementTag::DOMDocument;
@@ -221,6 +226,12 @@ namespace Animate::DOM
 
 		void SetAttributes(XFL::XFLWriter& writer)
 		{
+			writer.WriteAttr(
+				GetAtributeName(Attributes::BackgroundColor),
+				backgroundColor,
+				BackgroundColor_Default
+			);
+
 			writer.WriteAttr(
 				GetAtributeName(Attributes::FrameRate),
 				frameRate
@@ -230,5 +241,6 @@ namespace Animate::DOM
 	public:
 		const char* xflVersion;
 		int frameRate;
+		wk::ColorRGB backgroundColor;
 	};
 }
