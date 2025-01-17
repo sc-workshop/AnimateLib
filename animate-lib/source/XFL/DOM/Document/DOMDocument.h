@@ -227,6 +227,41 @@ namespace Animate::DOM
 		void SetAttributes(XFL::XFLWriter& writer)
 		{
 			writer.WriteAttr(
+				GetAtributeName(Attributes::XflVersion),
+				xflVersion
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::CreatorInfo),
+				creator
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Platform),
+				platform
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::VersionInfo),
+				versionInfo
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::MajorVersion),
+				majorVersion
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::BuildNumber),
+				buildNumber
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::BuildNumber),
+				minorVersion
+			);
+
+			writer.WriteAttr(
 				GetAtributeName(Attributes::BackgroundColor),
 				backgroundColor,
 				BackgroundColor_Default
@@ -236,11 +271,30 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::FrameRate),
 				frameRate
 			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Width),
+				width
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Height),
+				width
+			);
 		}
 
 	public:
 		const char* xflVersion;
+		const char* creator;
+		const char* platform;
+		std::string versionInfo;
+		int majorVersion;
+		int minorVersion;
+		int buildNumber;
 		int frameRate;
 		wk::ColorRGB backgroundColor;
+
+		uint32_t width;
+		uint32_t height;
 	};
 }

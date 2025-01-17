@@ -26,7 +26,7 @@ namespace Animate::XFL
 		const std::string proxy_content = "PROXY-CS5";
 		m_stream->Write(proxy.concat(".xfl"), proxy_content.c_str(), proxy_content.size());
 
-		document.Save("DOMDocument", *m_stream);
+		document.Save("DOMDocument.xml", *m_stream);
 
 		m_stream->Flush();
 	}

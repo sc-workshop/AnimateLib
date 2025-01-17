@@ -136,7 +136,7 @@ namespace Animate::DOM
 		SaveCustomEase
 	};
 
-	inline std::array ElementTagNames =
+	static const inline std::array ElementTagNames
 	{
 		"DOMDocument",
 		"DOMFolderItem",
@@ -267,5 +267,5 @@ namespace Animate::DOM
 		"SaveCustomEase"
 	};
 
-
+	const char* GetElementTag(ElementTag tag);
 }

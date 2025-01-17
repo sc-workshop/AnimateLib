@@ -2,6 +2,8 @@
 
 #include "SerizalizeTraits.h"
 #include "Stream/Stream.h"
+#include "DOM/DOMProps.h"
+
 #include <filesystem>
 #include <string>
 #include <sstream>
@@ -20,11 +22,15 @@ namespace Animate::DOM
 
 namespace Animate::XFL
 {
+	class XFLWriter;
+	using XFLProp = XFLWriter;
+
 	class XFLWriter
 	{
 	public:
-		XFLWriter(DOM::DOMElement& element);
-		XFLWriter(DOM::Node node, DOM::DOMElement& element, bool isRoot = false);
+		XFLWriter(DOM::DOMElement& element);;
+		XFLWriter(DOM::Node node, DOM::DOMElement& element);
+		XFLWriter(DOM::Node node, DOM::PropTag prop);
 
 	public:
 		void Save(const std::filesystem::path& path, IO::Stream& stream);
@@ -59,6 +65,20 @@ namespace Animate::XFL
 
 			DOM::Attribute attr = m_node.append_attribute(name);
 			write_alpha ? WriteColorAttr<wk::ColorRGBA, true>(attr, value) : WriteColorAttr<wk::ColorRGBA, false>(attr, value);
+		}
+
+		void WriteAttr(const std::string& name, const std::string& value, const std::string default_value = "")
+		{
+			if (value == default_value) return;
+
+			m_node.append_attribute(name)
+				.set_value(value);
+		}
+
+	public:
+		XFLProp CreateProperty(DOM::PropTag prop)
+		{
+			return XFLProp(m_node, prop);
 		}
 		
 	private:

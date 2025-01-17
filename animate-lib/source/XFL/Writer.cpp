@@ -13,20 +13,27 @@ namespace Animate::XFL
 
 		virtual void write(const void* data, size_t size)
 		{
-			stream.Write(std::filesystem::path(path).concat(".xml"), data, size);
+			stream.Write(path, data, size);
 		}
 	};
 
 	XFLWriter::XFLWriter(DOM::DOMElement& element)
 	{
 		m_root = wk::CreateRef<DOM::Document>();
-		XFLWriter(*m_root, element, true);
+		m_node = m_root->append_child();
+		InitializeNode(element, true);
 	}
 
-	XFLWriter::XFLWriter(DOM::Node node, DOM::DOMElement& element, bool isRoot)
+	XFLWriter::XFLWriter(DOM::Node node, DOM::DOMElement& element)
 	{
 		m_node = node.append_child();
-		InitializeNode(element, isRoot);
+		InitializeNode(element);
+	}
+
+	XFLWriter::XFLWriter(DOM::Node node, DOM::PropTag prop)
+	{
+		m_node = node.append_child();
+		m_node.set_name(DOM::GetPropName(prop));
 	}
 
 	void XFLWriter::InitializeNode(DOM::DOMElement& element, bool isRoot)
@@ -41,7 +48,7 @@ namespace Animate::XFL
 				.set_value("http://ns.adobe.com/xfl/2008/");
 		}
 
-		const char* tag = DOM::ElementTagNames[(uint32_t)element.GetTag()];
+		const char* tag = DOM::GetElementTag(element.GetTag());
 		m_node.set_name(tag);
 		element.SetAttributes(*this);
 	}
