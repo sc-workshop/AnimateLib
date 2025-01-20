@@ -4,6 +4,11 @@
 
 namespace Animate::Document
 {
+	SketchDocument::SketchDocument() : m_controller(*this)
+	{
+
+	}
+
 	XFL::XFLWriter SketchDocument::CreateXFLDOMWriter() const
 	{
 		DOM::FLDocument document{};
@@ -47,7 +52,11 @@ namespace Animate::Document
 
 	void SketchDocument::WriteXFLFolders(XFL::XFLWriter& writer) const
 	{
-		XFL::XFLProp property = writer.CreateProperty(DOM::PropTag::Folders);
+		XFL::XFLProp folders = writer.CreateProperty(DOM::PropTag::Folders);
 
+		for (auto& folder : libraryFolders)
+		{
+			folder.WriteXFL(folders);
+		}
 	}
 }

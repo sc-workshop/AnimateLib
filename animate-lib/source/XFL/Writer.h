@@ -18,6 +18,7 @@
 namespace Animate::DOM
 {
 	class DOMElement;
+	class DOMItem;
 }
 
 namespace Animate::XFL
@@ -75,10 +76,36 @@ namespace Animate::XFL
 				.set_value(value);
 		}
 
+		void WriteAttr(const std::string& name, const std::u16string& value, const std::u16string default_value = u"")
+		{
+			if (value == default_value) return;
+
+			m_node.append_attribute(name)
+				.set_value(pugi::as_utf8((const wchar_t*)value.data()));
+		}
+
 	public:
 		XFLProp CreateProperty(DOM::PropTag prop)
 		{
 			return XFLProp(m_node, prop);
+		}
+
+		void WriteDOMFolderItem(DOM::DOMItem& item, bool is_expanded);
+
+	public:
+		static std::u16string MakePrefferedPath(const std::filesystem::path& path)
+		{
+			const std::u16string from = u"\\";
+			const std::u16string to = u"/";
+
+			std::u16string result = path.u16string();
+			size_t startPos = 0;
+			while ((startPos = result.find(from, startPos)) != std::u16string::npos) {
+				result.replace(startPos, from.length(), to);
+				startPos += to.length();
+			}
+
+			return result;
 		}
 		
 	private:
@@ -109,5 +136,8 @@ namespace Animate::XFL
 	private:
 		DOM::Node m_node;
 		wk::Ref<DOM::Document> m_root;
+
+	private:
+		static inline std::string DOMFolderItem_IsExpanded = "isExpanded";
 	};
 }

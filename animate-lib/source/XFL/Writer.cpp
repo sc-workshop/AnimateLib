@@ -1,5 +1,6 @@
 #include "Writer.h"
 #include "DOM/DOMElement.h"
+#include "DOM/DOMItem.h"
 
 namespace Animate::XFL
 {
@@ -62,5 +63,15 @@ namespace Animate::XFL
 
 		XMLWriter writer(stream, path);
 		m_root->print(writer);
+	}
+
+	void XFLWriter::WriteDOMFolderItem(DOM::DOMItem& item, bool is_expanded)
+	{
+		XFLWriter writer(m_node, item);
+
+		writer.WriteAttr(
+			DOMFolderItem_IsExpanded,
+			is_expanded
+		);
 	}
 }

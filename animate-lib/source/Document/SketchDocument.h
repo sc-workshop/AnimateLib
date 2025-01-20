@@ -9,10 +9,19 @@
 #include "core/math/color_rgb.h"
 #include "core/math/rect.h"
 
+#include "Document/LibraryController.h"
+#include "Library/LibraryItem/LibraryFolder.h"
+
 namespace Animate::Document
 {
 	class SketchDocument
 	{	
+		friend LibraryController;
+
+	public:
+		SketchDocument();
+		virtual ~SketchDocument() = default;
+
 	public:
 		int GetFrameRate() const { return m_frameRate; };
 		void SetFrameRate(const int rate) { m_frameRate = rate; };
@@ -28,9 +37,16 @@ namespace Animate::Document
 		void WriteXFL(const std::filesystem::path& path) const;
 		void WriteXFLFolders(XFL::XFLWriter& writer) const;
 
+	public:
+		LibraryController& GetController() { return m_controller;  }
+
 	private:
 		int m_frameRate = 24;
 		wk::ColorRGB m_backgroundColor = {0xFF, 0xFF, 0XFF};
 		wk::Rect m_bounds{0, 0, 1024, 1024};
+		LibraryController m_controller;
+
+	private:
+		std::vector<Library::LibraryFolder> libraryFolders;
 	};
 }
