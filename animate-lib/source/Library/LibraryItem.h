@@ -8,6 +8,10 @@
 #include "core/generic/non_copyable.h"
 #include "core/generic/non_movable.h"
 
+#include <optional>
+#include <string>
+#include <time.h>
+
 namespace Animate::Document
 {
 	class SketchDocument;
@@ -18,7 +22,7 @@ namespace Animate::Library
 	class LibraryItem
 	{
 	public:
-		LibraryItem(Document::SketchDocument& document);
+		LibraryItem(Document::SketchDocument& document, std::optional<std::u16string> name = std::nullopt);
 
 	public:
 #pragma region Item types
@@ -94,12 +98,14 @@ namespace Animate::Library
 
 		const bool HasNoParent() const { return m_parent_id == LibraryItemID::NoParent; };
 
-		virtual void SetLibraryItemName(const std::u16string& name);
-		virtual std::u16string GetLibraryItemName() const;
+		virtual void SetLibraryName(const std::u16string& name);
+		virtual std::u16string GetLibraryName() const;
 		virtual std::filesystem::path GetLibraryItemPath() const;
 
-		virtual void WriteXFL(XFL::XFLWriter& /*writer*/) const {};
+		virtual time_t GetModDateForLibrary() const;
+		virtual void SetModDateForLibrary(time_t);
 
+		virtual void WriteXFL(XFL::XFLWriter& /*writer*/) const {};
 		bool SetParent(const LibraryItem& parent);
 
 	protected:

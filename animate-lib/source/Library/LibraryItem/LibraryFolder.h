@@ -10,7 +10,7 @@ namespace Animate::Library
 	class LibraryFolder : public LibraryItem
 	{
 	public:
-		LibraryFolder(Document::SketchDocument& document, std::optional<std::u16string> name);
+		using LibraryItem::LibraryItem;
 
 	public:
 		virtual bool IsFolder() const override

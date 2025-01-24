@@ -1,5 +1,7 @@
 #include "LibraryItemID.h"
 
+#include "core/string/string_converter.h"
+
 namespace Animate::Library
 {
 	void LibraryItemID::GenerateUniqueID()
@@ -15,8 +17,11 @@ namespace Animate::Library
 
 	std::string LibraryItemID::ToString() const
 	{
-		// TODO
-		return "";
+		auto left = wk::StringConverter::ToHex(m_high);
+		wk::StringConverter::StripLeadingHexZeros(left);
+
+		auto right = wk::StringConverter::ToHex(m_low);
+		return left + "-" + right;
 	}
 
 	void LibraryItemID::FromString(const std::string&)

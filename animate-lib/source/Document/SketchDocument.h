@@ -8,15 +8,25 @@
 #include "core/math/color_rgba.h"
 #include "core/math/color_rgb.h"
 #include "core/math/rect.h"
+#include "core/memory/ref.h"
+#include "core/generic/non_copyable.h"
 
 #include "Document/LibraryController.h"
 #include "Library/LibraryItem/LibraryFolder.h"
+#include "Library/LibraryItem/MediaElem.h"
+#include "Library/LibraryItem/Media/MediaBits.h"
+#include "Vector/LibraryItemVector.h"
 
 namespace Animate::Document
 {
+	using wk::Ref;
+	using wk::Unique;
+
 	class SketchDocument
 	{	
+	private:
 		friend LibraryController;
+		NON_COPYABLE(SketchDocument);
 
 	public:
 		SketchDocument();
@@ -36,9 +46,23 @@ namespace Animate::Document
 		XFL::XFLWriter CreateXFLDOMWriter() const;
 		void WriteXFL(const std::filesystem::path& path) const;
 		void WriteXFLFolders(XFL::XFLWriter& writer) const;
+		void WriteXFLMedia(XFL::XFLWriter& writer) const;
 
 	public:
 		LibraryController& GetController() { return m_controller;  }
+
+	private:
+		template<typename T, typename ... Args>
+		T& CreateFolder(Args&& ... args)
+		{
+			return libraryFolders.Add<T>(std::forward<Args>(args)...);
+		}
+
+		template<typename T, typename... Args>
+		T& CreateMedia(Args&&... args)
+		{
+			return mediaElements.Add<T>(std::forward<Args>(args)...);
+		}
 
 	private:
 		int m_frameRate = 24;
@@ -47,6 +71,7 @@ namespace Animate::Document
 		LibraryController m_controller;
 
 	private:
-		std::vector<Library::LibraryFolder> libraryFolders;
+		LibraryItemsVector<Library::LibraryFolder> libraryFolders;
+		LibraryItemsVector<Library::MediaElem> mediaElements;
 	};
 }

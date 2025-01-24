@@ -9,7 +9,7 @@ namespace Animate::Library
 	class LibraryItemID
 	{
 	private:
-		uint32_t s_RandomElement = 0;
+		static inline uint32_t s_RandomElement = 0;
 
 	public:
 		LibraryItemID() {};

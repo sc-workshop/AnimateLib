@@ -11,6 +11,7 @@
 
 #include "core/memory/ref.h"
 #include "core/exception/exception.h"
+#include "core/string/string_converter.h"
 
 #include "core/math/color_rgb.h"
 #include "core/math/color_rgba.h"
@@ -91,6 +92,7 @@ namespace Animate::XFL
 		}
 
 		void WriteDOMFolderItem(DOM::DOMItem& item, bool is_expanded);
+		void WriteDOMBitmapItem(DOM::DOMItem& item);
 
 	public:
 		static std::u16string MakePrefferedPath(const std::filesystem::path& path)
@@ -114,23 +116,17 @@ namespace Animate::XFL
 		template<typename T, bool write_alpha>
 		void WriteColorAttr(DOM::Attribute& attr, const T& value)
 		{
-			std::stringstream ss{};
-			auto write = [&ss](uint8_t value)
+			std::string result;
+			if constexpr (write_alpha)
 			{
-				ss << std::setw(2) << std::setfill('0') << (int)value;
-			};
-
-			ss << "#" << std::hex;
-			write(value.r);
-			write(value.g);
-			write(value.b);
-
-			if constexpr(write_alpha)
-			{
-				write(value.a);
+				result = wk::StringConverter::ToHex(value.r, value.g, value.b, value.a);
 			}
-
-			attr.set_value(ss.str());
+			else
+			{
+				result = wk::StringConverter::ToHex(value.r, value.g, value.b);
+			}
+			
+			attr.set_value(std::string("#") + result);
 		}
 
 	private:

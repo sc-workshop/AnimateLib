@@ -46,6 +46,7 @@ namespace Animate::Document
 		auto writer = CreateXFLDOMWriter();
 
 		WriteXFLFolders(writer);
+		WriteXFLMedia(writer);
 		
 		file.SaveXFL(writer);
 	}
@@ -54,9 +55,20 @@ namespace Animate::Document
 	{
 		XFL::XFLProp folders = writer.CreateProperty(DOM::PropTag::Folders);
 
-		for (auto& folder : libraryFolders)
+		for (size_t i = 0; libraryFolders.Length() > i; i++)
 		{
-			folder.WriteXFL(folders);
+			auto& item = libraryFolders.At(i);
+			item.WriteXFL(folders);
+		}
+	}
+	void SketchDocument::WriteXFLMedia(XFL::XFLWriter& writer) const
+	{
+		XFL::XFLProp media = writer.CreateProperty(DOM::PropTag::Media);
+
+		for (size_t i = 0; mediaElements.Length() > i; i++)
+		{
+			auto& item = mediaElements.At(i);
+			item.WriteXFL(media);
 		}
 	}
 }

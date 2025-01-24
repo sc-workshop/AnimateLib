@@ -74,4 +74,9 @@ namespace Animate::XFL
 			is_expanded
 		);
 	}
+
+	void XFLWriter::WriteDOMBitmapItem(DOM::DOMItem& item)
+	{
+		XFLWriter writer(m_node, item);
+	}
 }

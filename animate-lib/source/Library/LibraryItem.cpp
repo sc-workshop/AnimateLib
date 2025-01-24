@@ -3,8 +3,13 @@
 
 namespace Animate::Library
 {
-	LibraryItem::LibraryItem(Document::SketchDocument& document) : m_document(document)
-	{ }
+	LibraryItem::LibraryItem(Document::SketchDocument& document, std::optional<std::u16string> name) : m_document(document)
+	{ 
+		if (name.has_value())
+		{
+			m_item_name = name.value();
+		}
+	}
 
 	bool LibraryItem::SetParent(const LibraryItem& parent)
 	{
@@ -25,16 +30,18 @@ namespace Animate::Library
 		if (HasNoParent())
 		{
 			m_item_path = m_item_name;
-		};
-
-		LibraryFolder* folder = m_document.GetController().GetFolder(m_parent_id);
-		if (folder)
-		{
-			m_item_path = folder->GetLibraryItemPath() / m_item_name;
 		}
 		else
 		{
-			m_item_path = m_item_name;
+			LibraryFolder* folder = m_document.GetController().GetFolder(m_parent_id);
+			if (folder)
+			{
+				m_item_path = folder->GetLibraryItemPath() / m_item_name;
+			}
+			else
+			{
+				m_item_path = m_item_name;
+			}
 		}
 
 		m_item_path_dirty = false;
@@ -50,12 +57,12 @@ namespace Animate::Library
 		return m_item_path_dirty;
 	}
 
-	void LibraryItem::SetLibraryItemName(const std::u16string& name) { 
+	void LibraryItem::SetLibraryName(const std::u16string& name) { 
 		m_item_name = name;
 		SetItemPathDirty();
 	};
 
-	std::u16string LibraryItem::GetLibraryItemName() const { 
+	std::u16string LibraryItem::GetLibraryName() const { 
 		return m_item_name; 
 	};
 
@@ -68,4 +75,16 @@ namespace Animate::Library
 
 		return m_item_path; 
 	};
+
+	time_t LibraryItem::GetModDateForLibrary() const
+	{
+		time_t result;
+		std::time(&result);
+
+		return result;
+	}
+
+	void LibraryItem::SetModDateForLibrary(time_t)
+	{
+	}
 }
