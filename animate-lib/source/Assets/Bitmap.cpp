@@ -179,10 +179,10 @@ namespace Animate
 
                 if (pixel.a != 0xFF && pixel.a)
                 {
-                    int alpha_inv = pixel.a ^ 0xFF;
-                    int r = pixel.r - ((unk_factor.r * (alpha_inv) >> 8));
-                    int g = pixel.g - ((unk_factor.g * (alpha_inv) >> 8));
-                    int b = pixel.b - ((unk_factor.b * (alpha_inv) >> 8));
+                    uint8_t alpha_inv = pixel.a ^ 0xFF;
+                    uint8_t r = pixel.r - ((unk_factor.r * (alpha_inv) >> 8));
+                    uint8_t g = pixel.g - ((unk_factor.g * (alpha_inv) >> 8));
+                    uint8_t b = pixel.b - ((unk_factor.b * (alpha_inv) >> 8));
 
                     if (r < 0) r = 0;
                     if (r > pixel.a)
@@ -219,11 +219,10 @@ namespace Animate
 
                     if (pixel.a != 0xFF && pixel.a)
                     {
-                        int alpha_inv = pixel.a ^ 0xFF;
-                        int r = pixel.r;
-                        int g = pixel.g;
-                        int b = pixel.b;
-                        int a = pixel.a + 1;
+                        uint8_t r = pixel.r;
+                        uint8_t g = pixel.g;
+                        uint8_t b = pixel.b;
+                        uint8_t a = pixel.a + 1;
 
                         b = (a * b) >> 8;
                         g = (a * g) >> 8;
@@ -263,7 +262,6 @@ namespace Animate
 
                 if (pixel.a)
                 {
-                    wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
                     wk::ColorRGBA buffer = pixel;
 
                     pixel.r = buffer.a;
