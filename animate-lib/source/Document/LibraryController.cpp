@@ -113,7 +113,7 @@ namespace Animate::Document
 
 	void LibraryController::GetItemValidNameAndParent(const std::u16string& item_name, std::u16string& name, Library::LibraryItemID& parent, const std::u16string& basename)
 	{
-		if (name.find(u"/") != std::u16string::npos)
+		if (item_name.find(u"/") != std::u16string::npos)
 		{
 			fs::path path(item_name);
 			fs::path parent_path = path.parent_path();
@@ -122,6 +122,7 @@ namespace Animate::Document
 		}
 		else
 		{
+			name = item_name;
 			parent = Library::LibraryItemID::NoParent;
 		}
 
@@ -135,10 +136,6 @@ namespace Animate::Document
 			if (folder.Contains(name))
 			{
 				name = GenerateUniqueName(name, folder);
-			}
-			else
-			{
-				name = item_name;
 			}
 		}
 	}
