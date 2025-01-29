@@ -20,6 +20,7 @@ namespace Animate::DOM
 {
 	class DOMElement;
 	class DOMItem;
+	class DOMMediaItem;
 }
 
 namespace Animate::XFL
@@ -92,7 +93,14 @@ namespace Animate::XFL
 		}
 
 		void WriteDOMFolderItem(DOM::DOMItem& item, bool is_expanded);
-		void WriteDOMBitmapItem(DOM::DOMItem& item);
+		void WriteDOMBitmapItem(
+			DOM::DOMMediaItem& item, 
+			bool smooth, 
+			uint32_t compression, 
+			bool use_jpeg, 
+			int quality,
+			const std::filesystem::path& bitmap_href
+		);
 
 	public:
 		static std::u16string MakePrefferedPath(const std::filesystem::path& path)

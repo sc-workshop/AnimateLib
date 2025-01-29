@@ -1,5 +1,7 @@
 #include "LibraryItem.h"
+
 #include "Document/SketchDocument.h"
+#include "XFL/DOM/Items/DOMItem.h"
 
 namespace Animate::Library
 {
@@ -45,6 +47,12 @@ namespace Animate::Library
 		}
 
 		m_item_path_dirty = false;
+	}
+
+	void LibraryItem::InitializeDOMItem(DOM::DOMItem& item) const
+	{
+		item.name = XFL::XFLWriter::MakePrefferedPath(GetLibraryItemPath());
+		item.itemId = m_item_id.ToString();
 	}
 
 	void LibraryItem::SetItemPathDirty() const

@@ -31,6 +31,12 @@ namespace Animate::XFL
 		m_stream->Flush();
 	}
 
+	void XFLFile::SaveBinary(std::filesystem::path path, XFL::XflIoFile& stream)
+	{
+		std::filesystem::path filepath = "bin" / path;
+		m_stream->Write(filepath, stream);
+	}
+
 	void XFLFile::CreateStream(IO::Stream::OpenType type)
 	{
 		if (m_filetype == XFLType::Packed)

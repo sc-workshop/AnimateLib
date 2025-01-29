@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 
-#include "DOMElement.h"
+#include "XFL/DOM/DOMElement.h"
 
 namespace Animate::DOM
 {
@@ -63,16 +63,16 @@ namespace Animate::DOM
 		static const inline std::u16string Default_Name = u"";
 		static const inline std::string Default_ItemID = "";
 
+	protected:
+		DOMItem() = default;
+
 	public:
 		DOMItem(Type type)
-		{ 
+		{
 			switch (type)
 			{
 			case Type::Folder:
 				m_tag = ElementTag::DOMFolderItem;
-				break;
-			case Type::Bitmap:
-				m_tag = ElementTag::DOMBitmapItem;
 				break;
 			default:
 				throw wk::Exception();
@@ -87,7 +87,7 @@ namespace Animate::DOM
 		std::u16string name;
 		std::string itemId;
 
-	private:
+	protected:
 		ElementTag m_tag;
 	};
 }

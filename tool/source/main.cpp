@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 
     Document::SketchDocument document;
     document.SetFrameRate(60);
-    document.SetBackgroundColor({ 0xfc, 0xfc, 0xfc });
+    document.SetBackgroundColor({ 50, 50, 50 });
 
     auto& controller = document.GetController();
 
@@ -22,8 +22,13 @@ int main(int argc, char* argv[])
     children_folder.SetParent(folder);
 
     auto& bitmap = controller.MakeBitmap("path/to/bitmap/funny bitmap");
-    auto& bitmap_copy = controller.MakeBitmap("path/to/bitmap/funny bitmap");
+    bitmap.FromImage("../../tool/assets/crow.png");
+    bitmap.SetAllowSmooth(true);
+    bitmap.SetCompression(Library::MediaBits::CompressionType::Lossless);
 
+    auto& bitmap_copy = controller.MakeBitmap("path/to/bitmap/funny bitmap");
+    bitmap_copy.SetAllowSmooth(true);
+    bitmap_copy.FromImage("../../tool/assets/you.png");
     
     document.WriteXFL(argv[1]);
 

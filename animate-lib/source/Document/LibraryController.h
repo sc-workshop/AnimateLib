@@ -25,6 +25,8 @@ namespace Animate::Document
 
 		Library::MediaBits& MakeBitmap(const std::filesystem::path& path);
 
+		void GetItemValidNameAndParent(const std::u16string& path, std::u16string& name, Library::LibraryItemID& parent, const std::u16string& basename = u"Item");
+
 	private:
 		std::u16string GenerateUniqueName(const std::u16string& basename, LibraryReferenceVector& folder) const;
 

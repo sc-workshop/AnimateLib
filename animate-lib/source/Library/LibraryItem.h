@@ -114,6 +114,8 @@ namespace Animate::Library
 
 		void ConstructLibraryPath() const;
 
+		void InitializeDOMItem(DOM::DOMItem& item) const;
+
 	protected:
 		mutable std::filesystem::path m_item_path;
 		std::u16string m_item_name;

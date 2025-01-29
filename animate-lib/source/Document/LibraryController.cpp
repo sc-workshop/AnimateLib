@@ -96,30 +96,13 @@ namespace Animate::Document
 
 	Library::MediaBits& LibraryController::MakeBitmap(const std::filesystem::path& path)
 	{
-		std::u16string name = path.u16string();
-		Library::LibraryItemID parent = Library::LibraryItemID::NoParent;
-		
-		if (name.find(u"/") != std::u16string::npos)
-		{
-			fs::path parent_path = path.parent_path();
-			parent = MakeFolders(parent_path).GetID();
-			name = path.filename().u16string();
-		}
-
-		LibraryReferenceVector folder = GetFolderItems(parent);
-		if (name.empty())
-		{
-			name = GenerateUniqueName(u"Bitmap", folder);
-		}
-		else
-		{
-			if (folder.Contains(name))
-			{
-				name = GenerateUniqueName(name, folder);
-			}
-		}
+		std::u16string name;
+		Library::LibraryItemID parent;
+		GetItemValidNameAndParent(path.u16string(), name, parent, u"Bitmap");
 
 		Library::MediaBits& result = m_document.CreateMedia<Library::MediaBits>(m_document, name);
+		result.Create();
+
 		Library::LibraryItemID folder_id;
 		folder_id.GenerateUniqueID();
 		result.SetID(folder_id);
@@ -127,6 +110,39 @@ namespace Animate::Document
 
 		return result;
 	}
+
+	void LibraryController::GetItemValidNameAndParent(const std::u16string& item_name, std::u16string& name, Library::LibraryItemID& parent, const std::u16string& basename)
+	{
+		if (name.find(u"/") != std::u16string::npos)
+		{
+			fs::path path(item_name);
+			fs::path parent_path = path.parent_path();
+			parent = MakeFolders(parent_path).GetID();
+			name = path.filename().u16string();
+		}
+		else
+		{
+			parent = Library::LibraryItemID::NoParent;
+		}
+
+		LibraryReferenceVector folder = GetFolderItems(parent);
+		if (name.empty())
+		{
+			name = GenerateUniqueName(basename, folder);
+		}
+		else
+		{
+			if (folder.Contains(name))
+			{
+				name = GenerateUniqueName(name, folder);
+			}
+			else
+			{
+				name = item_name;
+			}
+		}
+	}
+
 	std::u16string LibraryController::GenerateUniqueName(const std::u16string& basename, LibraryReferenceVector& folder) const
 	{
 		size_t counter = 1;

@@ -1,25 +1,32 @@
 #include "MediaElem.h"
 
 #include "Document/SketchDocument.h"
-#include "XFL/DOM/DOMItem.h"
+#include "XFL/DOM/Items/DOMItem.h"
+#include "XFL/DOM/Items/DOMMediaItem.h"
 
 namespace Animate::Library
 {
 	MediaElem::MediaElem(Document::SketchDocument& document, const std::u16string& name) : LibraryItem(document, name)
 	{
+	}
+
+	void MediaElem::Create()
+	{
 		time_t creation_time;
 		time(&creation_time);
 
-		m_media_filename = "M " + std::to_string(MediaCounter++) + " " + std::to_string(creation_time);
+		m_media_filename = "M " + std::to_string(MediaCounter++) + " " + std::to_string(creation_time) + ".dat";
 	}
 
-	time_t MediaElem::GetModDateForLibrary() const
+	void MediaElem::UpdateFromSource()
 	{
-		return m_last_modify;
+		time(&m_last_source_update);
 	}
 
-	void MediaElem::SetModDateForLibrary(time_t time)
+	void MediaElem::InitializeDOMItem(DOM::DOMMediaItem& item) const
 	{
-		m_last_modify = time;
+		LibraryItem::InitializeDOMItem((DOM::DOMItem&)item);
+
+		item.source_last_imported = m_last_source_update;
 	}
 }

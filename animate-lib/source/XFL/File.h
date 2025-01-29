@@ -6,6 +6,7 @@
 
 #include "Stream/Packed.h"
 #include "Stream/Unpacked.h"
+#include "IoFile.h"
 #include "Writer.h"
 #include "DOM/Document/DOMDocument.h"
 
@@ -27,6 +28,7 @@ namespace Animate::XFL
 
 	public:
 		void SaveXFL(XFLWriter& writer);
+		void SaveBinary(std::filesystem::path path, XFL::XflIoFile& stream);
 
 	private:
 		void CreateStream(IO::Stream::OpenType type);
