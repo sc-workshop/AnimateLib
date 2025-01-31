@@ -8,6 +8,7 @@ include(FetchContent)
 include(cmake/core.cmake)
 include(cmake/xml.cmake)
 include(cmake/zip.cmake)
+include(cmake/zlib.cmake)
 
 # projects
 add_subdirectory(animate-lib)

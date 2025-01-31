@@ -9,6 +9,7 @@ target_link_libraries(${TARGET} PUBLIC
     wk::core
     pugixml::pugixml
     zip
+    ZLIB::ZLIB
 )
 
 wk_project_setup(${TARGET})

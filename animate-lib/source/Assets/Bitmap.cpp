@@ -22,7 +22,7 @@ namespace Animate
         file.write_int(bounds.height);
 
         bool has_alpha = image.base_type() == wk::Image::BasePixelType::RGBA;
-        bool should_compress = false;//0x6400000 > image.data_length();
+        bool should_compress = true;//0x6400000 > image.data_length();
         file.write_bool(has_alpha);
         file.write_bool(should_compress);
 
@@ -64,21 +64,6 @@ namespace Animate
         image->copy(*m_image);
 
         CleanUpAlpha();
-
-        // RGBA -> ARGB
-        //for (uint16_t h = 0; m_image->height() > h; h++)
-        //{
-        //    for (uint16_t w = 0; m_image->width() > w; w++)
-        //    {
-        //        wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
-        //        wk::ColorRGBA buffer = pixel;
-        //        
-        //        pixel.r = buffer.a;
-        //        pixel.g = buffer.r;
-        //        pixel.b = buffer.g;
-        //        pixel.a = buffer.b;
-        //    }
-        //}
 	}
 
     void Bitmap::CleanUpAlpha()

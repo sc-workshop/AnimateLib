@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/io/buffer_stream.h"
+#include "core/exception/exception.h"
 
 #include <filesystem>
 
