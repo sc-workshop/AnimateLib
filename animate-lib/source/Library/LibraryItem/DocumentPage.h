@@ -18,7 +18,10 @@ namespace Animate::Library
 			Graphic = 0,
 			MovieClip,
 			Button,
-			Screen
+			IkContainer,
+			Puppet,
+			PuppetBase,
+			Media3D
 		};
 
 		friend Document::LibraryController;

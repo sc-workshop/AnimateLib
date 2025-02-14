@@ -6,11 +6,19 @@ namespace fs = std::filesystem;
 
 namespace Animate::IO
 {
-	bool UnpackedStream::Open(const std::filesystem::path& path, Stream::OpenType /*type*/)
+	bool UnpackedStream::Open(const std::filesystem::path& path, Stream::OpenType type)
 	{
 		if (!fs::exists(path))
 		{
-			fs::create_directories(path);
+			if (type == Stream::OpenType::Write)
+			{
+				fs::create_directories(path);
+			}
+			else
+			{
+				return false;
+			}
+			
 		}
 
 		m_basedir = path;
@@ -30,6 +38,19 @@ namespace Animate::IO
 	bool UnpackedStream::Exist(const std::filesystem::path& path)
 	{
 		return fs::exists(m_basedir / path);
+	}
+
+	bool UnpackedStream::Writable()
+	{
+		fs::path basename = m_basedir.stem().concat(".xfl");
+		fs::path proxy = m_basedir / basename;
+		if (!fs::exists(proxy))
+		{
+			return false;
+		}
+
+		std::ofstream file(proxy, std::ios_base::app);
+		return file.good();
 	}
 
 	void UnpackedStream::CreateBaseFolder(const fs::path& path)

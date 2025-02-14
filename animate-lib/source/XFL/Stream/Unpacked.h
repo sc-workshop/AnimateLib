@@ -13,6 +13,7 @@ namespace Animate::IO
 		virtual void Write(const std::filesystem::path& path, const void* data, size_t length);
 		virtual void Flush() {};
 		virtual bool Exist(const std::filesystem::path& path);
+		virtual bool Writable();
 
 	private:
 		void CreateBaseFolder(const std::filesystem::path& path);

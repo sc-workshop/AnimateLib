@@ -7,15 +7,24 @@
 
 namespace Animate::Library
 {
-	void DocumentPage::WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& writer) const
+	void DocumentPage::WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& root) const
 	{
 		DOM::Include item;
 		item.href = GetItemPath().u16string();
 		item.last_modified = m_last_modify_time;
 		item.item_id = m_item_id.ToString();
-		item.item_icon = (int)m_type;
 
-		XFL::XFLWriter include(writer, item);
+		switch (m_type)
+		{
+		case Animate::Library::DocumentPage::SymbolType::Graphic:
+			item.item_icon = 1;
+			break;
+		default:
+			item.item_icon = 0;
+			break;
+		}
+
+		XFL::XFLWriter writer(root, item);
 	}
 
 	void DocumentPage::WriteXFLSymbol(XFL::XFLFile& file) const
@@ -23,6 +32,7 @@ namespace Animate::Library
 		DOM::DOMSymbolItem item;
 		InitializeDOMItem(item);
 		item.last_modified = m_last_modify_time;
+		item.symbol_type = (size_t)m_type;
 
 		XFL::XFLWriter writer(item);
 		auto timeline = writer.CreateProperty(DOM::PropTag::Timeline);

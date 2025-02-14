@@ -52,7 +52,8 @@ namespace Animate::DOM
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::ItemIcon),
-				item_icon
+				item_icon,
+				std::numeric_limits<int>::max()
 			);
 
 			writer.WriteAttr(

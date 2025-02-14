@@ -64,4 +64,9 @@ namespace Animate::IO
 	{
 		return std::find(m_written_files.begin(), m_written_files.end(), path) != m_written_files.end();
 	}
+
+	bool PackedStream::Writable()
+	{
+		return m_file->is_open();
+	}
 }

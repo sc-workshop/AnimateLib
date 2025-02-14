@@ -30,8 +30,7 @@ int main(int argc, char* argv[])
     bitmap_copy.SetAllowSmooth(true);
     bitmap_copy.FromImage("../../tool/assets/you.png");
 
-    auto& symbol = controller.MakeSymbol("path/new symbol", Library::DocumentPage::SymbolType::MovieClip);
-
+    auto& symbol = controller.MakeSymbol("path/new symbol", Library::DocumentPage::SymbolType::Graphic);
     
     document.WriteXFL(argv[1]);
 

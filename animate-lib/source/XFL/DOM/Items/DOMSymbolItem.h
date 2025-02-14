@@ -13,6 +13,17 @@ namespace Animate::DOM
 		DOMSymbolItem() : DOMItem(DOMItem::Type::Symbol)
 		{ }
 	public:
+		static const inline std::array SymbolType
+		{
+			"graphic",
+			"movie clip",
+			"button",
+			"ik container",
+			"puppet",
+			"puppetBase",
+			"media 3D"
+		};
+		
 		enum class Attributes : uint32_t
 		{
 			SymbolType,
@@ -92,10 +103,20 @@ namespace Animate::DOM
 			return AttributeNames[(uint32_t)attribute];
 		}
 
+		static const char* GetSymbolTypeName(size_t index)
+		{
+			return SymbolType[index];
+		}
+
 	public:
 		void SetAttributes(XFL::XFLWriter& writer)
 		{
 			DOMItem::SetAttributes(writer);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::SymbolType),
+				GetSymbolTypeName(symbol_type)
+			);
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::LastModified),
@@ -104,6 +125,7 @@ namespace Animate::DOM
 		}
 
 	public:
+		size_t symbol_type;
 		time_t last_modified;
 	};
 }
