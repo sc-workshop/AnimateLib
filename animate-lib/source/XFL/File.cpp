@@ -31,10 +31,26 @@ namespace Animate::XFL
 		m_stream->Flush();
 	}
 
-	void XFLFile::SaveBinary(std::filesystem::path path, XFL::XflIoFile& stream)
+	void XFLFile::SaveSymbol(XFLWriter& document, const std::filesystem::path& path)
+	{
+		std::filesystem::path symbol_path = GetLibraryItemPath(path);
+		document.Save(symbol_path, *m_stream);
+	}
+
+	void XFLFile::SaveBinary(const std::filesystem::path& path, XFL::XflIoFile& stream)
 	{
 		std::filesystem::path filepath = "bin" / path;
 		m_stream->Write(filepath, stream);
+	}
+
+	bool XFLFile::Exist(const std::filesystem::path& path)
+	{
+		return m_stream->Exist(path);
+	}
+
+	std::filesystem::path XFLFile::GetLibraryItemPath(const std::filesystem::path& path)
+	{
+		return (std::filesystem::path("LIBRARY") / path).concat(".xml");
 	}
 
 	void XFLFile::CreateStream(IO::Stream::OpenType type)

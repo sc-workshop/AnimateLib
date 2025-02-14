@@ -28,7 +28,12 @@ namespace Animate::XFL
 
 	public:
 		void SaveXFL(XFLWriter& writer);
-		void SaveBinary(std::filesystem::path path, XFL::XflIoFile& stream);
+		void SaveSymbol(XFLWriter& writer, const std::filesystem::path& path);
+		void SaveBinary(const std::filesystem::path& path, XFL::XflIoFile& stream);
+		bool Exist(const std::filesystem::path& path);
+
+	public:
+		std::filesystem::path GetLibraryItemPath(const std::filesystem::path& path);
 
 	private:
 		void CreateStream(IO::Stream::OpenType type);

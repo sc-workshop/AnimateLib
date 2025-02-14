@@ -38,6 +38,7 @@ namespace Animate::IO
 			return false;
 		}
 
+		m_written_files.push_back(path);
 		return true;
 	}
 
@@ -57,5 +58,10 @@ namespace Animate::IO
 
 		zip_stream_copy(m_context, &buffer, &length);
 		m_file->write(buffer, length);
+	}
+
+	bool PackedStream::Exist(const std::filesystem::path& path)
+	{
+		return std::find(m_written_files.begin(), m_written_files.end(), path) != m_written_files.end();
 	}
 }

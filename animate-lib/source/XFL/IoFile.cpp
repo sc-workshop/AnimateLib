@@ -20,12 +20,12 @@ namespace Animate::XFL
 		chunk_buffer.resize(chunk_size);
 
 		stream.next_in = (Bytef*)buffer;
-		stream.avail_in = length;
+		stream.avail_in = (uInt)length;
 
 		while (result != Z_STREAM_END)
 		{
 			stream.next_out = (Bytef*)chunk_buffer.data();
-			stream.avail_out = chunk_buffer.size();
+			stream.avail_out = (uInt)chunk_buffer.size();
 
 			result = deflate(&stream, 4 * (stream.total_in >= length));
 			if ( 0 > result)
@@ -35,7 +35,7 @@ namespace Animate::XFL
 
 			if (stream.avail_out != chunk_size)
 			{
-				uint16_t buffer_length = chunk_size - stream.avail_out;
+				uint16_t buffer_length = uint16_t(chunk_size - stream.avail_out);
 				write_unsigned_short(buffer_length);
 				write(chunk_buffer.data(), buffer_length);
 			}

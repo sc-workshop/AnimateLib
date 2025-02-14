@@ -2,6 +2,7 @@
 #include "DOM/DOMElement.h"
 #include "DOM/Items/DOMItem.h"
 #include "DOM/Items/DOMMediaItem.h"
+#include "DOM/Document/Include.h"
 #include "DOM/Items/DOMBitmapItem.h"
 
 namespace Animate::XFL
@@ -31,6 +32,11 @@ namespace Animate::XFL
 	{
 		m_node = node.append_child();
 		InitializeNode(element);
+	}
+
+	XFLWriter::XFLWriter(XFLWriter& node, DOM::DOMElement& element)
+	{
+		XFLWriter(node.m_node, element);
 	}
 
 	XFLWriter::XFLWriter(DOM::Node node, DOM::PropTag prop)
@@ -65,53 +71,5 @@ namespace Animate::XFL
 
 		XMLWriter writer(stream, path);
 		m_root->print(writer);
-	}
-
-	void XFLWriter::WriteDOMFolderItem(DOM::DOMItem& item, bool is_expanded)
-	{
-		XFLWriter writer(m_node, item);
-
-		writer.WriteAttr(
-			DOMFolderItem_IsExpanded,
-			is_expanded
-		);
-	}
-
-	void XFLWriter::WriteDOMBitmapItem(
-		DOM::DOMMediaItem& item, 
-		bool smooth, 
-		uint32_t compression, 
-		bool use_jpeg, 
-		int quality,
-		const std::filesystem::path& bitmap_href
-	)
-	{
-		XFLWriter writer(m_node, item);
-
-		writer.WriteAttr(
-			DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::AllowSmoothing),
-			smooth
-		);
-
-		writer.WriteAttr(
-			DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::CompressionType),
-			DOM::DOMBitmapItem::GetCompressionName(compression)
-		);
-
-		writer.WriteAttr(
-			DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::UseImportedJPEGData),
-			use_jpeg,
-			true
-		);
-
-		writer.WriteAttr(
-			DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::Quality),
-			quality
-		);
-
-		writer.WriteAttr(
-			DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::BitmapDataHRef),
-			MakePrefferedPath(bitmap_href)
-		);
 	}
 }

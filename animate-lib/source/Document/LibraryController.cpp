@@ -17,7 +17,7 @@ namespace Animate::Document
 		auto folder = m_document.libraryFolders.Find(
 			[&name, &id](const auto& item)
 			{
-				if (item->GetParentID() == id && item->GetLibraryName() == name)
+				if (item->GetParentID() == id && item->GetItemName() == name)
 				{
 					return true;
 				}
@@ -107,6 +107,24 @@ namespace Animate::Document
 		folder_id.GenerateUniqueID();
 		result.SetID(folder_id);
 		result.SetParentID(parent);
+
+		return result;
+	}
+
+	Library::DocumentPage& LibraryController::MakeSymbol(const std::filesystem::path& path, Library::DocumentPage::SymbolType type)
+	{
+		std::u16string name;
+		Library::LibraryItemID parent;
+		GetItemValidNameAndParent(path.u16string(), name, parent, u"Symbol");
+
+		Library::DocumentPage& result = m_document.CreateSymbol<Library::DocumentPage>(m_document, name);
+
+		Library::LibraryItemID symbol_id;
+		symbol_id.GenerateUniqueID();
+		result.SetID(symbol_id);
+		result.SetParentID(parent);
+		result.CreateSymbol(m_document);
+		result.m_type = type;
 
 		return result;
 	}

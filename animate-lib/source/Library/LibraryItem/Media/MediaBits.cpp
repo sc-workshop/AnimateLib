@@ -24,23 +24,28 @@ namespace Animate::Library
         }
     }
 
-    void MediaBits::WriteXFL(XFL::XFLWriter& writer) const
+    void MediaBits::WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& root) const
     {
-        DOM::DOMMediaItem item(DOM::DOMMediaItem::Type::Bitmap);
+        DOM::DOMBitmapItem item;
         InitializeDOMItem(item);
 
-        writer.WriteDOMBitmapItem(
-            item, 
-            m_allow_smooth, 
-            (uint32_t)m_compression, 
-            m_compression == CompressionType::Photo, 
-            m_quality,
-            GetXFLMediaPath()
-        );
+        XFL::XFLWriter writer(root, item);
     }
 
     void MediaBits::WriteXFLContent(XFL::XflIoFile& file) const
     {
         m_bitmap.WriteXFLContent(file);
+    }
+
+    void MediaBits::InitializeDOMItem(DOM::DOMBitmapItem& item) const
+    {
+        MediaElem::InitializeDOMItem(item);
+
+        item.smooth = m_allow_smooth;
+        item.compression = (uint32_t)m_compression;
+        item.use_jpeg = m_compression == CompressionType::Photo;
+        item.quality = m_quality;
+        item.bitmap_href = GetXFLMediaPath();
+        item.frame = m_bitmap.GetBounds();
     }
 }

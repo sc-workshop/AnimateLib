@@ -4,9 +4,13 @@
 #include <filesystem>
 
 #include "Library/LibraryItem.h"
+#include "XFL/DOM/Items/DOMFolderItem.h"
 
 namespace Animate::Library
 {
+	/// <summary>
+	/// List of other library items
+	/// </summary>
 	class LibraryFolder : public LibraryItem
 	{
 	public:
@@ -29,7 +33,8 @@ namespace Animate::Library
 #pragma endregion
 
 	public:
-		virtual void WriteXFL(XFL::XFLWriter& writer) const;
+		virtual void WriteXFL(XFL::XFLFile& file, XFL::XFLWriter& writer) const override;
+		void InitializeDOMItem(DOM::DOMFolderItem& item) const;
 
 	private:
 		std::filesystem::path m_library_path;

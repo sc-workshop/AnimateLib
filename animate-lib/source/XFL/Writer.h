@@ -15,12 +15,14 @@
 
 #include "core/math/color_rgb.h"
 #include "core/math/color_rgba.h"
+#include "core/math/rect.h"
 
 namespace Animate::DOM
 {
 	class DOMElement;
 	class DOMItem;
 	class DOMMediaItem;
+	class Include;
 }
 
 namespace Animate::XFL
@@ -31,8 +33,9 @@ namespace Animate::XFL
 	class XFLWriter
 	{
 	public:
-		XFLWriter(DOM::DOMElement& element);;
+		XFLWriter(DOM::DOMElement& element);
 		XFLWriter(DOM::Node node, DOM::DOMElement& element);
+		XFLWriter(XFLWriter& node, DOM::DOMElement& element);
 		XFLWriter(DOM::Node node, DOM::PropTag prop);
 
 	public:
@@ -92,18 +95,8 @@ namespace Animate::XFL
 			return XFLProp(m_node, prop);
 		}
 
-		void WriteDOMFolderItem(DOM::DOMItem& item, bool is_expanded);
-		void WriteDOMBitmapItem(
-			DOM::DOMMediaItem& item, 
-			bool smooth, 
-			uint32_t compression, 
-			bool use_jpeg, 
-			int quality,
-			const std::filesystem::path& bitmap_href
-		);
-
 	public:
-		static std::u16string MakePrefferedPath(const std::filesystem::path& path)
+		static std::u16string MakePrefferedPath(const std::filesystem::path& path, bool is_symbol = false)
 		{
 			const std::u16string from = u"\\";
 			const std::u16string to = u"/";
@@ -113,6 +106,11 @@ namespace Animate::XFL
 			while ((startPos = result.find(from, startPos)) != std::u16string::npos) {
 				result.replace(startPos, from.length(), to);
 				startPos += to.length();
+			}
+
+			if (is_symbol)
+			{
+				result += u".xml";
 			}
 
 			return result;
@@ -140,8 +138,5 @@ namespace Animate::XFL
 	private:
 		DOM::Node m_node;
 		wk::Ref<DOM::Document> m_root;
-
-	private:
-		static inline std::string DOMFolderItem_IsExpanded = "isExpanded";
 	};
 }

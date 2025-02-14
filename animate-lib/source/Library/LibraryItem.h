@@ -4,6 +4,7 @@
 #include "Properties/LibraryItemID.h"
 
 #include "XFL/Writer.h"
+#include "XFL/File.h"
 
 #include "core/generic/non_copyable.h"
 #include "core/generic/non_movable.h"
@@ -98,14 +99,14 @@ namespace Animate::Library
 
 		const bool HasNoParent() const { return m_parent_id == LibraryItemID::NoParent; };
 
-		virtual void SetLibraryName(const std::u16string& name);
-		virtual std::u16string GetLibraryName() const;
-		virtual std::filesystem::path GetLibraryItemPath() const;
+		virtual void SetItemName(const std::u16string& name);
+		virtual std::u16string GetItemName() const;
+		virtual std::filesystem::path GetItemPath() const;
 
 		virtual time_t GetModDateForLibrary() const;
 		virtual void SetModDateForLibrary(time_t);
 
-		virtual void WriteXFL(XFL::XFLWriter& /*writer*/) const {};
+		virtual void WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& /*writer*/) const {};
 		bool SetParent(const LibraryItem& parent);
 
 	protected:

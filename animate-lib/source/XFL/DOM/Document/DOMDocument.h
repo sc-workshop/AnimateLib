@@ -284,17 +284,17 @@ namespace Animate::DOM
 		}
 
 	public:
-		const char* xflVersion;
-		const char* creator;
-		const char* platform;
+		const char* xflVersion = "";
+		const char* creator = "";
+		const char* platform = "";
 		std::string versionInfo;
-		int majorVersion;
-		int minorVersion;
-		int buildNumber;
-		int frameRate;
-		wk::ColorRGB backgroundColor;
+		int majorVersion = 0;
+		int minorVersion = 0;
+		int buildNumber = 0;
+		int frameRate = 0;
+		wk::ColorRGB backgroundColor = BackgroundColor_Default;
 
-		uint32_t width;
-		uint32_t height;
+		uint32_t width = 0;
+		uint32_t height = 0;
 	};
 }

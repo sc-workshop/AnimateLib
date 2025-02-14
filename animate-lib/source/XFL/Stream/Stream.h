@@ -21,6 +21,7 @@ namespace Animate::IO
 		virtual bool Open(const std::filesystem::path& path, OpenType type) = 0;
 		virtual void Write(const std::filesystem::path& path, const void* data, size_t length) = 0;
 		virtual void Flush() = 0;
+		virtual bool Exist(const std::filesystem::path& path) = 0;
 
 		void Write(const std::filesystem::path& path, wk::Stream& stream)
 		{

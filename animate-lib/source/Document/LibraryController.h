@@ -5,11 +5,15 @@
 #include "Document/Vector/LibraryItemVector.h"
 #include "Library/LibraryItem/LibraryFolder.h"
 #include "Library/LibraryItem/Media/MediaBits.h"
+#include "Library/LibraryItem/DocumentPage.h"
 
 namespace Animate::Document
 {
 	class SketchDocument;
 
+	/// <summary>
+	/// Separate class to control over Root library
+	/// </summary>
 	class LibraryController
 	{
 	public:
@@ -24,6 +28,7 @@ namespace Animate::Document
 		LibraryReferenceVector GetFolderItems(const Library::LibraryItemID& folder_id);
 
 		Library::MediaBits& MakeBitmap(const std::filesystem::path& path);
+		Library::DocumentPage& MakeSymbol(const std::filesystem::path& path, Library::DocumentPage::SymbolType type);
 
 		void GetItemValidNameAndParent(const std::u16string& path, std::u16string& name, Library::LibraryItemID& parent, const std::u16string& basename = u"Item");
 

@@ -13,6 +13,11 @@
 
 namespace Animate::Document
 {
+	/// <summary>
+	/// Helper class that in essential is std::vector but with some enhancements in this specific case
+	/// </summary>
+	/// <typeparam name="T">Base type</typeparam>
+	/// <typeparam name="P">Pointer type</typeparam>
 	template<typename T = Library::LibraryItem, typename P = Library::LibraryItem*>
 	class LibraryItemsVector_t
 	{
@@ -40,7 +45,7 @@ namespace Animate::Document
 			return Find(
 				[&name](Value& item)
 				{
-					return item->GetLibraryName() == name;
+					return item->GetItemName() == name;
 				}
 			);
 		}

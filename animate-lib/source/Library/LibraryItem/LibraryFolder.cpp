@@ -1,15 +1,20 @@
 #include "LibraryFolder.h"
 
 #include "Document/SketchDocument.h"
-#include "XFL/DOM/Items/DOMItem.h"
 
 namespace Animate::Library
 {
-	void LibraryFolder::WriteXFL(XFL::XFLWriter& writer) const
+	void LibraryFolder::WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& root) const
 	{
-		DOM::DOMItem item(DOM::DOMItem::Type::Folder);
+		DOM::DOMFolderItem item;
 		InitializeDOMItem(item);
 
-		writer.WriteDOMFolderItem(item, IsExpanded());
+		XFL::XFLWriter writer(root, item);
+	}
+
+	void LibraryFolder::InitializeDOMItem(DOM::DOMFolderItem& item) const
+	{
+		LibraryItem::InitializeDOMItem(item);
+		item.is_expanded = IsExpanded();
 	}
 }

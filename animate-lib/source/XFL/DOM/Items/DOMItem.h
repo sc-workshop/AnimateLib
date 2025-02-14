@@ -13,7 +13,7 @@ namespace Animate::DOM
 		enum class Type
 		{
 			Folder,
-			Bitmap
+			Symbol
 		};
 
 		enum class Props
@@ -73,6 +73,9 @@ namespace Animate::DOM
 			{
 			case Type::Folder:
 				m_tag = ElementTag::DOMFolderItem;
+				break;
+			case Type::Symbol:
+				m_tag = ElementTag::DOMSymbolItem;
 				break;
 			default:
 				throw wk::Exception();

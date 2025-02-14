@@ -29,6 +29,9 @@ int main(int argc, char* argv[])
     auto& bitmap_copy = controller.MakeBitmap("path/to/bitmap/funny bitmap");
     bitmap_copy.SetAllowSmooth(true);
     bitmap_copy.FromImage("../../tool/assets/you.png");
+
+    auto& symbol = controller.MakeSymbol("path/new symbol", Library::DocumentPage::SymbolType::MovieClip);
+
     
     document.WriteXFL(argv[1]);
 

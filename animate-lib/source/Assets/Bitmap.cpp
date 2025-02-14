@@ -22,7 +22,7 @@ namespace Animate
         file.write_int(bounds.height);
 
         bool has_alpha = image.base_type() == wk::Image::BasePixelType::RGBA;
-        bool should_compress = true;//0x6400000 > image.data_length();
+        bool should_compress = 0x6400000 > image.data_length();
         file.write_bool(has_alpha);
         file.write_bool(should_compress);
 

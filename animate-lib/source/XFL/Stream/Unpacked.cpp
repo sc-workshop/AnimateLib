@@ -27,6 +27,11 @@ namespace Animate::IO
 		file.write(data, length);
 	}
 
+	bool UnpackedStream::Exist(const std::filesystem::path& path)
+	{
+		return fs::exists(m_basedir / path);
+	}
+
 	void UnpackedStream::CreateBaseFolder(const fs::path& path)
 	{
 		fs::path base = path.parent_path();

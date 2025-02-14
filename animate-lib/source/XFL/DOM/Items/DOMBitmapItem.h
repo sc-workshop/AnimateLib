@@ -3,13 +3,15 @@
 #include <array>
 #include <string>
 
-#include "core/generic/static.h"
+#include "XFL/DOM/Items/DOMMediaItem.h"
 
 namespace Animate::DOM
 {
-	class DOMBitmapItem
+	class DOMBitmapItem : public DOMMediaItem
 	{
-		WK_STATIC_CLASS(DOMBitmapItem);
+	public:
+		DOMBitmapItem() : DOMMediaItem(DOMMediaItem::Type::Bitmap)
+		{ }
 
 	public:
 		static const inline std::array CompressionName
@@ -58,5 +60,15 @@ namespace Animate::DOM
 		};
 
 		static const char* GetPropName(Props);
+
+		virtual void SetAttributes(XFL::XFLWriter& writer);
+
+	public:
+		bool smooth = false;
+		uint32_t compression = 0;
+		bool use_jpeg = false;
+		int quality = 0;
+		std::filesystem::path bitmap_href;
+		wk::Rect frame;
 	};
 }

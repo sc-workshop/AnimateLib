@@ -7,6 +7,9 @@
 
 namespace Animate::Library
 {
+	/// <summary>
+	/// Base class for all media types (bitmaps, videos, etc)
+	/// </summary>
 	class MediaElem : public LibraryItem
 	{
 	private:
@@ -49,7 +52,7 @@ namespace Animate::Library
 	public:
 		virtual void Create();
 
-		virtual void WriteXFL(XFL::XFLWriter& /*writer*/) const override
+		virtual void WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& /*writer*/) const override
 		{
 		};
 

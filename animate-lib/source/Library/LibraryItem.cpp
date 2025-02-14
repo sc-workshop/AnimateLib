@@ -38,7 +38,7 @@ namespace Animate::Library
 			LibraryFolder* folder = m_document.GetController().GetFolder(m_parent_id);
 			if (folder)
 			{
-				m_item_path = folder->GetLibraryItemPath() / m_item_name;
+				m_item_path = folder->GetItemPath() / m_item_name;
 			}
 			else
 			{
@@ -51,7 +51,7 @@ namespace Animate::Library
 
 	void LibraryItem::InitializeDOMItem(DOM::DOMItem& item) const
 	{
-		item.name = XFL::XFLWriter::MakePrefferedPath(GetLibraryItemPath());
+		item.name = XFL::XFLWriter::MakePrefferedPath(GetItemPath());
 		item.itemId = m_item_id.ToString();
 	}
 
@@ -65,16 +65,16 @@ namespace Animate::Library
 		return m_item_path_dirty;
 	}
 
-	void LibraryItem::SetLibraryName(const std::u16string& name) { 
+	void LibraryItem::SetItemName(const std::u16string& name) { 
 		m_item_name = name;
 		SetItemPathDirty();
 	};
 
-	std::u16string LibraryItem::GetLibraryName() const { 
+	std::u16string LibraryItem::GetItemName() const { 
 		return m_item_name; 
 	};
 
-	std::filesystem::path LibraryItem::GetLibraryItemPath() const {
+	std::filesystem::path LibraryItem::GetItemPath() const {
 		if (IsItemPathDirty())
 		{
 			ConstructLibraryPath();

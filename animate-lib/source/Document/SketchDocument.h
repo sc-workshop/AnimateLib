@@ -22,6 +22,9 @@ namespace Animate::Document
 	using wk::Ref;
 	using wk::Unique;
 
+	/// <summary>
+	/// Document root class
+	/// </summary>
 	class SketchDocument
 	{	
 	private:
@@ -45,8 +48,9 @@ namespace Animate::Document
 	public:
 		XFL::XFLWriter CreateXFLDOMWriter() const;
 		void WriteXFL(const std::filesystem::path& path) const;
-		void WriteXFLFolders(XFL::XFLWriter& writer) const;
+		void WriteXFLFolders(XFL::XFLFile& file, XFL::XFLWriter& writer) const;
 		void WriteXFLMedia(XFL::XFLFile& file, XFL::XFLWriter& writer) const;
+		void WriteXFLSymbols(XFL::XFLFile& file, XFL::XFLWriter& writer) const;
 
 	public:
 		LibraryController& GetController() { return m_controller;  }
@@ -64,6 +68,18 @@ namespace Animate::Document
 			return mediaElements.Add<T>(std::forward<Args>(args)...);
 		}
 
+		template<typename T, typename... Args>
+		T& CreateSymbol (Args&&... args)
+		{
+			return symbols.Add<T>(std::forward<Args>(args)...);
+		}
+
+		template<typename T, typename... Args>
+		T& CreateScene(Args&&... args)
+		{
+			return scenes.Add<T>(std::forward<Args>(args)...);
+		}
+
 	private:
 		int m_frameRate = 24;
 		wk::ColorRGB m_backgroundColor = {0xFF, 0xFF, 0XFF};
@@ -73,5 +89,7 @@ namespace Animate::Document
 	private:
 		LibraryItemsVector<Library::LibraryFolder> libraryFolders;
 		LibraryItemsVector<Library::MediaElem> mediaElements;
+		LibraryItemsVector<Library::DocumentPage> symbols;
+		LibraryItemsVector<Library::DocumentPage> scenes;
 	};
 }

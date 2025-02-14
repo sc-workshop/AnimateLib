@@ -11,7 +11,7 @@ namespace Animate::Document
 
 	XFL::XFLWriter SketchDocument::CreateXFLDOMWriter() const
 	{
-		DOM::FLDocument document{};
+		DOM::FLDocument document;
 		document.xflVersion = "23.0";
 		document.creator = "Adobe Animate Lib";
 		document.platform = wk::CurrentPlatformName();
@@ -45,36 +45,49 @@ namespace Animate::Document
 		XFL::XFLFile file(path, IO::Stream::OpenType::Write);
 		auto writer = CreateXFLDOMWriter();
 
-		WriteXFLFolders(writer);
+		WriteXFLFolders(file, writer);
 		WriteXFLMedia(file, writer);
+		WriteXFLSymbols(file, writer);
 		
 		file.SaveXFL(writer);
 	}
 
-	void SketchDocument::WriteXFLFolders(XFL::XFLWriter& writer) const
+	void SketchDocument::WriteXFLFolders(XFL::XFLFile& file, XFL::XFLWriter& writer) const
 	{
-		XFL::XFLProp folders = writer.CreateProperty(DOM::PropTag::Folders);
+		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Folders);
 
 		for (size_t i = 0; libraryFolders.Length() > i; i++)
 		{
 			auto& item = libraryFolders.At(i);
-			item.WriteXFL(folders);
+			item.WriteXFL(file, items);
 		}
 	}
 	void SketchDocument::WriteXFLMedia(XFL::XFLFile& file, XFL::XFLWriter& writer) const
 	{
-		XFL::XFLProp media = writer.CreateProperty(DOM::PropTag::Media);
+		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Media);
 
 		for (size_t i = 0; mediaElements.Length() > i; i++)
 		{
 			auto& item = mediaElements.At(i);
-			item.WriteXFL(media);
+			item.WriteXFL(file, items);
 
 			XFL::XflIoFile media_file;
 			item.WriteXFLContent(media_file);
 
 			fs::path media_path = item.GetXFLMediaPath();
 			file.SaveBinary(media_path, media_file);
+		}
+	}
+
+	void SketchDocument::WriteXFLSymbols(XFL::XFLFile& file, XFL::XFLWriter& writer) const
+	{
+		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Symbols);
+
+		for (size_t i = 0; symbols.Length() > i; i++)
+		{
+			auto& item = symbols.At(i);
+			item.WriteXFL(file, items);
+			item.WriteXFLSymbol(file);
 		}
 	}
 }
