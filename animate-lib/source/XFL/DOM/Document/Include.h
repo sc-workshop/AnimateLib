@@ -67,9 +67,9 @@ namespace Animate::DOM
 				item_id
 			);
 
-			writer.WriteAttr(
+			writer.WriteAttr<uint32_t>(
 				GetAtributeName(Attributes::LastModified),
-				last_modified,
+				(uint32_t)last_modified,
 				0
 			);
 

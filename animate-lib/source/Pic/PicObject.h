@@ -6,6 +6,8 @@
 
 #include "XFL/Writer.h"
 
+#include "XFL/DOM/Math/Matrix.h"
+
 namespace Animate::Document
 {
 	class SketchDocument;
@@ -39,6 +41,11 @@ namespace Animate::Pic
 
 	public:
 		virtual void WriteXFL(XFL::XFLWriter& /*writer*/, uint32_t /*index*/) const {};
+
+	public:
+		virtual bool GetMatrix(Matrix& /*matrix*/) const { return false; }
+		virtual bool SetMatrix(const Matrix& /*matrix*/) { return false; }
+		void WriteXFLMatrix(XFL::XFLWriter& wrtier) const;
 	
 	protected:
 		template<typename T = Object, typename ... Args>

@@ -12,6 +12,7 @@ namespace Animate::Pic
 		instance.libraryItemName = XFL::XFLWriter::MakePrefferedPath(m_mediBits->GetItemPath());
 
 		XFL::XFLWriter writer(root, instance);
+		WriteXFLMatrix(writer);
 	}
 
 	Library::MediaBits& Bitmap::GetBits() const

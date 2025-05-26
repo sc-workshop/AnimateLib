@@ -50,6 +50,8 @@ namespace Animate::Library
 
 		void InitializeDOMItem(DOM::DOMBitmapItem& item) const;
 
+		const Bitmap& GetBitmap() const { return m_bitmap; }
+
 	private:
 		time_t m_last_update = 0;
 		bool m_allow_smooth = false;

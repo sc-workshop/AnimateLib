@@ -1,16 +1,32 @@
 
 #include "Document/SketchDocument.h"
+#include "Pic/PicBitmap.h"
 
 using namespace Animate;
 
-static void create_test_symbol(Library::DocumentPage& doc, Library::MediaBits& testImage)
+static void create_test_symbol(Library::DocumentPage& doc, Library::MediaBits& firstImage, Library::MediaBits& secondImage)
 {
     auto& controller = doc.GetPage();
 
-	auto& layer1 = controller.AddNewLayer("Layer 1", false, std::nullopt);
-    auto& testFrame = layer1.CreateFrame();
-    testFrame.SetDuration(10);
-	testFrame.AddBitmapChildren(testImage);
+    {
+        auto& layer = controller.AddNewLayer("First image", false, std::nullopt);
+        auto& testFrame = layer.CreateFrame();
+        testFrame.SetDuration(10);
+        auto& image = testFrame.AddBitmapChildren(firstImage);
+
+        Matrix imageMat;
+        imageMat.tx = -((float)firstImage.GetBitmap().GetWidth() / 2);
+        imageMat.ty = -((float)firstImage.GetBitmap().GetHeight() / 2);
+
+        image.SetMatrix(imageMat);
+    }
+	
+    {
+        auto& layer = controller.AddNewLayer("Second image", false, std::nullopt);
+        auto& testFrame = layer.CreateFrame();
+        testFrame.SetDuration(20);
+        testFrame.AddBitmapChildren(secondImage);
+    }
 }
 
 int main(int argc, char* argv[])
@@ -40,7 +56,7 @@ int main(int argc, char* argv[])
     funny_bitmap.FromImage("../../tool/assets/you.png");
 
     auto& symbol = controller.MakeSymbol("path/new symbol", Library::DocumentPage::SymbolType::Graphic);
-	create_test_symbol(symbol, funny_bitmap);
+	create_test_symbol(symbol, funny_bitmap, not_funy_bitmap_but_why_not);
     
     try
     {

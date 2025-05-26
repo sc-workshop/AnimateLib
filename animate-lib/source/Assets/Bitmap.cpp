@@ -36,7 +36,7 @@ namespace Animate
         }
     }
 
-    wk::Rect Bitmap::GetBounds() const
+    wk::Rect Bitmap::GetBounds() const 
     {
         wk::RawImage& image = GetImage();
 

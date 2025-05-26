@@ -41,6 +41,9 @@ namespace Animate
 
 		void CleanUpAlpha();
 
+		uint16_t GetWidth() const { return m_image ? m_image->width() : 0; }
+		uint16_t GetHeight() const { return m_image ? m_image->height() : 0; }
+
 	private:
 		static Bitmap& GetDefaultFallback();
 		wk::RawImage& GetImage() const;

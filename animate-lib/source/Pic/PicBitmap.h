@@ -24,7 +24,17 @@ namespace Animate::Pic
 		Library::MediaBits& GetBits() const;
 		void SetBits(Library::MediaBits& bits);
 
+		virtual bool GetMatrix(Matrix& matrix) const override  { 
+			matrix = m_matrix;
+			return true;
+		}
+		virtual bool SetMatrix(const Matrix& matrix) override { 
+			m_matrix = matrix; 
+			return true;
+		}
+
 	private:
 		Library::MediaBits* m_mediBits;
+		Matrix m_matrix;
 	};
 }

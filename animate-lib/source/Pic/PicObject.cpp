@@ -21,5 +21,16 @@ namespace Animate::Pic
 		assert(m_owner != nullptr);
 		return *m_owner;
 	}
+
+	void Object::WriteXFLMatrix(XFL::XFLWriter& root) const
+	{
+		Matrix matrix;
+		if (!GetMatrix(matrix)) return;
+		if (matrix == Matrix::Identity()) return;
+
+		auto writer = root.CreateProperty(DOM::PropTag::Matrix);
+		DOM::DOMMatrix domMatrix(matrix);
+		XFL::XFLWriter(writer, domMatrix);
+	}
 }
 

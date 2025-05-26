@@ -4,6 +4,9 @@
 #include <vector>
 #include <filesystem>
 
+#include "core/math/matrix2d.h"
+#include "core/math/matrix3d.h"
+
 namespace Animate
 {
 	using String = std::string;
@@ -12,4 +15,8 @@ namespace Animate
 	using Container = std::vector<T>;
 
 	using Path = std::filesystem::path;
+
+	using Matrix = wk::Matrix2D;
+	using Matrix3D = wk::Matrix3D;
+
 } 
