@@ -15,7 +15,7 @@ namespace Animate::Library
 		return m_high == other.m_high && m_low == other.m_low;
 	}
 
-	std::string LibraryItemID::ToString() const
+	String LibraryItemID::ToString() const
 	{
 		auto left = wk::StringConverter::ToHex(m_high);
 		wk::StringConverter::StripLeadingHexZeros(left);
@@ -24,7 +24,7 @@ namespace Animate::Library
 		return left + "-" + right;
 	}
 
-	void LibraryItemID::FromString(const std::string&)
+	void LibraryItemID::FromString(const String&)
 	{
 		// TODO
 	}

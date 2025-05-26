@@ -20,7 +20,6 @@ namespace Animate::Document
 		LibraryController(SketchDocument& document);
 			
 	public:
-		void ReserveFolders(size_t capacity);
 		Library::LibraryFolder& MakeFolder(const std::u16string& name, const Library::LibraryItemID& folder_id = Library::LibraryItemID::NoParent);
 		Library::LibraryFolder& MakeFolders(const std::filesystem::path& path);
 

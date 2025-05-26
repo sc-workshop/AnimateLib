@@ -1,9 +1,10 @@
 #include "DocumentPage.h"
 
+#include "assert.h"
 #include "Document/SketchDocument.h"
 #include "XFL/DOM/Document/Include.h"
 #include "XFL/DOM/Items/DOMSymbolItem.h"
-#include "XFL/DOM/Document/DOMTimeline.h"
+#include "XFL/DOM/Timeline/DOMTimeline.h"
 
 namespace Animate::Library
 {
@@ -46,17 +47,38 @@ namespace Animate::Library
 		DOM::DOMTimeline timeline;
 		timeline.name = m_item_name;
 
+		// TODO guides and other stuff
+
 		XFL::XFLWriter writer(root, timeline);
+		assert(m_page == nullptr);
+		m_page->WriteXFL(writer);
+	}
+
+	Pic::Page& DocumentPage::GetPage() const
+	{
+		assert(m_page != nullptr);
+		return *m_page;
 	}
 
 	void DocumentPage::CreateSymbol(Document::SketchDocument& root)
 	{
 		Create(root, false);
+		m_page = Pic::Page::Create(*this);
 	}
 
 	void DocumentPage::Create(Document::SketchDocument& /*root*/, bool /*is_scene*/)
 	{
 		time(&m_creation_time);
+	}
+
+	void DocumentPage::InitializeSymbol(const Library::DocumentPage::SymbolType type, const Library::LibraryItemID& parent)
+	{
+		Library::LibraryItemID symbol_id;
+		symbol_id.GenerateUniqueID();
+		SetID(symbol_id);
+		SetParentID(parent);
+		CreateSymbol(m_document);
+		m_type = type;
 	}
 }
 

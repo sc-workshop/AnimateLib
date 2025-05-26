@@ -1,24 +1,24 @@
 #pragma once
 
-#include <string>
+#include "type_traits.h"
 
 namespace Animate::Library
 {
 	class LinkageProps
 	{
 	public:
-		std::string GetIdentifier() const { return m_identifier; }
-		void SetIdentifier(const std::string& id) { m_identifier = id; }
+		String GetIdentifier() const { return m_identifier; }
+		void SetIdentifier(const String& id) { m_identifier = id; }
 
-		std::string GetClass() const { return m_class; }
-		void SetClass(const std::string& name) { m_class = name; }
+		String GetClass() const { return m_class; }
+		void SetClass(const String& name) { m_class = name; }
 
-		std::string GetBaseClass() const { return m_baseClass; }
-		void SetBaseClass(const std::string& name) { m_baseClass = name; }
+		String GetBaseClass() const { return m_baseClass; }
+		void SetBaseClass(const String& name) { m_baseClass = name; }
 
 	private:
-		std::string m_identifier;
-		std::string m_class;
-		std::string m_baseClass;
+		String m_identifier;
+		String m_class;
+		String m_baseClass;
 	};
 }

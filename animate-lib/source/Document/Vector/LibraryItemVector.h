@@ -26,6 +26,9 @@ namespace Animate::Document
 		using Pointer = T*;
 		using Value = P;
 
+		template<typename T>
+		using Container = std::vector<T>;
+
 	public:
 		LibraryItemsVector_t() = default;
 
@@ -102,8 +105,18 @@ namespace Animate::Document
 			return m_items.size();
 		}
 
+		Reference operator [](size_t index)
+		{
+			return At(index);
+		}
+
+		const Reference operator [](size_t index) const
+		{
+			return At(index);
+		}
+
 	private:
-		std::vector<Value> m_items;
+		Container<Value> m_items;
 	};
 
 	// List of items

@@ -109,6 +109,8 @@ namespace Animate::Library
 		virtual void WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& /*writer*/) const {};
 		bool SetParent(const LibraryItem& parent);
 
+		Document::SketchDocument& GetSketchDoc();
+
 	protected:
 		void SetItemPathDirty() const;
 		bool IsItemPathDirty() const;

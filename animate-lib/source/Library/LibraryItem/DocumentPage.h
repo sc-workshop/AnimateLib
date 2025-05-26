@@ -2,6 +2,8 @@
 
 #include "Library/LibraryItem.h"
 
+#include "Pic/PicPage.h"
+
 namespace Animate::Document
 {
 	class LibraryController;
@@ -10,6 +12,7 @@ namespace Animate::Document
 
 namespace Animate::Library
 {
+	// Represents a symbol or scene in a document
 	class DocumentPage : public LibraryItem
 	{
 	public:
@@ -43,13 +46,17 @@ namespace Animate::Library
 		virtual void WriteXFLSymbol(XFL::XFLFile& file) const;
 		virtual void WriteXFLTimeline(XFL::XFLWriter& writer) const;
 
+		Pic::Page& GetPage() const;
+
 	protected:
 		void CreateSymbol(Document::SketchDocument& root);
 		void Create(Document::SketchDocument& root, bool is_scene);
+		void InitializeSymbol(const Library::DocumentPage::SymbolType type, const Library::LibraryItemID& parent);
 
 	protected:
 		SymbolType m_type = SymbolType::Graphic;
 		time_t m_creation_time = 0;
 		time_t m_last_modify_time = 0;
+		wk::Ref<Pic::Page> m_page;
 	};
 }

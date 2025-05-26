@@ -7,11 +7,6 @@ namespace Animate::Document
 	{
 	}
 
-	void LibraryController::ReserveFolders(size_t capacity)
-	{
-		m_document.libraryFolders.Reserve(capacity);
-	}
-
 	Library::LibraryFolder& LibraryController::MakeFolder(const std::u16string& name, const Library::LibraryItemID& id)
 	{
 		auto folder = m_document.libraryFolders.Find(
@@ -118,13 +113,7 @@ namespace Animate::Document
 		GetItemValidNameAndParent(path.u16string(), name, parent, u"Symbol");
 
 		Library::DocumentPage& result = m_document.CreateSymbol<Library::DocumentPage>(m_document, name);
-
-		Library::LibraryItemID symbol_id;
-		symbol_id.GenerateUniqueID();
-		result.SetID(symbol_id);
-		result.SetParentID(parent);
-		result.CreateSymbol(m_document);
-		result.m_type = type;
+		result.InitializeSymbol(type, parent);
 
 		return result;
 	}

@@ -21,6 +21,11 @@ namespace Animate::Library
 		return true;
 	}
 
+	Document::SketchDocument& LibraryItem::GetSketchDoc()
+	{
+		return m_document;
+	}
+
 	void LibraryItem::OnParentChange()
 	{
 		SetItemPathDirty();

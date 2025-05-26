@@ -4,6 +4,7 @@
 #include "XFL/IoFile.h"
 
 #include <filesystem>
+#include "type_traits.h"
 
 namespace Animate::Library
 {
@@ -60,7 +61,7 @@ namespace Animate::Library
 		{
 		};
 
-		virtual std::string GetXFLMediaName() const { return m_media_filename; }
+		virtual String GetXFLMediaName() const { return m_media_filename; }
 		virtual std::filesystem::path GetXFLMediaPath() const { return GetXFLMediaName(); }
 
 	protected:
@@ -70,6 +71,6 @@ namespace Animate::Library
 	protected:
 		time_t m_last_source_update = 0;
 		std::filesystem::path m_source_path;
-		std::string m_media_filename;
+		String m_media_filename;
 	};
 }

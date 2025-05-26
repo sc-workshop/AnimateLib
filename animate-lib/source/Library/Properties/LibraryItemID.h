@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 #include <time.h>
-#include <string>
+#include "type_traits.h"
 
 namespace Animate::Library
 {
@@ -17,8 +17,8 @@ namespace Animate::Library
 
 	public:
 		void GenerateUniqueID();
-		std::string ToString() const;
-		void FromString(const std::string&);
+		String ToString() const;
+		void FromString(const String&);
 
 	public:
 		bool operator==(const LibraryItemID& other) const;

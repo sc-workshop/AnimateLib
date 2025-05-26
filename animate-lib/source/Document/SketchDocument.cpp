@@ -58,7 +58,7 @@ namespace Animate::Document
 
 		for (size_t i = 0; libraryFolders.Length() > i; i++)
 		{
-			auto& item = libraryFolders.At(i);
+			auto& item = libraryFolders[i];
 			item.WriteXFL(file, items);
 		}
 	}
@@ -68,7 +68,7 @@ namespace Animate::Document
 
 		for (size_t i = 0; mediaElements.Length() > i; i++)
 		{
-			auto& item = mediaElements.At(i);
+			auto& item = mediaElements[i];
 			item.WriteXFL(file, items);
 
 			XFL::XflIoFile media_file;
@@ -83,9 +83,10 @@ namespace Animate::Document
 	{
 		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Symbols);
 
+		// TODO: add multithreading for that loop ? or at least for symbol writing
 		for (size_t i = 0; symbols.Length() > i; i++)
 		{
-			auto& item = symbols.At(i);
+			auto& item = symbols[i];
 			item.WriteXFL(file, items);
 			item.WriteXFLSymbol(file);
 		}

@@ -3,6 +3,15 @@
 
 using namespace Animate;
 
+static void create_test_symbol(Library::DocumentPage& doc)
+{
+    auto& controller = doc.GetPage();
+
+	auto& layer1 = controller.AddNewLayer("Layer 1", false, std::nullopt);
+    auto& testFrame = layer1.CreateFrame();
+    testFrame.SetDuration(10);
+}
+
 int main(int argc, char* argv[])
 {
     if (argc == 1) return 1;
@@ -13,7 +22,6 @@ int main(int argc, char* argv[])
 
     auto& controller = document.GetController();
 
-    controller.ReserveFolders(3);
     auto& folder = controller.MakeFolder(u"Какая-то папка");
     folder.SetExpanded(true);
      
@@ -31,9 +39,17 @@ int main(int argc, char* argv[])
     bitmap_copy.FromImage("../../tool/assets/you.png");
 
     auto& symbol = controller.MakeSymbol("path/new symbol", Library::DocumentPage::SymbolType::Graphic);
+	create_test_symbol(symbol);
     
-    document.WriteXFL(argv[1]);
-
+    try
+    {
+        document.WriteXFL(argv[1]);
+    }
+    catch (const std::exception& e)
+    {
+		std::cout << "error: " << e.what() << std::endl;
+    }
+    
     std::cout << "Done";
     return 0;
 }
