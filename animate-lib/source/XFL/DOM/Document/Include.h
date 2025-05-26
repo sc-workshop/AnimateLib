@@ -69,17 +69,20 @@ namespace Animate::DOM
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::LastModified),
-				last_modified
+				last_modified,
+				0
 			);
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::IsLinked),
-				is_linked
+				is_linked,
+				false
 			);
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::IsCCLibAssetParent),
-				is_cc_lib_asset_parent
+				is_cc_lib_asset_parent,
+				false
 			);
 		}
 

@@ -39,22 +39,26 @@ namespace Animate::DOM
 		{
 			writer.WriteAttr(
 				DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::FrameBottom),
-				frame.bottom
+				frame.bottom,
+				0
 			);
 
 			writer.WriteAttr(
 				DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::FrameLeft),
-				frame.left
+				frame.left,
+				0
 			);
 
 			writer.WriteAttr(
 				DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::FrameRight),
-				frame.right
+				frame.right,
+				0
 			);
 
 			writer.WriteAttr(
 				DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::FrameTop),
-				frame.top
+				frame.top,
+				0
 			);
 		}
 	}

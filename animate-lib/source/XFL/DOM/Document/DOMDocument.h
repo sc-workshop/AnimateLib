@@ -227,6 +227,27 @@ namespace Animate::DOM
 		void SetAttributes(XFL::XFLWriter& writer)
 		{
 			writer.WriteAttr(
+				GetAtributeName(Attributes::BackgroundColor),
+				backgroundColor,
+				BackgroundColor_Default
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Width),
+				width
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Height),
+				width
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::FrameRate),
+				frameRate
+			);
+
+			writer.WriteAttr(
 				GetAtributeName(Attributes::XflVersion),
 				xflVersion
 			);
@@ -252,34 +273,13 @@ namespace Animate::DOM
 			);
 
 			writer.WriteAttr(
-				GetAtributeName(Attributes::BuildNumber),
-				buildNumber
-			);
-
-			writer.WriteAttr(
-				GetAtributeName(Attributes::BuildNumber),
+				GetAtributeName(Attributes::MinorVersion),
 				minorVersion
 			);
 
 			writer.WriteAttr(
-				GetAtributeName(Attributes::BackgroundColor),
-				backgroundColor,
-				BackgroundColor_Default
-			);
-
-			writer.WriteAttr(
-				GetAtributeName(Attributes::FrameRate),
-				frameRate
-			);
-
-			writer.WriteAttr(
-				GetAtributeName(Attributes::Width),
-				width
-			);
-
-			writer.WriteAttr(
-				GetAtributeName(Attributes::Height),
-				width
+				GetAtributeName(Attributes::BuildNumber),
+				buildNumber
 			);
 		}
 

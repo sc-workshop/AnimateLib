@@ -22,14 +22,14 @@ namespace Animate::XFL
 
 	void XFLFile::SaveXFL(XFLWriter& document)
 	{
+		fs::path proxy = m_document_path.stem();
+		const std::string proxy_content = "PROXY-CS5";
+		m_stream->Write(proxy.concat(".xfl"), proxy_content.c_str(), proxy_content.size());
+
 		if (!m_stream->Writable())
 		{
 			throw wk::Exception("Failed to save. Target project is not writable");
 		}
-
-		fs::path proxy = m_document_path.stem();
-		const std::string proxy_content = "PROXY-CS5";
-		m_stream->Write(proxy.concat(".xfl"), proxy_content.c_str(), proxy_content.size());
 
 		document.Save("DOMDocument.xml", *m_stream);
 

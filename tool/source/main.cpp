@@ -28,12 +28,12 @@ int main(int argc, char* argv[])
     auto& children_folder = controller.MakeFolder(u"Какая-то дочерняя папка");
     auto& big_path = controller.MakeFolders(u"Очень/большой/путь");
     children_folder.SetParent(folder);
-
+    
     auto& bitmap = controller.MakeBitmap("path/to/bitmap/funny bitmap");
     bitmap.FromImage("../../tool/assets/crow.png");
     bitmap.SetAllowSmooth(true);
     bitmap.SetCompression(Library::MediaBits::CompressionType::Lossless);
-
+    
     auto& bitmap_copy = controller.MakeBitmap("path/to/bitmap/funny bitmap");
     bitmap_copy.SetAllowSmooth(true);
     bitmap_copy.FromImage("../../tool/assets/you.png");
