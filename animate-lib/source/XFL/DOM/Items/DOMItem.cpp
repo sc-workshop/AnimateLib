@@ -7,11 +7,11 @@ namespace Animate::DOM
 	void DOMItem::SetAttributes(XFL::XFLWriter& writer)
 	{
 		writer.WriteAttr(
-			GetPropName(Props::Name), name, Default_Name
+			GetPropName(Props::Name), name
 		);
 
 		writer.WriteAttr(
-			GetPropName(Props::ItemID), itemId, Default_ItemID
+			GetPropName(Props::ItemID), itemId
 		);
 	}
 }

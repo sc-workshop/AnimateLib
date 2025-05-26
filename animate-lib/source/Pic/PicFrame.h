@@ -4,6 +4,16 @@
 
 #include "XFL/DOM/Timeline/DOMFrame.h"
 
+namespace Animate::Library
+{
+	class MediaBits;
+}
+
+namespace Animate::Pic
+{
+	class Bitmap;
+}
+
 namespace Animate::Pic
 {
 	class Frame : public Object
@@ -18,6 +28,9 @@ namespace Animate::Pic
 	public:
 		uint32_t GetDuration() const { return m_duration; }
 		void SetDuration(uint32_t duration) { m_duration = duration; }
+
+	public:
+		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
 
 	private:
 		uint32_t m_duration = 0;

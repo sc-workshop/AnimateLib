@@ -1,5 +1,8 @@
 #include "PicFrame.h"
 
+#include "Library/LibraryItem/Media/MediaBits.h"
+#include "Pic/PicBitmap.h"
+
 namespace Animate::Pic
 {
 	void Frame::WriteXFL(XFL::XFLWriter& root, uint32_t index) const
@@ -16,6 +19,13 @@ namespace Animate::Pic
 			auto& element = ChildAt(i);
 			element.WriteXFL(elements, i);
 		}
+	}
+
+	Bitmap& Frame::AddBitmapChildren(Library::MediaBits& bits)
+	{
+		Bitmap& bitmap = AddChild<Bitmap>();
+		bitmap.SetBits(bits);
+		return bitmap;
 	}
 
 }

@@ -59,10 +59,6 @@ namespace Animate::DOM
 			return PropNames[(uint32_t)prop];
 		}
 
-	public:
-		static const inline std::u16string Default_Name = u"";
-		static const inline std::string Default_ItemID = "";
-
 	protected:
 		DOMItem() = default;
 

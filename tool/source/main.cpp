@@ -3,13 +3,14 @@
 
 using namespace Animate;
 
-static void create_test_symbol(Library::DocumentPage& doc)
+static void create_test_symbol(Library::DocumentPage& doc, Library::MediaBits& testImage)
 {
     auto& controller = doc.GetPage();
 
 	auto& layer1 = controller.AddNewLayer("Layer 1", false, std::nullopt);
     auto& testFrame = layer1.CreateFrame();
     testFrame.SetDuration(10);
+	testFrame.AddBitmapChildren(testImage);
 }
 
 int main(int argc, char* argv[])
@@ -29,17 +30,17 @@ int main(int argc, char* argv[])
     auto& big_path = controller.MakeFolders(u"Очень/большой/путь");
     children_folder.SetParent(folder);
     
-    auto& bitmap = controller.MakeBitmap("path/to/bitmap/funny bitmap");
-    bitmap.FromImage("../../tool/assets/crow.png");
-    bitmap.SetAllowSmooth(true);
-    bitmap.SetCompression(Library::MediaBits::CompressionType::Lossless);
+    auto& not_funy_bitmap_but_why_not = controller.MakeBitmap("path/to/bitmap/funny bitmap");
+    not_funy_bitmap_but_why_not.FromImage("../../tool/assets/crow.png");
+    not_funy_bitmap_but_why_not.SetAllowSmooth(true);
+    not_funy_bitmap_but_why_not.SetCompression(Library::MediaBits::CompressionType::Lossless);
     
-    auto& bitmap_copy = controller.MakeBitmap("path/to/bitmap/funny bitmap");
-    bitmap_copy.SetAllowSmooth(true);
-    bitmap_copy.FromImage("../../tool/assets/you.png");
+    auto& funny_bitmap = controller.MakeBitmap("path/to/bitmap/funny bitmap");
+    funny_bitmap.SetAllowSmooth(true);
+    funny_bitmap.FromImage("../../tool/assets/you.png");
 
     auto& symbol = controller.MakeSymbol("path/new symbol", Library::DocumentPage::SymbolType::Graphic);
-	create_test_symbol(symbol);
+	create_test_symbol(symbol, funny_bitmap);
     
     try
     {

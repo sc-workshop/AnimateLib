@@ -22,7 +22,7 @@ namespace Animate::Pic
 		Create();
 		SetName(name);
 
-		Frame& frame = FirstFrame();
+		//Frame& frame = FirstFrame();
 		// TODO: set duration
 	}
 
@@ -45,7 +45,7 @@ namespace Animate::Pic
 	void Layer::Create()
 	{
 		m_childrens.clear();
-		CreateFrame();
+		//CreateFrame();
 	}
 }
 
