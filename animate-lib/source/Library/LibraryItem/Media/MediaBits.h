@@ -42,8 +42,8 @@ namespace Animate::Library
 		int GetQuality() const { return m_quality; }
 		void SetQuality(int status) { m_quality = status; }
 
-		void FromImage(const std::filesystem::path& path);
-		void UpdateImage(const std::filesystem::path& path);
+		void FromImage(const Path& path);
+		void UpdateImage(const Path& path);
 
 		virtual void WriteXFL(XFL::XFLFile& file, XFL::XFLWriter& writer) const override;
 		virtual void WriteXFLContent(XFL::XflIoFile& file) const;
@@ -54,7 +54,7 @@ namespace Animate::Library
 		time_t m_last_update = 0;
 		bool m_allow_smooth = false;
 		CompressionType m_compression = CompressionType::Lossless;
-		int m_quality = 0;
+		int m_quality = 50;
 
 		Bitmap m_bitmap;
 	};

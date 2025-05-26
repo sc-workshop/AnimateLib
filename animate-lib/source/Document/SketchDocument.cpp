@@ -40,7 +40,7 @@ namespace Animate::Document
 		return XFL::XFLWriter(document);
 	}
 
-	void SketchDocument::WriteXFL(const std::filesystem::path& path) const
+	void SketchDocument::WriteXFL(const Path& path) const
 	{
 		XFL::XFLFile file(path, IO::Stream::OpenType::Write);
 		auto writer = CreateXFLDOMWriter();

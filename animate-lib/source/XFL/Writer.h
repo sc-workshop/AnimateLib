@@ -39,7 +39,7 @@ namespace Animate::XFL
 		XFLWriter(DOM::Node node, DOM::PropTag prop);
 
 	public:
-		void Save(const std::filesystem::path& path, IO::Stream& stream);
+		void Save(const Path& path, IO::Stream& stream);
 
 	public:
 		template<
@@ -49,12 +49,42 @@ namespace Animate::XFL
 			std::is_arithmetic_v<T> ||
 			std::is_pointer_v<T>
 			, bool> = true>
-		void WriteAttr(const std::string& name, const T& value, const T& default_value = 0)
+		void WriteAttr(const std::string & name, const T & value, const T& default_value, const T& min, const T& max)
+		{
+			if (value == default_value) return;
+			
+			T finalValue = std::max<T>(std::min<T>(value, max), min);
+
+			m_node.append_attribute(name)
+				.set_value(finalValue);
+		}
+
+		template<
+			typename T,
+			typename std::enable_if_t<
+			std::is_enum_v<T> ||
+			std::is_arithmetic_v<T> ||
+			std::is_pointer_v<T>
+			, bool> = true>
+		void WriteAttr(const std::string& name, const T& value, const T& default_value)
 		{
 			if (value == default_value) return;
 
 			m_node.append_attribute(name)
 					.set_value(value);
+		}
+
+		template<
+			typename T,
+			typename std::enable_if_t<
+			std::is_enum_v<T> ||
+			std::is_arithmetic_v<T> ||
+			std::is_pointer_v<T>
+			, bool> = true>
+		void WriteAttr(const std::string & name, const T & value)
+		{
+			m_node.append_attribute(name)
+				.set_value(value);
 		}
 
 		void WriteAttr(const std::string& name, const wk::ColorRGB& value, const wk::ColorRGB default_value = {0xFF, 0xFF, 0xFF})
@@ -96,7 +126,7 @@ namespace Animate::XFL
 		}
 
 	public:
-		static std::u16string MakePrefferedPath(const std::filesystem::path& path, bool is_symbol = false)
+		static std::u16string MakePrefferedPath(const Path& path, bool is_symbol = false)
 		{
 			const std::u16string from = u"\\";
 			const std::u16string to = u"/";

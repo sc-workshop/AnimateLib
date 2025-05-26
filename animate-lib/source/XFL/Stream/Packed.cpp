@@ -60,7 +60,7 @@ namespace Animate::IO
 		m_file->write(buffer, length);
 	}
 
-	bool PackedStream::Exist(const std::filesystem::path& path)
+	bool PackedStream::Exist(const Path& path)
 	{
 		return std::find(m_written_files.begin(), m_written_files.end(), path) != m_written_files.end();
 	}

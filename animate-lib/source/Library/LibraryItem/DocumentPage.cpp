@@ -11,7 +11,7 @@ namespace Animate::Library
 	void DocumentPage::WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& root) const
 	{
 		DOM::Include item;
-		item.href = GetItemPath().u16string();
+		item.href = GetItemPath();
 		item.last_modified = m_last_modify_time;
 		item.item_id = m_item_id.ToString();
 
@@ -50,8 +50,10 @@ namespace Animate::Library
 		// TODO guides and other stuff
 
 		XFL::XFLWriter writer(root, timeline);
-		assert(m_page == nullptr);
-		m_page->WriteXFL(writer);
+		assert(m_page != nullptr);
+
+		auto layers = writer.CreateProperty(DOM::PropTag::Layers);
+		m_page->WriteXFL(layers, 0);
 	}
 
 	Pic::Page& DocumentPage::GetPage() const

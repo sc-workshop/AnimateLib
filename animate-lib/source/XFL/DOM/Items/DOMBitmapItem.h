@@ -68,7 +68,7 @@ namespace Animate::DOM
 		uint32_t compression = 0;
 		bool use_jpeg = false;
 		int quality = 0;
-		std::filesystem::path bitmap_href;
+		Path bitmap_href;
 		wk::Rect frame;
 	};
 }

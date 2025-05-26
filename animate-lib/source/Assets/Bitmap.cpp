@@ -54,7 +54,7 @@ namespace Animate
         return m_image->data();
     }
 
-    void Bitmap::FromImage(const std::filesystem::path& path)
+    void Bitmap::FromImage(const Path& path)
 	{
         wk::InputFileStream file(path);
 

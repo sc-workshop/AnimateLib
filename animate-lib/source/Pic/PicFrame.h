@@ -2,6 +2,8 @@
 
 #include "PicObject.h"
 
+#include "XFL/DOM/Timeline/DOMFrame.h"
+
 namespace Animate::Pic
 {
 	class Frame : public Object
@@ -11,6 +13,7 @@ namespace Animate::Pic
 
 	public:
 		virtual bool IsPicFrame() const override { return true; };
+		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t index) const override;
 
 	public:
 		uint32_t GetDuration() const { return m_duration; }

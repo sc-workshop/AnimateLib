@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
 
 namespace Animate
 {
@@ -9,4 +10,6 @@ namespace Animate
 
 	template <typename T>
 	using Container = std::vector<T>;
+
+	using Path = std::filesystem::path;
 } 

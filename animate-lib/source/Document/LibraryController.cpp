@@ -31,7 +31,7 @@ namespace Animate::Document
 		return result;
 	}
 
-	Library::LibraryFolder& LibraryController::MakeFolders(const std::filesystem::path& path)
+	Library::LibraryFolder& LibraryController::MakeFolders(const Path& path)
 	{
 		Library::LibraryFolder* current_folder = nullptr;
 		Library::LibraryItemID last_folder_id = Library::LibraryItemID::NoParent;
@@ -89,7 +89,7 @@ namespace Animate::Document
 		return result;
 	}
 
-	Library::MediaBits& LibraryController::MakeBitmap(const std::filesystem::path& path)
+	Library::MediaBits& LibraryController::MakeBitmap(const Path& path)
 	{
 		std::u16string name;
 		Library::LibraryItemID parent;
@@ -106,7 +106,7 @@ namespace Animate::Document
 		return result;
 	}
 
-	Library::DocumentPage& LibraryController::MakeSymbol(const std::filesystem::path& path, Library::DocumentPage::SymbolType type)
+	Library::DocumentPage& LibraryController::MakeSymbol(const Path& path, Library::DocumentPage::SymbolType type)
 	{
 		std::u16string name;
 		Library::LibraryItemID parent;
@@ -122,8 +122,8 @@ namespace Animate::Document
 	{
 		if (item_name.find(u"/") != std::u16string::npos)
 		{
-			fs::path path(item_name);
-			fs::path parent_path = path.parent_path();
+			Path path(item_name);
+			Path parent_path = path.parent_path();
 			parent = MakeFolders(parent_path).GetID();
 			name = path.filename().u16string();
 		}

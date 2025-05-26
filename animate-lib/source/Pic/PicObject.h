@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type_traits.h"
+#include "TypeTraits.h"
 #include "assert.h"
 #include "core/memory/ref.h"
 
@@ -38,7 +38,7 @@ namespace Animate::Pic
 		Object* Parent() { return m_parent;  };
 
 	public:
-		virtual void WriteXFL(XFL::XFLWriter& /*writer*/) const {};
+		virtual void WriteXFL(XFL::XFLWriter& /*writer*/, uint32_t /*index*/) const {};
 	
 	protected:
 		template<typename T = Object, typename ... Args>

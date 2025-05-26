@@ -101,7 +101,7 @@ namespace Animate::Library
 
 		virtual void SetItemName(const std::u16string& name);
 		virtual std::u16string GetItemName() const;
-		virtual std::filesystem::path GetItemPath() const;
+		virtual Path GetItemPath() const;
 
 		virtual time_t GetModDateForLibrary() const;
 		virtual void SetModDateForLibrary(time_t);
@@ -120,7 +120,7 @@ namespace Animate::Library
 		void InitializeDOMItem(DOM::DOMItem& item) const;
 
 	protected:
-		mutable std::filesystem::path m_item_path;
+		mutable Path m_item_path;
 		std::u16string m_item_name;
 
 		LibraryItemID m_parent_id = LibraryItemID::NoParent;

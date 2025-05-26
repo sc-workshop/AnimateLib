@@ -1,5 +1,7 @@
 #include "PicObject.h"
 
+#include "Document/SketchDocument.h"
+
 namespace Animate::Pic
 {
 	void Object::SetOwner(Document::SketchDocument& document)

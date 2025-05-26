@@ -79,7 +79,7 @@ namespace Animate::Library
 		return m_item_name; 
 	};
 
-	std::filesystem::path LibraryItem::GetItemPath() const {
+	Path LibraryItem::GetItemPath() const {
 		if (IsItemPathDirty())
 		{
 			ConstructLibraryPath();

@@ -15,14 +15,14 @@ namespace Animate::IO
 		virtual ~PackedStream();
 
 	public:
-		virtual bool Open(const std::filesystem::path& path, OpenType type);
-		virtual void Write(const std::filesystem::path& path, const void* data, size_t length);
+		virtual bool Open(const Path& path, OpenType type);
+		virtual void Write(const Path& path, const void* data, size_t length);
 		virtual void Flush();
-		virtual bool Exist(const std::filesystem::path& path);
+		virtual bool Exist(const Path& path);
 		virtual bool Writable();
 
 	private:
-		std::vector<std::filesystem::path> m_written_files;
+		std::vector<Path> m_written_files;
 		wk::Unique<wk::Stream> m_file;
 		zip_t* m_context = nullptr;
 	};

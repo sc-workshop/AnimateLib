@@ -22,7 +22,7 @@ namespace Animate::Pic
 	public:
 		virtual bool IsPicPage() const override { return true; };
 		void SetOwner(Library::DocumentPage& doc);
-		virtual void WriteXFL(XFL::XFLWriter& writer) const override;
+		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	public:
 		Layer& AddNewLayer(const String& name, bool is_folder, const std::optional<Layer>& parent = std::nullopt);
@@ -33,6 +33,6 @@ namespace Animate::Pic
 		Layer& AddFolder();
 
 	private:
-		Library::DocumentPage* m_owner;
+		Library::DocumentPage* m_ownerPage;
 	};
 }

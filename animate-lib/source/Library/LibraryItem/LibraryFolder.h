@@ -37,7 +37,7 @@ namespace Animate::Library
 		void InitializeDOMItem(DOM::DOMFolderItem& item) const;
 
 	private:
-		std::filesystem::path m_library_path;
+		Path m_library_path;
 		bool m_expanded = false;
 	};
 }

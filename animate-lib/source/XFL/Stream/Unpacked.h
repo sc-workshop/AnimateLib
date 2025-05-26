@@ -9,16 +9,16 @@ namespace Animate::IO
 	class UnpackedStream final : public Stream
 	{
 	public:
-		virtual bool Open(const std::filesystem::path& path, OpenType type);
-		virtual void Write(const std::filesystem::path& path, const void* data, size_t length);
+		virtual bool Open(const Path& path, OpenType type);
+		virtual void Write(const Path& path, const void* data, size_t length);
 		virtual void Flush() {};
-		virtual bool Exist(const std::filesystem::path& path);
+		virtual bool Exist(const Path& path);
 		virtual bool Writable();
 
 	private:
-		void CreateBaseFolder(const std::filesystem::path& path);
+		void CreateBaseFolder(const Path& path);
 
 	private:
-		std::filesystem::path m_basedir;
+		Path m_basedir;
 	};
 }

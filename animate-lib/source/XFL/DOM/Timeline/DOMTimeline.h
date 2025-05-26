@@ -52,9 +52,10 @@ namespace Animate::DOM
 				name
 			);
 
-			writer.WriteAttr(
+			writer.WriteAttr<size_t>(
 				GetAtributeName(Attributes::CurrentFrame),
-				current_frame
+				current_frame,
+				0
 			);
 		}
 

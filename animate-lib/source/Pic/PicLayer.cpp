@@ -2,9 +2,19 @@
 
 namespace Animate::Pic
 {
-	void Layer::WriteXFL(XFL::XFLWriter& writer) const
+	void Layer::WriteXFL(XFL::XFLWriter& root, uint32_t /*index*/) const
 	{
+		DOM::DOMLayer layer;
+		layer.name = m_name;
 
+		XFL::XFLWriter writer(root, layer);
+
+		auto frames = writer.CreateProperty(DOM::PropTag::Frames);
+		for (uint32_t i = 0; ChildrenCount() > i; i++)
+		{
+			auto& frame = ChildAt<Frame>(i);
+			frame.WriteXFL(frames, i);
+		}
 	}
 
 	void Layer::Initialize(const String& name, size_t duration)
@@ -21,7 +31,7 @@ namespace Animate::Pic
 		if (m_childrens.empty()) Create();
 
 		auto& firstFrame = ChildAt(0); // TODO: implement and use FindFrame
-		assert(!firstFrame.IsPicFrame());
+		assert(firstFrame.IsPicFrame());
 
 		return (Frame&)firstFrame;
 	}

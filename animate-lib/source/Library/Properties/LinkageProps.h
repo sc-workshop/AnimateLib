@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type_traits.h"
+#include "TypeTraits.h"
 
 namespace Animate::Library
 {

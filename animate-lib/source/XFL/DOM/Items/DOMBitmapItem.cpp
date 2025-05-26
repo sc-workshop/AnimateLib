@@ -24,7 +24,10 @@ namespace Animate::DOM
 
 		writer.WriteAttr(
 			DOM::DOMBitmapItem::GetPropName(DOM::DOMBitmapItem::Props::Quality),
-			quality
+			quality,
+			50,
+			0,
+			100
 		);
 
 		writer.WriteAttr(

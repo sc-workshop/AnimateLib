@@ -6,7 +6,7 @@ namespace fs = std::filesystem;
 
 namespace Animate::IO
 {
-	bool UnpackedStream::Open(const std::filesystem::path& path, Stream::OpenType type)
+	bool UnpackedStream::Open(const Path& path, Stream::OpenType type)
 	{
 		if (!fs::exists(path))
 		{
@@ -35,7 +35,7 @@ namespace Animate::IO
 		file.write(data, length);
 	}
 
-	bool UnpackedStream::Exist(const std::filesystem::path& path)
+	bool UnpackedStream::Exist(const Path& path)
 	{
 		return fs::exists(m_basedir / path);
 	}

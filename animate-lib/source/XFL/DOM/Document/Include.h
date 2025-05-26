@@ -84,10 +84,10 @@ namespace Animate::DOM
 		}
 
 	public:
-		std::u16string href;
+		Path href;
 		int item_icon = 0;
 		bool load_immediate = false;
-		std::string item_id;
+		String item_id;
 		time_t last_modified = 0;
 		bool is_linked = false;
 		bool is_cc_lib_asset_parent = false;

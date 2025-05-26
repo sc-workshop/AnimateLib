@@ -7,13 +7,13 @@
 
 namespace Animate::Library
 {
-    void MediaBits::FromImage(const std::filesystem::path& path)
+    void MediaBits::FromImage(const Path& path)
     {
         m_bitmap.FromImage(path);
         m_source_path = path;
     }
 
-    void MediaBits::UpdateImage(const std::filesystem::path& path)
+    void MediaBits::UpdateImage(const Path& path)
     {
         bool first_load = !m_bitmap.Loaded();
         FromImage(path);

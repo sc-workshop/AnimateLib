@@ -6,7 +6,7 @@
 
 #include "MediaAsset.h"
 
-#include <filesystem>
+#include "TypeTraits.h"
 
 namespace Animate
 {
@@ -35,7 +35,7 @@ namespace Animate
 		wk::Rect GetBounds() const;
 
 		uint8_t* FromData(uint16_t width, uint16_t height);
-		void FromImage(const std::filesystem::path& path);
+		void FromImage(const Path& path);
 
 		bool Loaded() const { return (bool)m_image; }
 

@@ -10,9 +10,9 @@ namespace Animate::XFL
 	struct XMLWriter : pugi::xml_writer
 	{
 		IO::Stream& stream;
-		const std::filesystem::path& path;
+		const Path& path;
 
-		XMLWriter(IO::Stream& _stream, const std::filesystem::path& _path) : stream(_stream), path(_path)
+		XMLWriter(IO::Stream& _stream, const Path& _path) : stream(_stream), path(_path)
 		{ }
 
 		virtual void write(const void* data, size_t size)
@@ -36,7 +36,8 @@ namespace Animate::XFL
 
 	XFLWriter::XFLWriter(XFLWriter& node, DOM::DOMElement& element)
 	{
-		XFLWriter(node.m_node, element);
+		m_node = node.m_node.append_child();
+		InitializeNode(element);
 	}
 
 	XFLWriter::XFLWriter(DOM::Node node, DOM::PropTag prop)
@@ -62,7 +63,7 @@ namespace Animate::XFL
 		element.SetAttributes(*this);
 	}
 
-	void XFLWriter::Save(const std::filesystem::path& path, IO::Stream& stream)
+	void XFLWriter::Save(const Path& path, IO::Stream& stream)
 	{
 		if (!m_root)
 		{

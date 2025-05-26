@@ -21,13 +21,13 @@ namespace Animate::Document
 			
 	public:
 		Library::LibraryFolder& MakeFolder(const std::u16string& name, const Library::LibraryItemID& folder_id = Library::LibraryItemID::NoParent);
-		Library::LibraryFolder& MakeFolders(const std::filesystem::path& path);
+		Library::LibraryFolder& MakeFolders(const Path& path);
 
 		Library::LibraryFolder* GetFolder(const Library::LibraryItemID& id);
 		LibraryReferenceVector GetFolderItems(const Library::LibraryItemID& folder_id);
 
-		Library::MediaBits& MakeBitmap(const std::filesystem::path& path);
-		Library::DocumentPage& MakeSymbol(const std::filesystem::path& path, Library::DocumentPage::SymbolType type);
+		Library::MediaBits& MakeBitmap(const Path& path);
+		Library::DocumentPage& MakeSymbol(const Path& path, Library::DocumentPage::SymbolType type);
 
 		void GetItemValidNameAndParent(const std::u16string& path, std::u16string& name, Library::LibraryItemID& parent, const std::u16string& basename = u"Item");
 

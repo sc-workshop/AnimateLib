@@ -47,7 +47,7 @@ namespace Animate::Document
 
 	public:
 		XFL::XFLWriter CreateXFLDOMWriter() const;
-		void WriteXFL(const std::filesystem::path& path) const;
+		void WriteXFL(const Path& path) const;
 		void WriteXFLFolders(XFL::XFLFile& file, XFL::XFLWriter& writer) const;
 		void WriteXFLMedia(XFL::XFLFile& file, XFL::XFLWriter& writer) const;
 		void WriteXFLSymbols(XFL::XFLFile& file, XFL::XFLWriter& writer) const;

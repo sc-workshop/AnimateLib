@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 #include <time.h>
-#include "type_traits.h"
+#include "TypeTraits.h"
 
 namespace Animate::Library
 {

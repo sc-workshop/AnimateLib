@@ -1,30 +1,30 @@
 #include "PicPage.h"
 
+#include "Document/SketchDocument.h"
+
 namespace Animate::Pic
 {
 	wk::Ref<Page> Page::Create(Library::DocumentPage& doc)
 	{
-		auto object = wk::Ref<Page>();
+		auto object = wk::CreateRef<Page>();
 		object->SetOwner(doc);
 		return object;
 	}
 
 	void Page::SetOwner(Library::DocumentPage& doc)
 	{
-		m_owner = &doc;
+		m_ownerPage = &doc;
+		Object::SetOwner(doc.GetSketchDoc());
 	}
 
-	void Page::WriteXFL(XFL::XFLWriter& writer) const
+	void Page::WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const
 	{
-		auto layers = writer.CreateProperty(DOM::PropTag::Layers);
-
-		for (size_t i = 0; ChildrenCount() > i; i++)
+		for (uint32_t i = 0; ChildrenCount() > i; i++)
 		{
 			const auto& layer = ChildAt<Layer>(i);
-			assert(layer.IsPicLayer() != true);
+			assert(layer.IsPicLayer());
 
-			layer.WriteXFL(layers);
-
+			layer.WriteXFL(writer, i);
 		}
 	}
 

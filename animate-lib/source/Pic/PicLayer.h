@@ -3,6 +3,8 @@
 #include "PicObject.h"
 #include "PicFrame.h"
 
+#include "XFL/DOM/Timeline/DOMLayer.h"
+
 namespace Animate::Pic
 {
 	class Layer : public Object
@@ -26,7 +28,7 @@ namespace Animate::Pic
 
 	public:
 		virtual bool IsPicLayer() const override { return true; };
-		virtual void WriteXFL(XFL::XFLWriter& writer) const override;
+		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	public:
 		void SetName(const String& name) { m_name = name; }
