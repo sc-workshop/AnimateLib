@@ -1,6 +1,6 @@
 
-#include "Document/SketchDocument.h"
-#include "Pic/PicBitmap.h"
+#include "Animate/Document/SketchDocument.h"
+#include "Animate/Pic/PicBitmap.h"
 
 using namespace Animate;
 
