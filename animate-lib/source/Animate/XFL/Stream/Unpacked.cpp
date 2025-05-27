@@ -1,6 +1,5 @@
 #include "Unpacked.h"
-
-#include "core/io/file_stream.h"
+#include "assert.h"
 
 namespace fs = std::filesystem;
 
@@ -25,16 +24,6 @@ namespace Animate::IO
 		return true;
 	}
 
-	void UnpackedStream::Write(const fs::path& path, const void* data, size_t length)
-	{
-		fs::path destination = m_basedir;
-		destination /= path;
-		CreateBaseFolder(destination);
-
-		wk::OutputFileStream file(destination);
-		file.write(data, length);
-	}
-
 	bool UnpackedStream::Exist(const Path& path)
 	{
 		return fs::exists(m_basedir / path);
@@ -51,6 +40,30 @@ namespace Animate::IO
 
 		std::ofstream file(proxy, std::ios_base::app);
 		return file.good();
+	}
+
+	bool UnpackedStream::OpenFile(const Path& path)
+	{
+		assert(m_active_file == nullptr);
+
+		fs::path destination = m_basedir;
+		destination /= path;
+		CreateBaseFolder(destination);
+
+		m_active_file = wk::CreateRef<wk::OutputFileStream>(destination);
+		return true;
+	}
+
+	size_t UnpackedStream::WriteFile(const void* data, size_t length)
+	{
+		if (!m_active_file) return 0;
+
+		return m_active_file->write(data, length);
+	}
+
+	void UnpackedStream::CloseFile()
+	{
+		m_active_file.reset();
 	}
 
 	void UnpackedStream::CreateBaseFolder(const fs::path& path)

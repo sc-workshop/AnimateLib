@@ -42,13 +42,6 @@ namespace Animate::IO
 		return true;
 	}
 
-	void PackedStream::Write(const Path& path, const void* data, size_t length)
-	{
-		zip_entry_open(m_context, path.string().c_str());
-		zip_entry_write(m_context, data, length);
-		zip_entry_close(m_context);
-	}
-
 	void PackedStream::Flush()
 	{
 		if (!m_file->is_writable() || !m_context) return;
@@ -68,5 +61,22 @@ namespace Animate::IO
 	bool PackedStream::Writable()
 	{
 		return m_file->is_open();
+	}
+
+	bool PackedStream::OpenFile(const Path& path)
+	{
+		return zip_entry_open(m_context, path.string().c_str()) == 0;
+	}
+
+	size_t PackedStream::WriteFile(const void* data, size_t length)
+	{
+		if(zip_entry_write(m_context, data, length) == 0) return length;
+
+		return 0;
+	}
+
+	void PackedStream::CloseFile()
+	{
+		zip_entry_close(m_context);
 	}
 }

@@ -10,14 +10,26 @@ namespace Animate::XFL
 	struct XMLWriter : pugi::xml_writer
 	{
 		IO::Stream& stream;
-		const Path& path;
 
-		XMLWriter(IO::Stream& _stream, const Path& _path) : stream(_stream), path(_path)
-		{ }
+		XMLWriter(IO::Stream& _stream, const Path& path) : stream(_stream)
+		{ 
+			if (!stream.OpenFile(path))
+			{
+				throw wk::Exception("Failed to open file for writing: " + path.string());
+			}
+		}
+
+		virtual ~XMLWriter()
+		{
+			stream.CloseFile();
+		}
 
 		virtual void write(const void* data, size_t size)
 		{
-			stream.Write(path, data, size);
+			if (stream.WriteFile(data, size) != size)
+			{
+				throw wk::Exception("Failed to write data to file");
+			}
 		}
 	};
 

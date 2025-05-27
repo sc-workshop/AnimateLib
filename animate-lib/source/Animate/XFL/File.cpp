@@ -10,7 +10,8 @@ namespace Animate::XFL
 
 		if (m_filetype == XFLType::Unpacked)
 		{
-			m_document_path = path.parent_path();
+			m_document_path = path;
+			m_document_path.replace_extension("");
 		}
 		else
 		{

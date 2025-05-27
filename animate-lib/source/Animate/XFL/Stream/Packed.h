@@ -16,10 +16,13 @@ namespace Animate::IO
 
 	public:
 		virtual bool Open(const Path& path, OpenType type);
-		virtual void Write(const Path& path, const void* data, size_t length);
 		virtual void Flush();
 		virtual bool Exist(const Path& path);
 		virtual bool Writable();
+
+		virtual bool OpenFile(const Path& path);
+		virtual size_t WriteFile(const void* data, size_t length);
+		virtual void CloseFile();
 
 	private:
 		std::vector<Path> m_written_files;
