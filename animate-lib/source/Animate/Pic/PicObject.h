@@ -3,6 +3,8 @@
 #include "assert.h"
 #include "core/memory/ref.h"
 
+#include "PicIterator.h"
+
 #include "Animate/XFL/Writer.h"
 #include "Animate/XFL/DOM/Math/Matrix.h"
 #include "Animate/TypeTraits.h"
@@ -20,6 +22,11 @@ namespace Animate::Pic
 	/// </summary>
 	class Object
 	{
+
+	public:
+		template <typename T>
+		friend class PicIterator;
+
 	public:
 		void SetOwner(Object& parent);
 		void SetOwner(Document::SketchDocument& document);

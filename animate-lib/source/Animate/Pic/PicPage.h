@@ -27,6 +27,11 @@ namespace Animate::Pic
 	public:
 		Layer& AddNewLayer(const String& name, bool is_folder, const std::optional<Layer>& parent = std::nullopt);
 		void SetLayerWithNamingRules(Layer& layer, const String& name);
+
+	public:
+		size_t LayersCount() const { return ChildrenCount(); }
+		PicIterator<Layer> begin() { return PicIterator<Layer>::CreateBegin(*this); }
+		PicIterator<Layer> end() { return PicIterator<Layer>::CreateEnd(*this); }
 	
 	protected:
 		Layer& AddLayer(bool a1, bool makeActive);

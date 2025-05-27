@@ -30,6 +30,10 @@ namespace Animate::Pic
 		void SetDuration(uint32_t duration) { m_duration = duration; }
 
 	public:
+		PicIterator<Object> begin() { return PicIterator<Object>::CreateBegin(*this); }
+		PicIterator<Object> end() { return PicIterator<Object>::CreateEnd(*this); }
+
+	public:
 		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
 
 	private:

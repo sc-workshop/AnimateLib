@@ -47,6 +47,10 @@ namespace Animate::Pic
 		void SetOpenFolder(bool is_open) { m_is_open_folder = is_open; }
 		bool IsOpenFolder() const { return m_is_open_folder; }
 
+	public:
+		PicIterator<Frame> begin() { return PicIterator<Frame>::CreateBegin(*this); }
+		PicIterator<Frame> end() { return PicIterator<Frame>::CreateEnd(*this); }
+
 	protected:
 		void Create();
 
