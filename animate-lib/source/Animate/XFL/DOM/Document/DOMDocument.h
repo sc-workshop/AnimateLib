@@ -232,14 +232,16 @@ namespace Animate::DOM
 				BackgroundColor_Default
 			);
 
-			writer.WriteAttr(
+			writer.WriteAttr<uint32_t>(
 				GetAtributeName(Attributes::Width),
-				width
+				width,
+				550
 			);
 
-			writer.WriteAttr(
+			writer.WriteAttr<uint32_t>(
 				GetAtributeName(Attributes::Height),
-				width
+				width,
+				450
 			);
 
 			writer.WriteAttr(

@@ -83,7 +83,7 @@ namespace Animate::Document
 	private:
 		int m_frameRate = 24;
 		wk::ColorRGB m_backgroundColor = {0xFF, 0xFF, 0XFF};
-		wk::Rect m_bounds{0, 0, 1024, 1024};
+		wk::Rect m_bounds{0, 0, 550, 450};
 		LibraryController m_controller;
 
 	private:
