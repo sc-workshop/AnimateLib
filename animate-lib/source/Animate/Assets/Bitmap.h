@@ -36,6 +36,7 @@ namespace Animate
 
 		uint8_t* FromData(uint16_t width, uint16_t height);
 		void FromImage(const Path& path);
+		void FromImage(const wk::RawImage& image);
 
 		bool Loaded() const { return (bool)m_image; }
 

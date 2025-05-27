@@ -96,7 +96,6 @@ namespace Animate::Document
 		GetItemValidNameAndParent(path.u16string(), name, parent, u"Bitmap");
 
 		Library::MediaBits& result = m_document.CreateMedia<Library::MediaBits>(m_document, name);
-		result.Create();
 
 		Library::LibraryItemID folder_id;
 		folder_id.GenerateUniqueID();

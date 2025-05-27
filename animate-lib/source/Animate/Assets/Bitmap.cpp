@@ -66,6 +66,13 @@ namespace Animate
         CleanUpAlpha();
 	}
 
+    void Bitmap::FromImage(const wk::RawImage& image)
+    {
+		FromData(image.width(), image.height());
+        image.copy(*m_image);
+        CleanUpAlpha();
+    }
+
     void Bitmap::CleanUpAlpha()
     {
         if (m_depth != Depth::RGBA) return;

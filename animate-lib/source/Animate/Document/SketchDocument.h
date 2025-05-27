@@ -15,6 +15,7 @@
 #include "Animate/Library/LibraryItem/LibraryFolder.h"
 #include "Animate/Library/LibraryItem/MediaElem.h"
 #include "Animate/Library/LibraryItem/Media/MediaBits.h"
+#include "Animate/Library/LibraryItem/DocumentPage.h"
 #include "Vector/LibraryItemVector.h"
 
 namespace Animate::Document

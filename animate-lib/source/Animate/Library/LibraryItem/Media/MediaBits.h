@@ -43,8 +43,10 @@ namespace Animate::Library
 		int GetQuality() const { return m_quality; }
 		void SetQuality(int status) { m_quality = status; }
 
-		void FromImage(const Path& path);
+		
 		void UpdateImage(const Path& path);
+		void CreateBits(const Path& path);
+		void CreateBits(const wk::RawImage& image);
 
 		virtual void WriteXFL(XFL::XFLFile& file, XFL::XFLWriter& writer) const override;
 		virtual void WriteXFLContent(XFL::XflIoFile& file) const;

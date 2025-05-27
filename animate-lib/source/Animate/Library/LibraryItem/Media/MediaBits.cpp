@@ -7,21 +7,33 @@
 
 namespace Animate::Library
 {
-    void MediaBits::FromImage(const Path& path)
+    void MediaBits::CreateBits(const Path& path)
     {
-        m_bitmap.FromImage(path);
+        if (!m_bitmap.Loaded()) Create();
+
+        wk::InputFileStream file(path);
+
+        wk::RawImageRef image;
+        wk::stb::load_image(file, image);
+        m_bitmap.FromImage(*image);
         m_source_path = path;
     }
 
     void MediaBits::UpdateImage(const Path& path)
     {
         bool first_load = !m_bitmap.Loaded();
-        FromImage(path);
+        CreateBits(path);
 
         if (!first_load)
         {
             UpdateFromSource();
         }
+    }
+
+    void MediaBits::CreateBits(const wk::RawImage& image)
+    {
+        Create();
+        m_bitmap.FromImage(image);
     }
 
     void MediaBits::WriteXFL(XFL::XFLFile& /*file*/, XFL::XFLWriter& root) const

@@ -45,7 +45,7 @@ namespace Animate::Pic
 	void Layer::Create()
 	{
 		m_childrens.clear();
-		//CreateFrame();
+		CreateFrame();
 	}
 }
 
