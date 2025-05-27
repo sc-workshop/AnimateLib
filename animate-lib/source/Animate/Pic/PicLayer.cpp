@@ -26,16 +26,6 @@ namespace Animate::Pic
 		// TODO: set duration
 	}
 
-	Frame& Layer::FirstFrame()
-	{
-		if (m_childrens.empty()) Create();
-
-		auto& firstFrame = ChildAt(0); // TODO: implement and use FindFrame
-		assert(firstFrame.IsPicFrame());
-
-		return (Frame&)firstFrame;
-	}
-
 	Frame& Layer::CreateFrame()
 	{
 		Frame& frame = AddChild<Frame>();
@@ -44,8 +34,8 @@ namespace Animate::Pic
 
 	void Layer::Create()
 	{
-		m_childrens.clear();
-		CreateFrame();
+		//m_childrens.clear();
+		//CreateFrame();
 	}
 }
 

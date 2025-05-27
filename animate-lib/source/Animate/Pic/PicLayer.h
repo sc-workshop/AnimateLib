@@ -35,7 +35,6 @@ namespace Animate::Pic
 		void Initialize(const String& name, size_t duration = 1);
 
 	public:
-		Frame& FirstFrame();
 		Frame& CreateFrame();
 
 	public:
