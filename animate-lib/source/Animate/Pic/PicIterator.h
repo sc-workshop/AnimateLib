@@ -16,7 +16,8 @@ namespace Animate::Pic
 
         static PicIterator<T> CreateEnd(Object& parent)
         {
-            return PicIterator(parent, parent.ChildrenCount() - 1);
+            size_t children_count = parent.ChildrenCount();
+            return PicIterator(parent, children_count);
         }
 
     public:
