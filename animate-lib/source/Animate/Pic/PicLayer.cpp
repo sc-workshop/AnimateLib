@@ -10,6 +10,7 @@ namespace Animate::Pic
 		XFL::XFLWriter writer(root, layer);
 
 		auto frames = writer.CreateProperty(DOM::PropTag::Frames);
+
 		for (uint32_t i = 0; ChildrenCount() > i; i++)
 		{
 			auto& frame = ChildAt<Frame>(i);

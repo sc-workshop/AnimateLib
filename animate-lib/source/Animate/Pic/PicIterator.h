@@ -32,7 +32,7 @@ namespace Animate::Pic
         }
 
         reference operator*() const { return parent.ChildAt<T>(position); }
-        pointer operator->() const { return &parent.ChildAt<T>(position); }
+        pointer operator->() const { return &this->operator*(); }
 
         PicIterator& operator++() { ++position; return *this; }
         PicIterator operator++(int) { auto tmp = *this; ++(*this); return tmp; }

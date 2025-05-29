@@ -53,6 +53,11 @@ namespace Animate::Pic
 	protected:
 		void Create();
 
+		virtual Object* CloneObject()
+		{
+			return new Layer(*this);
+		}
+
 	private:
 		String m_name;
 		Type m_type = Type::Normal;

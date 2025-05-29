@@ -33,6 +33,12 @@ namespace Animate::Pic
 			return true;
 		}
 
+	protected:
+		virtual Object* CloneObject()
+		{
+			return new Bitmap(*this);
+		}
+
 	private:
 		Library::MediaBits* m_mediBits;
 		Matrix m_matrix;

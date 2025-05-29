@@ -22,12 +22,15 @@ namespace Animate::Pic
 	/// </summary>
 	class Object
 	{
+	public:
+		using Childrens = Container<wk::Ref<Object>>;
 
 	public:
 		template <typename T>
 		friend class PicIterator;
 
 	public:
+		virtual ~Object() = default;
 		void SetOwner(Object& parent);
 		void SetOwner(Document::SketchDocument& document);
 
@@ -44,6 +47,13 @@ namespace Animate::Pic
 
 		Document::SketchDocument& OwnerDoc() const;
 		Object* Parent() { return m_parent;  };
+
+		Object* Clone()
+		{
+			Object* result = CloneObject();
+			result->CloneChildrens();
+			return result;
+		}
 
 	public:
 		virtual void WriteXFL(XFL::XFLWriter& /*writer*/, uint32_t /*index*/) const {};
@@ -63,6 +73,24 @@ namespace Animate::Pic
 			return *object;
 		}
 
+		template<typename T = Object, typename ... Args>
+		T& AddChildAt(size_t index, Args&&... args)
+		{
+			auto object = wk::CreateRef<T>(std::forward<Args>(args)...);
+			object->SetOwner(*this);
+			m_childrens.insert(m_childrens.begin() + index, object);
+			return *object;
+		}
+
+		template<typename T = Object>
+		T& AddChildAt(size_t index, T* ptr)
+		{
+			auto object = wk::Ref<T>(ptr);
+			object->SetOwner(*this);
+			m_childrens.insert(m_childrens.begin() + index, object);
+			return *object;
+		}
+
 		template<typename T = Object>
 		T& ChildAt(size_t index)
 		{
@@ -79,8 +107,18 @@ namespace Animate::Pic
 
 		size_t ChildrenCount() const { return m_childrens.size(); }
 
+		virtual Object* CloneObject() = 0;
+
+		void CloneChildrens()
+		{
+			for (size_t i = 0; ChildrenCount() > i; i++)
+			{
+				m_childrens[i] = wk::Ref<Object>(m_childrens[i]->Clone());
+			}
+		}
+
 	protected:
-		Container<wk::Ref<Object>> m_childrens;
+		Childrens m_childrens;
 
 	private:
 		Document::SketchDocument* m_owner;

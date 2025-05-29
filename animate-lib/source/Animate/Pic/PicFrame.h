@@ -36,6 +36,12 @@ namespace Animate::Pic
 	public:
 		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
 
+	protected:
+		virtual Object* CloneObject()
+		{
+			return new Frame(*this);
+		}
+
 	private:
 		uint32_t m_duration = 0;
 	};

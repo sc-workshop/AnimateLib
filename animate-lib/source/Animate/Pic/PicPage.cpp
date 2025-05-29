@@ -21,10 +21,12 @@ namespace Animate::Pic
 	{
 		for (uint32_t i = 0; ChildrenCount() > i; i++)
 		{
-			const auto& layer = ChildAt<Layer>(i);
+			// Write layers in inverse order 
+			size_t index = ChildrenCount() - 1 - i;
+			const auto& layer = ChildAt<Layer>(index);
 			assert(layer.IsPicLayer());
 
-			layer.WriteXFL(writer, i);
+			layer.WriteXFL(writer, (uint32_t)index);
 		}
 	}
 
@@ -44,6 +46,37 @@ namespace Animate::Pic
 	{
 		layer.SetName(name);
 		// TODO: lookup tables, rule applying, etc
+	}
+
+	void Page::CopyLayers(size_t begin_index, size_t count)
+	{
+		if (begin_index >= ChildrenCount()) return;
+		if (begin_index + count > ChildrenCount())
+		{
+			count = ChildrenCount() - begin_index;
+		}
+
+		for (size_t i = begin_index; begin_index + count > i; i++)
+		{
+			sCopyPasteLayerData.targets.push_back(m_childrens[i]);
+		}
+	}
+
+	size_t Page::PasteLayers(size_t begin_index)
+	{
+		if (begin_index == -1)
+		{
+			begin_index = 0;
+		}
+
+		size_t result = begin_index;
+		for (auto& layer : sCopyPasteLayerData.targets)
+		{
+			AddChildAt(begin_index++, layer->Clone());
+		}
+		sCopyPasteLayerData.targets.clear();
+
+		return result;
 	}
 
 	Layer& Page::AddLayer(bool /*a1*/, bool /*makeActive*/)
