@@ -7,11 +7,13 @@
 namespace Animate::Library
 {
 	class MediaBits;
+	class DocumentPage;
 }
 
 namespace Animate::Pic
 {
 	class Bitmap;
+	class Symbol;
 }
 
 namespace Animate::Pic
@@ -35,6 +37,7 @@ namespace Animate::Pic
 
 	public:
 		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
+		Symbol& AddSymbolChildren(Library::DocumentPage& page);
 
 	protected:
 		virtual Object* CloneObject()
@@ -43,6 +46,6 @@ namespace Animate::Pic
 		}
 
 	private:
-		uint32_t m_duration = 0;
+		uint32_t m_duration = 1;
 	};
 }

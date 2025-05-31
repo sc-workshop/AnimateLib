@@ -15,7 +15,7 @@ namespace Animate::Pic
 			Normal,
 			Guide = 2,
 			Folder,
-			Clipper,
+			Clipper, // Also knows as Mask layer
 			Camera 
 		};
 
@@ -35,6 +35,7 @@ namespace Animate::Pic
 		void Initialize(const String& name, size_t duration = 1);
 
 	public:
+		size_t GetNumFrames();
 		Frame& CreateFrame();
 
 	public:
@@ -45,6 +46,7 @@ namespace Animate::Pic
 		void SetFolder() { m_type = Type::Folder; }
 		void SetOpenFolder(bool is_open) { m_is_open_folder = is_open; }
 		bool IsOpenFolder() const { return m_is_open_folder; }
+		bool IsCameraLayer() const { return m_type == Type::Camera;  }
 
 	public:
 		PicIterator<Frame> begin() { return PicIterator<Frame>::CreateBegin(*this); }

@@ -27,6 +27,16 @@ namespace Animate::Pic
 		// TODO: set duration
 	}
 
+	size_t Layer::GetNumFrames()
+	{
+		size_t result = 0;
+		for (auto& layer : *this)
+		{
+			result += layer.GetDuration();
+		}
+		return result;
+	}
+
 	Frame& Layer::CreateFrame()
 	{
 		Frame& frame = AddChild<Frame>();
