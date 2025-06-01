@@ -49,8 +49,9 @@ namespace Animate
 		static Bitmap& GetDefaultFallback();
 		wk::RawImage& GetImage() const;
 
-		void GuessAlpha(int& alpha_type, wk::ColorRGBA& unk_factor) const;
-		void AdjustAlpha(int alpha_type, wk::ColorRGBA unk_factor);
+		void GuessAlpha(int& alpha_type, wk::ColorRGBA& color_factor, bool strict_alpha = false) const;
+		void AdjustAlpha(int alpha_type, wk::ColorRGBA color_factor, int32_t a4 = 0);
+		void FixPixelOrder();
 
 	private:
 		wk::RawImageRef m_image;

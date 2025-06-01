@@ -1,5 +1,7 @@
 #include "Bitmap.h"
 
+#include <algorithm>
+
 namespace Animate
 {
     Bitmap Bitmap::m_sDefaultFallback = Bitmap();
@@ -60,10 +62,7 @@ namespace Animate
 
         wk::RawImageRef image;
         wk::stb::load_image(file, image);
-        FromData(image->width(), image->height());
-        image->copy(*m_image);
-
-        CleanUpAlpha();
+		FromImage(*image);
 	}
 
     void Bitmap::FromImage(const wk::RawImage& image)
@@ -71,6 +70,7 @@ namespace Animate
 		FromData(image.width(), image.height());
         image.copy(*m_image);
         CleanUpAlpha();
+        FixPixelOrder();
     }
 
     void Bitmap::CleanUpAlpha()
@@ -103,169 +103,159 @@ namespace Animate
         return *m_image;
     }
 
-    void Bitmap::GuessAlpha(int& alpha_type, wk::ColorRGBA& unk_factor) const
+    void Bitmap::GuessAlpha(int& alpha_type, wk::ColorRGBA& color_factor, bool strict_alpha) const
     {
         alpha_type = 0;
 
-        bool has_alpha = true;
-        bool is_empty_image = true;
-        bool is_premultiplied = true;
+        if ((uint32_t)m_depth >= 3)
+        {
+            bool hasAlpha = false;
+            bool isOpaque = true;
+            bool is_colorfill = true;
 
-        if (0 >= m_image->width() || 0 >= m_image->height())
-        {
-            has_alpha = false;
-            is_empty_image = true;
-        }
-        else
-        {
-            for (uint16_t h = 0; m_image->height() > h; h++)
+            if (m_depth == Depth::RGBA)
             {
-                for (uint16_t w = 0; m_image->width() > w; w++)
+				uint16_t width = m_image->width();
+				uint16_t height = m_image->height();
+
+                for (uint16_t h = 0; h < height; ++h)
                 {
-                    const wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
+                    for (uint16_t w = 0; w < width; ++w)
+                    {
+                        const wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
 
-                    if (pixel.a)
-                    {
-                        if (pixel.a != 0xFF) has_alpha = true;
-                        is_empty_image = false;
-                    }
-                    else
-                    {
-                        unk_factor = pixel;
-                        unk_factor.a = 0xFF;
-                        has_alpha = true;
-                    }
+                        if (pixel.a != 0xFF)
+                        {
+                            hasAlpha = true;
+                            if (pixel.a == 0)
+                            {
+                                color_factor = pixel;
+                                is_colorfill = false;
+                            }
 
-                    if (pixel.r > pixel.a || pixel.g > pixel.a || pixel.b > pixel.a)
-                    {
-                        is_premultiplied = false;
+                            if (color_factor.r > color_factor.a || color_factor.g > color_factor.a || color_factor.b > color_factor.a)
+                                isOpaque = false;
+                        }
                     }
                 }
             }
-        }
-
-        if (has_alpha && !is_empty_image)
-        {
-            if (unk_factor.r && unk_factor.g && unk_factor.b && is_premultiplied)
-            {
-                alpha_type = 2;
-            }
             else
             {
-                alpha_type = 1;
+
+            }
+
+
+            if (hasAlpha)
+            {
+				bool validColorFactor = color_factor.r | color_factor.g | color_factor.b;
+
+                if (!is_colorfill && !strict_alpha)
+                {
+                    if (validColorFactor || !isOpaque)
+                        alpha_type = 1;
+                    else
+                        alpha_type = 2;
+                }
             }
         }
     }
 
-    // thats a fucking magic
-    // its looks ugly but it just works
-    void Bitmap::AdjustAlpha(int alpha_type, wk::ColorRGBA unk_factor)
+    void Bitmap::AdjustAlpha(int alpha_type, wk::ColorRGBA color_factor, int32_t a4)
     {
-        if (alpha_type == 0 || alpha_type == 2) return;
+        if (!alpha_type)
+            return;
 
-        for (uint16_t h = 0; m_image->height() > h; h++)
+        if (alpha_type == 2) {
+            if (m_depth == Depth::RGBA) {
+                if (a4 <= 0) {
+                    for (uint16_t h = 0; h < m_image->height(); ++h)
+                    {
+                        for (uint16_t w = 0; w < m_image->width(); ++w)
+                        {
+                            wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
+                            if (pixel.a == 255) continue;
+
+                            if (pixel.a) {
+                                uint8_t invAlpha = 255 - pixel.a;
+
+                                uint8_t r = pixel.r - (invAlpha * color_factor.r);
+                                uint8_t g = pixel.g - (invAlpha * color_factor.g);
+                                uint8_t b = pixel.b - (invAlpha * color_factor.b);
+
+                                pixel.r = std::clamp<uint8_t>(r, 0, pixel.a);
+                                pixel.g = std::clamp<uint8_t>(g, 0, pixel.a);
+                                pixel.b = std::clamp<uint8_t>(b, 0, pixel.a);
+                            }
+                            else
+                            {
+                                pixel.r = 0;
+                                pixel.g = 0;
+                                pixel.b = 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // TODO: depth 5?
+        }
+		else if (alpha_type == 1)
         {
-            for (uint16_t w = 0; m_image->width() > w; w++)
-            {
-                wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
+            if ((color_factor.r | color_factor.g | color_factor.b) == 0)
+                return;
 
-                if (pixel.a != 0xFF && pixel.a)
-                {
-                    uint8_t alpha_inv = pixel.a ^ 0xFF;
-                    uint8_t r = pixel.r - ((unk_factor.r * (alpha_inv) >> 8));
-                    uint8_t g = pixel.g - ((unk_factor.g * (alpha_inv) >> 8));
-                    uint8_t b = pixel.b - ((unk_factor.b * (alpha_inv) >> 8));
-
-                    if (r < 0) r = 0;
-                    if (r > pixel.a)
+            if (m_depth == Depth::RGBA) {
+                if (a4 <= 0) {
+                    for (uint16_t h = 0; h < m_image->height(); ++h)
                     {
-                        r = pixel.a;
-                    }
+                        for (uint16_t w = 0; w < m_image->width(); ++w)
+                        {
+                            wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
+                            if (pixel.a == 255) continue;
 
-                    if (g < 0) g = 0;
-                    if (g > pixel.a)
-                    {
-                        g = pixel.a;
-                    }
+                            if (pixel.a) {
+                                int r = pixel.a * pixel.r;
+                                int g = pixel.a * pixel.g;
+                                int b = pixel.a * pixel.g;
 
-                    if (b < 0) b = 0;
-                    if (b > pixel.a)
-                    {
-                        b = pixel.a;
+                                pixel.r = std::min(r, pixel.a + 1);
+                                pixel.g = std::min(g, pixel.a + 1);
+                                pixel.b = std::min(b, pixel.a + 1);
+                            }
+                            else {
+                                pixel.r = 0;
+                                pixel.g = 0;
+                                pixel.b = 0;
+                            }
+                        }
                     }
-
-                    pixel.r = r;
-                    pixel.g = g;
-                    pixel.b = b;
                 }
             }
         }
 
-        if ((uint8_t)m_depth > 3)
+        // TODO: alpha type 1
+    }
+
+    void Bitmap::FixPixelOrder()
+    {
+        if (m_depth == Depth::RGBA)
         {
+            wk::ColorRGBA buffer;
             for (uint16_t h = 0; m_image->height() > h; h++)
             {
                 for (uint16_t w = 0; m_image->width() > w; w++)
                 {
                     wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
 
-                    if (pixel.a != 0xFF && pixel.a)
+                    if (pixel.a)
                     {
-                        uint8_t r = pixel.r;
-                        uint8_t g = pixel.g;
-                        uint8_t b = pixel.b;
-                        uint8_t a = pixel.a + 1;
+                        buffer = pixel;
 
-                        b = (a * b) >> 8;
-                        g = (a * g) >> 8;
-                        r = (a * r) >> 8;
-
-                        if (r < 0) r = 0;
-                        if (r > a)
-                        {
-                            r = a;
-                        }
-
-                        if (g < 0) g = 0;
-                        if (g > a)
-                        {
-                            g = a;
-                        }
-
-                        if (b < 0) b = 0;
-                        if (b > a)
-                        {
-                            b = a;
-                        }
-
-                        pixel.r = r;
-                        pixel.g = g;
-                        pixel.b = b;
+                        pixel.r = buffer.a;
+                        pixel.g = buffer.r;
+                        pixel.b = buffer.g;
+                        pixel.a = buffer.b;
                     }
-                }
-            }
-        }
-
-        for (uint16_t h = 0; m_image->height() > h; h++)
-        {
-            for (uint16_t w = 0; m_image->width() > w; w++)
-            {
-                wk::ColorRGBA& pixel = m_image->at<wk::ColorRGBA>(w, h);
-
-                if (pixel.a)
-                {
-                    wk::ColorRGBA buffer = pixel;
-
-                    pixel.r = buffer.a;
-                    pixel.g = buffer.r;
-                    pixel.b = buffer.g;
-                    pixel.a = buffer.b;
-                }
-                else
-                {
-                    pixel.r = 0;
-                    pixel.g = 0;
-                    pixel.b = 0;
                 }
             }
         }
