@@ -2,6 +2,8 @@
 
 #include "core/platform/platform_info.h"
 
+#include "core/parallel/enumerate.h"
+
 namespace Animate::Document
 {
 	SketchDocument::SketchDocument() : m_controller(*this)
@@ -70,10 +72,10 @@ namespace Animate::Document
 		{
 			auto& item = mediaElements[i];
 			item.WriteXFL(file, items);
-
+		
 			XFL::XflIoFile media_file;
 			item.WriteXFLContent(media_file);
-
+		
 			fs::path media_path = item.GetXFLMediaPath();
 			file.SaveBinary(media_path, media_file);
 		}
@@ -83,12 +85,15 @@ namespace Animate::Document
 	{
 		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Symbols);
 
-		// TODO: add multithreading for that loop ? or at least for symbol writing
 		for (size_t i = 0; symbols.Length() > i; i++)
 		{
 			auto& item = symbols[i];
 			item.WriteXFL(file, items);
-			item.WriteXFLSymbol(file);
 		}
+
+		wk::parallel::enumerate(symbols.begin(), symbols.end(), [&](auto item, size_t) {
+			item->WriteXFLSymbol(file);
+		});
+
 	}
 }

@@ -65,6 +65,7 @@ namespace Animate::IO
 
 	bool PackedStream::OpenFile(const Path& path)
 	{
+		m_mutex.lock();
 		return zip_entry_open(m_context, path.string().c_str()) == 0;
 	}
 
@@ -78,5 +79,6 @@ namespace Animate::IO
 	void PackedStream::CloseFile()
 	{
 		zip_entry_close(m_context);
+		m_mutex.unlock();
 	}
 }

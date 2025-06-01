@@ -50,6 +50,7 @@ namespace Animate::IO
 		destination /= path;
 		CreateBaseFolder(destination);
 
+		m_mutex.lock();
 		m_active_file = wk::CreateRef<wk::OutputFileStream>(destination);
 		return true;
 	}
@@ -64,6 +65,7 @@ namespace Animate::IO
 	void UnpackedStream::CloseFile()
 	{
 		m_active_file.reset();
+		m_mutex.unlock();
 	}
 
 	void UnpackedStream::CreateBaseFolder(const fs::path& path)

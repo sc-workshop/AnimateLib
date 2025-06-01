@@ -12,6 +12,7 @@
 #include <optional>
 #include <string>
 #include <time.h>
+#include <mutex>
 
 namespace Animate::Document
 {
@@ -120,6 +121,7 @@ namespace Animate::Library
 		void InitializeDOMItem(DOM::DOMItem& item) const;
 
 	protected:
+		mutable std::mutex m_mutex;
 		mutable Path m_item_path;
 		std::u16string m_item_name;
 

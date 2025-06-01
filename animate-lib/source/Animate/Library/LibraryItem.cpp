@@ -80,6 +80,7 @@ namespace Animate::Library
 	};
 
 	Path LibraryItem::GetItemPath() const {
+		std::lock_guard guard(m_mutex);
 		if (IsItemPathDirty())
 		{
 			ConstructLibraryPath();

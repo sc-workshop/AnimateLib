@@ -115,13 +115,19 @@ namespace Animate::Document
 			return At(index);
 		}
 
+		typename Container<Value>::iterator begin() { return m_items.begin(); }
+		typename Container<Value>::iterator end() { return m_items.end(); }
+
+		typename Container<Value>::const_iterator begin() const { return m_items.cbegin(); }
+		typename Container<Value>::const_iterator end() const { return m_items.cend(); }
+
 	private:
 		Container<Value> m_items;
 	};
 
 	// List of items
 	template<typename T>
-	using LibraryItemsVector = LibraryItemsVector_t<T, wk::Unique<T>>;
+	using LibraryItemsVector = LibraryItemsVector_t<T, wk::Ref<T>>;
 
 	// List of references to items
 	using LibraryReferenceVector = LibraryItemsVector_t<Library::LibraryItem, Library::LibraryItem*>;

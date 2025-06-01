@@ -6,6 +6,8 @@
 #include "core/memory/ref.h"
 #include "core/io/file_stream.h"
 
+#include <mutex>
+
 namespace Animate::IO
 {
 	class UnpackedStream final : public Stream
@@ -24,6 +26,7 @@ namespace Animate::IO
 		void CreateBaseFolder(const Path& path);
 
 	private:
+		std::mutex m_mutex;
 		Path m_basedir;
 		wk::Ref<wk::OutputFileStream> m_active_file;
 	};
