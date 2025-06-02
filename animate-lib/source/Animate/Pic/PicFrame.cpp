@@ -17,10 +17,11 @@ namespace Animate::Pic
 		XFL::XFLWriter writer(root, frame);
 
 		auto elements = writer.CreateProperty(DOM::PropTag::Elements);
-		for (uint32_t i = 0; ChildrenCount() > i; i++)
+		
+		size_t element_index = 0;
+		for (const Object& element : *this)
 		{
-			auto& element = ChildAt(i);
-			element.WriteXFL(elements, i);
+			element.WriteXFL(elements, element_index++);
 		}
 	}
 

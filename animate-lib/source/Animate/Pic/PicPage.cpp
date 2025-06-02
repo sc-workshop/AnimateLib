@@ -19,20 +19,28 @@ namespace Animate::Pic
 
 	void Page::WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const
 	{
-		for (uint32_t i = 0; ChildrenCount() > i; i++)
+		uint32_t index = 0;
+		for (const auto& layer : *this)
 		{
-			// Write layers in inverse order 
-			size_t index = ChildrenCount() - 1 - i;
-			const auto& layer = ChildAt<Layer>(index);
-			assert(layer.IsPicLayer());
-
-			layer.WriteXFL(writer, (uint32_t)index);
+			layer.WriteXFL(writer, index++);
 		}
 	}
 
-	Layer& Page::AddNewLayer(const String& name, bool is_folder, const std::optional<Layer>& parent)
+	Layer& Page::AddNewLayer(const String& name, bool is_folder, bool add_above, std::optional<std::reference_wrapper<Layer>> parent)
 	{
 		Layer& layer = is_folder ? AddFolder() : AddLayer(false, false);
+
+		if (parent)
+		{
+			if (layer.IsCameraLayer())
+			{
+
+			}
+			else
+			{
+				MoveLayer(layer, parent.value(), add_above);
+			}
+		}
 
 		if (!name.empty())
 		{
@@ -77,6 +85,17 @@ namespace Animate::Pic
 		sCopyPasteLayerData.targets.clear();
 
 		return result;
+	}
+
+	void Page::MoveLayer(Layer& source, Layer& destination, bool add_above)
+	{
+		size_t destination_index = 0;
+		assert(GetChildrenIndex(destination, destination_index));
+
+		size_t source_index = 0;
+		assert(GetChildrenIndex(source, source_index));
+		
+		MoveChildrens(source_index, add_above ? destination_index : ++destination_index);
 	}
 
 	Layer& Page::AddLayer(bool /*a1*/, bool /*makeActive*/)

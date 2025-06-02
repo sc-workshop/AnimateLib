@@ -11,10 +11,10 @@ namespace Animate::Pic
 
 		auto frames = writer.CreateProperty(DOM::PropTag::Frames);
 
-		for (uint32_t i = 0; ChildrenCount() > i; i++)
+		size_t index = 0;
+		for (const Frame& frame : *this)
 		{
-			auto& frame = ChildAt<Frame>(i);
-			frame.WriteXFL(frames, i);
+			frame.WriteXFL(frames, index++);
 		}
 	}
 

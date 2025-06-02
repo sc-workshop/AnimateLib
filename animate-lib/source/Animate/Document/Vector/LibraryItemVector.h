@@ -27,7 +27,7 @@ namespace Animate::Document
 		using Value = P;
 
 		template<typename T>
-		using Container = std::vector<T>;
+		using Container = std::vector<T>; // TODO: replace for std::list ?
 
 	public:
 		LibraryItemsVector_t() = default;
@@ -90,6 +90,30 @@ namespace Animate::Document
 			return nullptr;
 		}
 
+		size_t Length() const
+		{
+			return m_items.size();
+		}
+
+		void Move(size_t from, size_t to)
+		{
+			if (from >= m_items.size() || to >= m_items.size())
+			{
+				return; // Out of bounds
+			}
+			if (from == to)
+			{
+				return; // No need to move
+			}
+
+			auto item = std::move(m_items[from]);
+			m_items.erase(m_items.begin() + from);
+			m_items.insert(m_items.begin() + to, std::move(item));
+		}
+
+	public:
+		// Access operators
+
 		const Reference At(size_t index) const
 		{
 			return *m_items.at(index);
@@ -98,11 +122,6 @@ namespace Animate::Document
 		Reference At(size_t index)
 		{
 			return *m_items.at(index);
-		}
-
-		size_t Length() const
-		{
-			return m_items.size();
 		}
 
 		Reference operator [](size_t index)

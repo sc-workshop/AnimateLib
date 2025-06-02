@@ -34,15 +34,20 @@ namespace Animate::Pic
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	public:
-		Layer& AddNewLayer(const String& name, bool is_folder, const std::optional<Layer>& parent = std::nullopt);
+		Layer& AddNewLayer(const String& name, bool is_folder = false, bool add_above = false, std::optional<std::reference_wrapper<Layer>> parent = std::nullopt);
 		void SetLayerWithNamingRules(Layer& layer, const String& name);
 		void CopyLayers(size_t begin_index, size_t count = 1);
 		size_t PasteLayers(size_t begin_index = -1);
+		void MoveLayer(Layer& layer, Layer& target, bool add_above);
 
 	public:
+		// Access operators
+
 		size_t LayersCount() const { return ChildrenCount(); }
-		PicIterator<Layer> begin() { return PicIterator<Layer>::CreateBegin(*this); }
-		PicIterator<Layer> end() { return PicIterator<Layer>::CreateEnd(*this); }
+		Iterator<Layer> begin() { return Iterator<Layer>::CreateBegin(*this); }
+		Iterator<Layer> end() { return Iterator<Layer>::CreateEnd(*this); }
+		ConstIterator<Layer> begin() const { return ConstIterator<Layer>::CreateBegin(*this); }
+		ConstIterator<Layer> end() const { return ConstIterator<Layer>::CreateEnd(*this); }
 		Layer& operator [](size_t index) { return ChildAt<Layer>(index); }
 	
 	protected:

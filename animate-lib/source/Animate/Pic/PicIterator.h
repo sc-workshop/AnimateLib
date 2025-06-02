@@ -6,18 +6,18 @@ namespace Animate::Pic
 {
     class Object;
 
-    template<typename T>
+    template<typename T, typename PT>
     class PicIterator {
     public:
-        static PicIterator<T> CreateBegin(Object& parent)
+        static PicIterator<T, PT> CreateBegin(PT& parent)
         {
-            return PicIterator<T>(parent, 0);
+            return PicIterator<T, PT>(parent, 0);
         }
 
-        static PicIterator<T> CreateEnd(Object& parent)
+        static PicIterator<T, PT> CreateEnd(PT& parent)
         {
             size_t children_count = parent.ChildrenCount();
-            return PicIterator(parent, children_count);
+            return PicIterator<T, PT>(parent, children_count);
         }
 
     public:
@@ -27,7 +27,7 @@ namespace Animate::Pic
         using pointer = T*;
         using reference = T&;
 
-        PicIterator(Object& parent, size_t index)
+        PicIterator(PT& parent, size_t index)
             : parent(parent), position(index) {
         }
 
@@ -60,7 +60,13 @@ namespace Animate::Pic
         reference operator[](difference_type n) const { return parent.ChildAt(position + n); }
 
     private:
-        Object& parent;
+        PT& parent;
         size_t position;
     };
+
+    template<typename T>
+	using Iterator = PicIterator<T, Object>;
+
+    template<typename T>
+    using ConstIterator = PicIterator<const T, const Object>;
 }

@@ -26,7 +26,7 @@ namespace Animate::Pic
 		using Childrens = Container<wk::Ref<Object>>;
 
 	public:
-		template <typename T>
+		template <typename T, typename TP>
 		friend class PicIterator;
 
 	public:
@@ -103,6 +103,31 @@ namespace Animate::Pic
 		{
 			const auto& object = m_childrens[index];
 			return (const T&)*object;
+		}
+
+		void MoveChildrens(size_t from, size_t to)
+		{
+			if (from == to || from >= m_childrens.size() || to >= m_childrens.size())
+				return;
+			auto object = m_childrens[from];
+			m_childrens.erase(m_childrens.begin() + from);
+			m_childrens.insert(m_childrens.begin() + to, object);
+		}
+
+		bool GetChildrenIndex(const Object& obj, size_t& index)
+		{
+			auto it = std::find_if(m_childrens.begin(), m_childrens.end(), [&obj](const wk::Ref<Object>& other) {
+				if (other.get() == &obj)
+				{
+					return true;
+				}
+				return false;
+			});
+			
+			if (it == m_childrens.end()) return false;
+			
+			index = std::distance(m_childrens.begin(), it);
+			return true;
 		}
 
 		size_t ChildrenCount() const { return m_childrens.size(); }

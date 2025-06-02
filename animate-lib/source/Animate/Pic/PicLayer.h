@@ -49,8 +49,10 @@ namespace Animate::Pic
 		bool IsCameraLayer() const { return m_type == Type::Camera;  }
 
 	public:
-		PicIterator<Frame> begin() { return PicIterator<Frame>::CreateBegin(*this); }
-		PicIterator<Frame> end() { return PicIterator<Frame>::CreateEnd(*this); }
+		Iterator<Frame> begin() { return Iterator<Frame>::CreateBegin(*this); }
+		Iterator<Frame> end() { return Iterator<Frame>::CreateEnd(*this); }
+		ConstIterator<Frame> begin() const { return ConstIterator<Frame>::CreateBegin(*this); }
+		ConstIterator<Frame> end() const { return ConstIterator<Frame>::CreateEnd(*this); }
 
 	protected:
 		void Create();

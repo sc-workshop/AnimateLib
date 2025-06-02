@@ -32,12 +32,17 @@ namespace Animate::Pic
 		void SetDuration(uint32_t duration) { m_duration = duration; }
 
 	public:
-		PicIterator<Object> begin() { return PicIterator<Object>::CreateBegin(*this); }
-		PicIterator<Object> end() { return PicIterator<Object>::CreateEnd(*this); }
-
-	public:
 		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
 		Symbol& AddSymbolChildren(Library::DocumentPage& page);
+
+	public:
+		// Access operators
+		size_t FramesCount() const { return ChildrenCount(); }
+		Iterator<Object> begin() { return Iterator<Object>::CreateBegin(*this); }
+		Iterator<Object> end() { return Iterator<Object>::CreateEnd(*this); }
+		ConstIterator<Object> begin() const { return ConstIterator<Object>::CreateBegin(*this); }
+		ConstIterator<Object> end() const { return ConstIterator<Object>::CreateEnd(*this); }
+		Object& operator [](size_t index) { return ChildAt<Object>(index); }
 
 	protected:
 		virtual Object* CloneObject()
