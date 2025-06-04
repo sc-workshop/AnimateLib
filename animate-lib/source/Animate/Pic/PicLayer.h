@@ -31,6 +31,7 @@ namespace Animate::Pic
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	public:
+		const String& GetName() { return m_name; }
 		void SetName(const String& name) { m_name = name; }
 		void Initialize(const String& name, size_t duration = 1);
 

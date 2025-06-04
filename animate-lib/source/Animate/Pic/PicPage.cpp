@@ -89,11 +89,14 @@ namespace Animate::Pic
 
 	void Page::MoveLayer(Layer& source, Layer& destination, bool add_above)
 	{
+		bool has_children;
 		size_t destination_index = 0;
-		assert(GetChildrenIndex(destination, destination_index));
+		has_children = GetChildrenIndex(destination, destination_index);
+		assert(has_children);
 
 		size_t source_index = 0;
-		assert(GetChildrenIndex(source, source_index));
+		has_children = GetChildrenIndex(source, source_index);
+		assert(has_children);
 		
 		MoveChildrens(source_index, add_above ? destination_index : ++destination_index);
 	}
