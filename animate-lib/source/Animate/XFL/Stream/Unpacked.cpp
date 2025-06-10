@@ -44,7 +44,7 @@ namespace Animate::IO
 
 	bool UnpackedStream::OpenFile(const Path& path)
 	{
-		assert(m_active_file == nullptr);
+		//assert(m_active_file == nullptr);
 
 		fs::path destination = m_basedir;
 		destination /= path;

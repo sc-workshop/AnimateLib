@@ -15,7 +15,7 @@ namespace Animate::Pic
 	class Symbol : public Object
 	{
 	public:
-		using Object::Object;
+		Symbol();
 
 	public:
 		virtual bool IsPicSymbol() const override { return true; };
@@ -47,5 +47,6 @@ namespace Animate::Pic
 	private:
 		Library::DocumentPage* m_page = nullptr;
 		Matrix m_matrix;
+		Library::GraphicEffectInstance m_graphic_effect;
 	};
 }

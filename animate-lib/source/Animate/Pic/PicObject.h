@@ -7,6 +7,7 @@
 
 #include "Animate/XFL/Writer.h"
 #include "Animate/XFL/DOM/Math/Matrix.h"
+#include "Animate/Library/Properties/GraphicEffectInstance.h"
 #include "Animate/TypeTraits.h"
 
 namespace Animate::Document
@@ -29,12 +30,12 @@ namespace Animate::Pic
 		template <typename T, typename TP>
 		friend class PicIterator;
 
-	public:
+	public: // Constructor
 		virtual ~Object() = default;
 		void SetOwner(Object& parent);
 		void SetOwner(Document::SketchDocument& document);
 
-	public:
+	public: // Object types
 		virtual bool IsPicPage() const { return false; };
 		virtual bool IsPicShape() const { return false; };
 		virtual bool IsPicFrame() const { return false; };
@@ -55,10 +56,11 @@ namespace Animate::Pic
 			return result;
 		}
 
-	public:
+	public: // XFL IO
 		virtual void WriteXFL(XFL::XFLWriter& /*writer*/, uint32_t /*index*/) const {};
 
-	public:
+	public: // Transforms
+		virtual Library::GraphicEffectInstance* GetGraphicEffectInstance() { return m_effect_instance; }
 		virtual bool GetMatrix(Matrix& /*matrix*/) const { return false; }
 		virtual bool SetMatrix(const Matrix& /*matrix*/) { return false; }
 		void WriteXFLMatrix(XFL::XFLWriter& wrtier) const;
@@ -144,6 +146,7 @@ namespace Animate::Pic
 
 	protected:
 		Childrens m_childrens;
+		Library::GraphicEffectInstance* m_effect_instance = nullptr;
 
 	private:
 		Document::SketchDocument* m_owner;

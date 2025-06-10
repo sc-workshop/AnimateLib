@@ -6,6 +6,11 @@
 
 namespace Animate::Pic
 {
+	Symbol::Symbol() : m_graphic_effect(*this)
+	{
+		m_effect_instance = &m_graphic_effect;
+	}
+
 	void Symbol::WriteXFL(XFL::XFLWriter& root, uint32_t) const
 	{
 		if (!m_page) return;
@@ -15,6 +20,7 @@ namespace Animate::Pic
 
 		XFL::XFLWriter writer(root, instance);
 		WriteXFLMatrix(writer);
+		m_graphic_effect.WriteXFL(writer);
 	}
 }
 
