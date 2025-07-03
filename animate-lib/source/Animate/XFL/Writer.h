@@ -161,6 +161,10 @@ namespace Animate::XFL
 			{
 				result = wk::StringConverter::ToHex(value.r, value.g, value.b);
 			}
+
+			std::transform(result.begin(), result.end(), result.begin(),
+				[](uint8_t c) { return (uint8_t)std::toupper(c); });
+
 			
 			attr.set_value(std::string("#") + result);
 		}

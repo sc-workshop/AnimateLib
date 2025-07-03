@@ -5,6 +5,7 @@
 
 #include "Animate/Pic/PicBitmap.h"
 #include "Animate/Pic/PicSymbol.h"
+#include "Animate/Pic/PicShape.h"
 
 namespace Animate::Pic
 {
@@ -18,7 +19,7 @@ namespace Animate::Pic
 
 		auto elements = writer.CreateProperty(DOM::PropTag::Elements);
 		
-		size_t element_index = 0;
+		uint32_t element_index = 0;
 		for (const Object& element : *this)
 		{
 			element.WriteXFL(elements, element_index++);
@@ -38,6 +39,13 @@ namespace Animate::Pic
 		Bitmap& bitmap = AddChild<Bitmap>();
 		bitmap.SetBits(bits);
 		return bitmap;
+	}
+
+	Shape& Frame::AddShapeChildren()
+	{
+		Shape& shape = AddChild<Shape>();
+
+		return shape;
 	}
 
 }

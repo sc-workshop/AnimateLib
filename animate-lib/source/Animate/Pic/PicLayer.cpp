@@ -11,7 +11,7 @@ namespace Animate::Pic
 
 		auto frames = writer.CreateProperty(DOM::PropTag::Frames);
 
-		size_t index = 0;
+		uint32_t index = 0;
 		for (const Frame& frame : *this)
 		{
 			frame.WriteXFL(frames, index++);

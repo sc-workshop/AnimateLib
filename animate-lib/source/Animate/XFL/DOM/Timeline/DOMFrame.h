@@ -129,7 +129,7 @@ namespace Animate::DOM
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::Duration),
-				duration
+				duration, 1u
 			);
 
 			writer.WriteAttr(

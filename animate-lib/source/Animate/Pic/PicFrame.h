@@ -14,6 +14,7 @@ namespace Animate::Pic
 {
 	class Bitmap;
 	class Symbol;
+	class Shape;
 }
 
 namespace Animate::Pic
@@ -34,6 +35,7 @@ namespace Animate::Pic
 	public:
 		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
 		Symbol& AddSymbolChildren(Library::DocumentPage& page);
+		Shape& AddShapeChildren();
 
 	public:
 		// Access operators
