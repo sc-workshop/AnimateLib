@@ -64,6 +64,9 @@ namespace Animate::Pic
 		virtual bool GetMatrix(Matrix& /*matrix*/) const { return false; }
 		virtual bool SetMatrix(const Matrix& /*matrix*/) { return false; }
 		void WriteXFLMatrix(XFL::XFLWriter& wrtier) const;
+
+		virtual void SetWidth(float) {};
+		virtual void SetHeight(float) {};
 	
 	protected:
 		template<typename T = Object, typename ... Args>

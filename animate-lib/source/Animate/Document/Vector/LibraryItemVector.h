@@ -35,7 +35,7 @@ namespace Animate::Document
 	public:
 		void Reserve(size_t capacity)
 		{
-			m_items.reserve(capacity);
+			m_symbols.reserve(capacity);
 		}
 
 		bool Contains(const std::u16string& name)
@@ -67,7 +67,7 @@ namespace Animate::Document
 		Cls& Add(Args&&... args)
 		{
 			Cls* result = new Cls(args...);
-			m_items.emplace_back(result);
+			m_symbols.emplace_back(result);
 
 			return *result;
 		}
@@ -75,14 +75,14 @@ namespace Animate::Document
 		template<typename ... Args>
 		Value& AddInplace(Args&&... args)
 		{
-			return m_items.emplace_back(std::forward<Args>(args)...);
+			return m_symbols.emplace_back(std::forward<Args>(args)...);
 		}
 
 		Pointer Find(std::function<bool(Value&)> cond)
 		{
-			auto it = std::find_if(std::execution::par_unseq, m_items.begin(), m_items.end(), cond);
+			auto it = std::find_if(std::execution::par_unseq, m_symbols.begin(), m_symbols.end(), cond);
 
-			if (it != m_items.end())
+			if (it != m_symbols.end())
 			{
 				return &(**it);
 			}
@@ -92,12 +92,12 @@ namespace Animate::Document
 
 		size_t Length() const
 		{
-			return m_items.size();
+			return m_symbols.size();
 		}
 
 		void Move(size_t from, size_t to)
 		{
-			if (from >= m_items.size() || to >= m_items.size())
+			if (from >= m_symbols.size() || to >= m_symbols.size())
 			{
 				return; // Out of bounds
 			}
@@ -106,9 +106,9 @@ namespace Animate::Document
 				return; // No need to move
 			}
 
-			auto item = std::move(m_items[from]);
-			m_items.erase(m_items.begin() + from);
-			m_items.insert(m_items.begin() + to, std::move(item));
+			auto item = std::move(m_symbols[from]);
+			m_symbols.erase(m_symbols.begin() + from);
+			m_symbols.insert(m_symbols.begin() + to, std::move(item));
 		}
 
 	public:
@@ -116,12 +116,12 @@ namespace Animate::Document
 
 		const Reference At(size_t index) const
 		{
-			return *m_items.at(index);
+			return *m_symbols.at(index);
 		}
 
 		Reference At(size_t index)
 		{
-			return *m_items.at(index);
+			return *m_symbols.at(index);
 		}
 
 		Reference operator [](size_t index)
@@ -134,14 +134,14 @@ namespace Animate::Document
 			return At(index);
 		}
 
-		typename Container<Value>::iterator begin() { return m_items.begin(); }
-		typename Container<Value>::iterator end() { return m_items.end(); }
+		typename Container<Value>::iterator begin() { return m_symbols.begin(); }
+		typename Container<Value>::iterator end() { return m_symbols.end(); }
 
-		typename Container<Value>::const_iterator begin() const { return m_items.cbegin(); }
-		typename Container<Value>::const_iterator end() const { return m_items.cend(); }
+		typename Container<Value>::const_iterator begin() const { return m_symbols.cbegin(); }
+		typename Container<Value>::const_iterator end() const { return m_symbols.cend(); }
 
 	private:
-		Container<Value> m_items;
+		Container<Value> m_symbols;
 	};
 
 	// List of items

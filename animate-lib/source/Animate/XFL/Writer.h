@@ -119,6 +119,16 @@ namespace Animate::XFL
 				.set_value(pugi::as_utf8((const wchar_t*)value.data()));
 		}
 
+		void SetValue(const std::string& str)
+		{
+			m_node.set_value(str);
+		}
+
+		void SetValue(const std::u16string& str)
+		{
+			m_node.set_value(pugi::as_utf8((const wchar_t*)str.data()));
+		}
+
 	public:
 		XFLProp CreateProperty(DOM::PropTag prop)
 		{

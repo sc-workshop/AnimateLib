@@ -10,7 +10,7 @@ namespace Animate::Pic
 	void Shape::CreateEdge(const FillStyle& style, const std::string& edge)
 	{
 		auto style_it = m_fill_styles.emplace(style);
-		size_t style_index = std::distance(m_fill_styles.begin(), style_it.first) + 1;
+		uint32_t style_index = (uint32_t)std::distance(m_fill_styles.begin(), style_it.first) + 1;
 
 		m_edges.push_back({ style_index, edge });
 	}

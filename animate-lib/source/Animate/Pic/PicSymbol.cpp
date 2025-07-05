@@ -6,7 +6,7 @@
 
 namespace Animate::Pic
 {
-	Symbol::Symbol() : m_graphic_effect(*this)
+	Symbol::Symbol()
 	{
 		m_effect_instance = &m_graphic_effect;
 	}

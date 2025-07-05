@@ -40,12 +40,4 @@ namespace Animate::Pic
 		bitmap.SetBits(bits);
 		return bitmap;
 	}
-
-	Shape& Frame::AddShapeChildren()
-	{
-		Shape& shape = AddChild<Shape>();
-
-		return shape;
-	}
-
 }

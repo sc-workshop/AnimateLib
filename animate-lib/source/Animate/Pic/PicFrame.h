@@ -33,9 +33,14 @@ namespace Animate::Pic
 		void SetDuration(uint32_t duration) { m_duration = duration; }
 
 	public:
+		template<typename T = Object, typename ... Args>
+		T& AddFrameElement(Args&&... args)
+		{
+			return AddChild<T>(std::forward<Args>(args)...);
+		}
+
 		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
 		Symbol& AddSymbolChildren(Library::DocumentPage& page);
-		Shape& AddShapeChildren();
 
 	public:
 		// Access operators

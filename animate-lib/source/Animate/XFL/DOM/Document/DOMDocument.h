@@ -289,7 +289,7 @@ namespace Animate::DOM
 		const char* xflVersion = "";
 		const char* creator = "";
 		const char* platform = "";
-		std::string versionInfo;
+		String versionInfo;
 		int majorVersion = 0;
 		int minorVersion = 0;
 		int buildNumber = 0;

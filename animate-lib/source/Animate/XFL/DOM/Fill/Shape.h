@@ -48,9 +48,6 @@ namespace Animate::DOM
 			return ElementTag::DOMShape;
 		}
 
-		void SetAttributes(XFL::XFLWriter& writer)
-		{
-			
-		}
+		void SetAttributes(XFL::XFLWriter&) {}
 	};
 }

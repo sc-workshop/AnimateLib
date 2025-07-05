@@ -16,15 +16,9 @@ namespace Animate::Library
 	class GraphicEffectInstance
 	{
 	public:
-		
-
-	public:
 		static void SetColorMatrixForAlpha(ColorTransform& matrix, int16_t alpha);
 		static void SetColorMatrixForBrightness(ColorTransform& matrix, int16_t brightness);
 		static void SetColorMatrixForTint(ColorTransform& matrix, Color tint, int16_t multiplier);
-
-	public:
-		GraphicEffectInstance(Pic::Object& parent) ;
 
 	public:
 		ColorTransform GetColorTransform() const { return m_matrix; };
@@ -41,7 +35,5 @@ namespace Animate::Library
 
 	private:
 		ColorTransform m_matrix;
-
-		Pic::Object& m_parent;
 	};
 }

@@ -71,10 +71,6 @@ namespace Animate::Library
 		}
 	}
 
-	GraphicEffectInstance::GraphicEffectInstance(Pic::Object& parent) : m_parent(parent)
-	{
-	}
-
 	void GraphicEffectInstance::SetColorTransforEffectAlpha(int16_t alpha)
 	{
 		if (m_matrix.offset_alpha == alpha) return;
@@ -114,6 +110,8 @@ namespace Animate::Library
 
 		XFL::XFLProp prop = root.CreateProperty(DOM::PropTag::Color);
 		DOM::Color color;
+
+		// TODO: handle other transform types
 		switch (m_matrix.transform_type)
 		{
 		case ColorTransform::Type::Alpha:

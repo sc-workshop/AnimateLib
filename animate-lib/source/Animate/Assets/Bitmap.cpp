@@ -218,9 +218,9 @@ namespace Animate
                                 int g = pixel.a * pixel.g;
                                 int b = pixel.a * pixel.g;
 
-                                pixel.r = std::min(r, pixel.a + 1);
-                                pixel.g = std::min(g, pixel.a + 1);
-                                pixel.b = std::min(b, pixel.a + 1);
+                                pixel.r = (uint8_t)std::min(r, pixel.a + 1);
+                                pixel.g = (uint8_t)std::min(g, pixel.a + 1);
+                                pixel.b = (uint8_t)std::min(b, pixel.a + 1);
                             }
                             else {
                                 pixel.r = 0;
