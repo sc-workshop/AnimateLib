@@ -38,7 +38,7 @@ namespace Animate::DOM
 		{
 			writer.WriteAttr(
 				GetAtributeName(Attributes::Color),
-				color, false
+				color, false, {0, 0, 0, 0}
 			);
 
 			writer.WriteAttr(
