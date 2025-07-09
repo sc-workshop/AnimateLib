@@ -31,27 +31,32 @@ namespace Animate::Pic
 		uint32_t style_index = 1;
 		for (auto& style : m_fill_styles)
 		{
-			DOM::FillStyle fill_style;
-			fill_style.index = style_index;
-
-			XFL::XFLWriter fill_root(fills, fill_style);
-			std::visit([&fill_root](const auto& fill_style) {
-				using T = std::decay_t<decltype(fill_style)>;
-
-				if constexpr (std::is_same_v<T, Fill::SolidFillStyle>)
-				{
-					DOM::SolidColor style;
-					style.color = fill_style.fill_color;
-
-					XFL::XFLWriter style_writer(fill_root, style);
-				}
-				else if constexpr (std::is_same_v<T, Fill::BitmapFillStyle>)
-				{
-					// TODO: implement
-				}
-			}, style);
+			WriteXFLStyle(writer, style, style_index);
 			style_index++;
 		}
+	}
+
+	void Shape::WriteXFLStyle(XFL::XFLWriter& writer, const FillStyle& style, uint32_t index) const
+	{
+		DOM::FillStyle fill_style;
+		fill_style.index = index;
+
+		XFL::XFLWriter root(writer, fill_style);
+		std::visit([&root](const auto& fill_style) {
+			using T = std::decay_t<decltype(fill_style)>;
+
+			if constexpr (std::is_same_v<T, Fill::SolidFillStyle>)
+			{
+				DOM::SolidColor style;
+				style.color = fill_style.fill_color;
+
+				XFL::XFLWriter style_writer(root, style);
+			}
+			else if constexpr (std::is_same_v<T, Fill::BitmapFillStyle>)
+			{
+				// TODO: implement
+			}
+			}, style);
 	}
 
 	void Shape::WriteXFLEdges(XFL::XFLWriter & writer) const

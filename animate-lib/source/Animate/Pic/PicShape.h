@@ -20,8 +20,9 @@ namespace Animate::Pic
 
 	public:
 		void CreateEdge(const FillStyle& style, const std::string& edge);
-		virtual void WriteXFL(XFL::XFLWriter& /*writer*/, uint32_t /*index*/) const;
+		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const;
 		void WriteXFLStyles(XFL::XFLWriter& writer) const;
+		void WriteXFLStyle(XFL::XFLWriter& writer, const FillStyle& style, uint32_t index = 0) const;
 		void WriteXFLEdges(XFL::XFLWriter& writer) const;
 
 	protected:
