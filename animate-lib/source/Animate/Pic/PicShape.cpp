@@ -7,12 +7,15 @@
 
 namespace Animate::Pic
 {
-	void Shape::CreateEdge(const FillStyle& style, const std::string& edge)
+	void Shape::CreateEdge(const FillStyle& style, const std::string& contour, bool is_hole)
 	{
 		auto style_it = m_fill_styles.emplace(style);
 		uint32_t style_index = (uint32_t)std::distance(m_fill_styles.begin(), style_it.first) + 1;
 
-		m_edges.push_back({ style_index, edge });
+		auto& edge = m_edges.emplace_back();
+		edge.contour = contour;
+		edge.style = style_index;
+		edge.is_hole = is_hole;
 	}
 
 	void Shape::WriteXFL(XFL::XFLWriter& writer, uint32_t) const
@@ -31,7 +34,7 @@ namespace Animate::Pic
 		uint32_t style_index = 1;
 		for (auto& style : m_fill_styles)
 		{
-			WriteXFLStyle(writer, style, style_index);
+			WriteXFLStyle(fills, style, style_index);
 			style_index++;
 		}
 	}
@@ -63,11 +66,19 @@ namespace Animate::Pic
 	{
 		auto edges = writer.CreateProperty(DOM::PropTag::Edges);
 
-		for (const auto& [style_index, edge] : m_edges)
+		for (auto& edge : m_edges)
 		{
 			DOM::Edge edge_prop;
-			edge_prop.fill_style_1 = style_index;
-			edge_prop.edges = edge;
+			if (edge.is_hole)
+			{
+				edge_prop.fill_style_0 = edge.style;
+			}
+			else
+			{
+				edge_prop.fill_style_1 = edge.style;
+			}
+			
+			edge_prop.edges = edge.contour;
 			XFL::XFLWriter(edges, edge_prop);
 		}
 	}
