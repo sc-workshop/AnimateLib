@@ -88,7 +88,7 @@ namespace Animate::DOM
 
 	public:
 		Path href;
-		int item_icon = 0;
+		int item_icon = std::numeric_limits<int>::max();
 		bool load_immediate = false;
 		String item_id;
 		time_t last_modified = 0;

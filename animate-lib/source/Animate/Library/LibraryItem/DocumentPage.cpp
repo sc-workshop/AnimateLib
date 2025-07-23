@@ -21,7 +21,6 @@ namespace Animate::Library
 			item.item_icon = 1;
 			break;
 		default:
-			item.item_icon = 0;
 			break;
 		}
 
