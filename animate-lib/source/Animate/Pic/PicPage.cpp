@@ -101,6 +101,14 @@ namespace Animate::Pic
 		MoveChildrens(source_index, add_above ? destination_index : ++destination_index);
 	}
 
+	void Page::MoveLayerInto(Layer& layer, Layer& target)
+	{
+		MoveLayer(layer, target, false);
+
+		if (target.IsClipper())
+			layer.AttachMask(target);
+	}
+
 	Layer& Page::AddLayer(bool /*a1*/, bool /*makeActive*/)
 	{
 		Layer& layer = AddChild<Layer>();

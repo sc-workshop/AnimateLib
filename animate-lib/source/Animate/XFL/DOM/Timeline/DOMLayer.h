@@ -3,6 +3,7 @@
 #include <string>
 #include <array>
 
+#include "Animate/Pic/PicLayer.h"
 #include "Animate/XFL/DOM/DOMElement.h"
 #include "Animate/TypeTraits.h"
 
@@ -65,6 +66,20 @@ namespace Animate::DOM
 			"highlighted"
 		};
 
+		static inline std::array LayerTypeNames =
+		{
+			"normal",
+			"folder",
+			"mask",
+			"guide",
+			"camera"
+		};
+
+		static const char* GetLayerTypeName(Pic::Layer::Type attribute)
+		{
+			return LayerTypeNames[(uint32_t)attribute];
+		}
+
 		static const char* GetAtributeName(Attributes attribute)
 		{
 			return AttributeNames[(uint32_t)attribute];
@@ -83,10 +98,23 @@ namespace Animate::DOM
 				name
 			);
 
+			writer.WriteAttr(
+				GetAtributeName(Attributes::LayerType),
+				GetLayerTypeName(type),
+				GetLayerTypeName(Pic::Layer::Type::Normal)
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Locked),
+				locked, false
+			);
+
 			// TODO: rest of props
 		}
 
 	public:
 		String name;
+		Pic::Layer::Type type;
+		bool locked = false;
 	};
 }

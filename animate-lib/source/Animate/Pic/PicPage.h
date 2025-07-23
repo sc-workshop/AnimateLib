@@ -38,7 +38,8 @@ namespace Animate::Pic
 		void SetLayerWithNamingRules(Layer& layer, const String& name);
 		void CopyLayers(size_t begin_index, size_t count = 1);
 		size_t PasteLayers(size_t begin_index = -1);
-		void MoveLayer(Layer& layer, Layer& target, bool add_above);
+		void MoveLayer(Layer& layer, Layer& target, bool add_above = true);
+		void MoveLayerInto(Layer& layer, Layer& target);
 
 	public:
 		// Access operators
