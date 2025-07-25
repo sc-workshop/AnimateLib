@@ -102,6 +102,22 @@ namespace Animate::DOM
 			return AttributeNames[(uint32_t)attribute];
 		}
 
+		static inline std::array SymbolTypeNames =
+		{
+			"button",
+			"graphic",
+			"movie clip",
+			"ik container",
+			"puppet",
+			"puppetBase",
+			"media 3D"
+		};
+
+		static const char* GetSymbolTypeName(Pic::Symbol::InstanceType type)
+		{
+			return SymbolTypeNames[(uint32_t)type];
+		}
+
 	public:
 		virtual ElementTag GetTag()
 		{
@@ -114,9 +130,22 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::LibraryItemName),
 				libraryItemName
 			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::SymbolType),
+				GetSymbolTypeName(type), GetSymbolTypeName(Pic::Symbol::InstanceType::MovieClip)
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Name),
+				name
+			);
 		}
 
 	public:
 		std::u16string libraryItemName;
+
+		String name;
+		Pic::Symbol::InstanceType type;
 	};
 }

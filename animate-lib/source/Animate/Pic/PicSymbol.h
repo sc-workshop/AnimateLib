@@ -2,8 +2,6 @@
 
 #include "PicObject.h"
 
-#include "Animate/XFL/DOM/Instance/DOMBitmapInstance.h"
-
 namespace Animate::Library
 {
 	class DocumentPage;
@@ -17,10 +15,29 @@ namespace Animate::Pic
 		Symbol();
 
 	public:
+		enum class InstanceType
+		{
+			Button = 0,
+			Graphic,
+			MovieClip,
+			IkContainer,
+			Puppet,
+			PuppetBase,
+			Media3D
+		};
+
+	public:
 		virtual bool IsPicSymbol() const override { return true; };
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t index) const override;
 
 	public:
+		String GetName() const { return m_name; }
+		void SetName(const String& name) { m_name = name; }
+		virtual void SetPIInstanceName(const String& name) override { SetName(name); }
+
+		InstanceType GetSymbolBehavior() const { return m_type; }
+		void SetSymbolBehavior(InstanceType type) { m_type = type; }
+
 		void SetSymbolPage(Library::DocumentPage& page) { m_page = &page; }
 		Library::DocumentPage& GetSymbolPage() {
 			assert(m_page == nullptr);
@@ -47,5 +64,9 @@ namespace Animate::Pic
 		Library::DocumentPage* m_page = nullptr;
 		Matrix m_matrix;
 		Library::GraphicEffectInstance m_graphic_effect;
+
+		// Should be in PropertyInstance but uh ok
+		String m_name;
+		InstanceType m_type = InstanceType::MovieClip;
 	};
 }

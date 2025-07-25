@@ -75,6 +75,9 @@ namespace Animate::Pic
 
 		virtual void SetWidth(float) {};
 		virtual void SetHeight(float) {};
+
+	public: // Properties
+		virtual void SetPIInstanceName(const String& /*name*/) {};
 	
 	protected:
 		template<typename T = Object, typename ... Args>

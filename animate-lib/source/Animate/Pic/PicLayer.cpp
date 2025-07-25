@@ -23,7 +23,7 @@ namespace Animate::Pic
 		}
 	}
 
-	void Layer::Initialize(const String& name, size_t duration)
+	void Layer::Initialize(const String& name, size_t /*duration*/)
 	{
 		Create();
 		SetName(name);
@@ -39,7 +39,7 @@ namespace Animate::Pic
 			// TODO: lock parent layers
 		}
 
-		m_locked = true;
+		m_locked = status;
 	}
 
 	size_t Layer::GetNumFrames()
