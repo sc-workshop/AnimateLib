@@ -126,7 +126,7 @@ namespace Animate::DOM
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::FillColor),
-				color, false
+				color, false, {0, 0, 0, 0xFF}
 			);
 
 			writer.WriteAttr<float>(

@@ -17,12 +17,20 @@ namespace Animate::Document
 
 namespace Animate::Pic
 {
+	class Layer;
+}
+
+namespace Animate::Pic
+{
 	/// <summary>
 	/// PIC is probably means something like "Program interaction control"
 	/// But overall its just a bunch of "conrol classes" that allow you to interact with layers, frames and other objects
 	/// </summary>
 	class Object
 	{
+	public:
+		friend Layer;
+
 	public:
 		using Childrens = Container<wk::Ref<Object>>;
 
@@ -47,7 +55,7 @@ namespace Animate::Pic
 		virtual bool IsPicTweenable() const { return false; };
 
 		Document::SketchDocument& OwnerDoc() const;
-		Object* Parent() { return m_parent;  };
+		Object* Parent() const { return m_parent;  };
 
 		Object* Clone()
 		{
@@ -119,7 +127,7 @@ namespace Animate::Pic
 			m_childrens.insert(m_childrens.begin() + to, object);
 		}
 
-		bool GetChildrenIndex(const Object& obj, size_t& index)
+		bool GetChildrenIndex(const Object& obj, size_t& index) const
 		{
 			auto it = std::find_if(m_childrens.begin(), m_childrens.end(), [&obj](const wk::Ref<Object>& other) {
 				if (other.get() == &obj)
@@ -151,7 +159,7 @@ namespace Animate::Pic
 		Childrens m_childrens;
 		Library::GraphicEffectInstance* m_effect_instance = nullptr;
 
-	private:
+	protected:
 		Document::SketchDocument* m_owner;
 		Object* m_parent = nullptr;
 	};

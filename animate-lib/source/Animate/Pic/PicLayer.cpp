@@ -10,7 +10,9 @@ namespace Animate::Pic
 		layer.name = m_name;
 		layer.type = m_type;
 		layer.locked = m_locked;
-
+		if (m_parent_layer)
+			Parent()->GetChildrenIndex(*m_parent_layer, layer.parentIndex);
+			
 		XFL::XFLWriter writer(root, layer);
 
 		uint32_t index = 0;
@@ -75,6 +77,7 @@ namespace Animate::Pic
 	void Layer::AttachMask(Layer& mask)
 	{
 		m_parent_layer = &mask;
+		SetLocked();
 	}
 
 	void Layer::Create()

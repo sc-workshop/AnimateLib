@@ -18,6 +18,12 @@ namespace Animate::Pic
 	public:
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const;
 
+	protected:
+		virtual Object* CloneObject() override
+		{
+			return new Rectangle(*this);
+		}
+
 	private:
 		Bound m_rectangle;
 		FillStyle m_style;

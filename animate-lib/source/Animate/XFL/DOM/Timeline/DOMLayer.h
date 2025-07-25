@@ -109,6 +109,11 @@ namespace Animate::DOM
 				locked, false
 			);
 
+			writer.WriteAttr(
+				GetAtributeName(Attributes::ParentLayerIndex),
+				parentIndex, std::numeric_limits<size_t>::max()
+			);
+
 			// TODO: rest of props
 		}
 
@@ -116,5 +121,6 @@ namespace Animate::DOM
 		String name;
 		Pic::Layer::Type type;
 		bool locked = false;
+		size_t parentIndex = std::numeric_limits<size_t>::max();
 	};
 }
