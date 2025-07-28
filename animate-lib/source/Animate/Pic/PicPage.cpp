@@ -34,12 +34,16 @@ namespace Animate::Pic
 		{
 			if (layer.IsCameraLayer())
 			{
-
+				
 			}
 			else
 			{
 				MoveLayer(layer, parent.value(), add_above);
 			}
+		}
+		else if (ChildrenCount() > 0 && add_above)
+		{
+			MoveLayer(layer, (*this)[0], add_above);
 		}
 
 		if (!name.empty())
@@ -70,12 +74,15 @@ namespace Animate::Pic
 		}
 	}
 
-	size_t Page::PasteLayers(size_t begin_index)
+	int64_t Page::PasteLayers(int64_t begin_index, bool add_above)
 	{
 		if (begin_index == -1)
 		{
 			begin_index = 0;
 		}
+
+		if (!add_above && begin_index)
+			begin_index++;
 
 		size_t result = begin_index;
 		for (auto& layer : sCopyPasteLayerData.targets)

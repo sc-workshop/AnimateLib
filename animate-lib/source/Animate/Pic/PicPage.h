@@ -34,10 +34,10 @@ namespace Animate::Pic
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	public:
-		Layer& AddNewLayer(const String& name, bool is_folder = false, bool add_above = false, std::optional<std::reference_wrapper<Layer>> parent = std::nullopt);
+		Layer& AddNewLayer(const String& name, bool is_folder = false, bool add_above = true, std::optional<std::reference_wrapper<Layer>> parent = std::nullopt);
 		void SetLayerWithNamingRules(Layer& layer, const String& name);
 		void CopyLayers(size_t begin_index, size_t count = 1);
-		size_t PasteLayers(size_t begin_index = -1);
+		int64_t PasteLayers(int64_t begin_index = -1, bool add_above = true);
 		void MoveLayer(Layer& layer, Layer& target, bool add_above = true);
 		void MoveLayerInto(Layer& layer, Layer& target, bool add_above = true);
 
