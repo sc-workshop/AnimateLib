@@ -26,7 +26,7 @@ namespace Animate::Pic
 		virtual bool IsPicShape() const { return true; };
 
 	public:
-		void CreateEdge(const FillStyle& style, const std::string& edge, bool is_hole = false);
+		void CreateEdge(const FillStyle& style, const std::string& edge, bool is_hole = false, bool merge_edges = true);
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const;
 		void WriteXFLStyles(XFL::XFLWriter& writer) const;
 		void WriteXFLStyle(XFL::XFLWriter& writer, const FillStyle& style, uint32_t index = 0) const;
@@ -51,7 +51,7 @@ namespace Animate::Pic
 
 	private:
 		Matrix m_matrix;
-		std::unordered_set<FillStyle> m_fill_styles;
+		std::vector<FillStyle> m_fill_styles;
 		std::vector<Edge> m_edges;
 	};
 }

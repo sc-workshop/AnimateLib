@@ -7,14 +7,33 @@
 
 namespace Animate::Pic
 {
-	void Shape::CreateEdge(const FillStyle& style, const std::string& contour, bool is_hole)
+	void Shape::CreateEdge(const FillStyle& style, const std::string& contour, bool is_hole, bool merge_edges)
 	{
-		auto style_it = m_fill_styles.emplace(style);
-		uint32_t style_index = (uint32_t)std::distance(m_fill_styles.begin(), style_it.first) + 1;
+		size_t style_index = 0;
+
+		if (merge_edges)
+		{
+			auto style_it = std::find(m_fill_styles.begin(), m_fill_styles.end(), style);
+
+			if (style_it != m_fill_styles.end())
+			{
+				style_index = std::distance(m_fill_styles.begin(), style_it) + 1;
+			}
+			else
+			{
+				m_fill_styles.push_back(style);
+				style_index = m_fill_styles.size();
+			}
+		}
+		else
+		{
+			m_fill_styles.push_back(style);
+			style_index = m_fill_styles.size();
+		}
 
 		auto& edge = m_edges.emplace_back();
 		edge.contour = contour;
-		edge.style = style_index;
+		edge.style = (uint32_t)style_index;
 		edge.is_hole = is_hole;
 	}
 
