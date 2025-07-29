@@ -11,7 +11,7 @@ namespace Animate::DOM
 	class DOMMatrix : public DOMElement
 	{
 	public:
-		DOMMatrix(Matrix& matrix) : m_matrix(matrix)
+		DOMMatrix(const Matrix& matrix) : m_matrix(matrix)
 		{
 		}
 
@@ -25,15 +25,25 @@ namespace Animate::DOM
 		{
 			auto& identity = Matrix::Identity();
 
-			writer.WriteAttr("a", m_matrix.a, identity.a);
+			if (twip_scale)
+				writer.WriteAttr("a", m_matrix.a * 20.f, 20.f);
+			else
+				writer.WriteAttr("a", m_matrix.a, identity.a);
+
 			writer.WriteAttr("b", m_matrix.b, identity.b);
 			writer.WriteAttr("c", m_matrix.c, identity.c);
-			writer.WriteAttr("d", m_matrix.d, identity.d);
+
+			if (twip_scale)
+				writer.WriteAttr("d", m_matrix.d * 20.f, 20.f);
+			else
+				writer.WriteAttr("d", m_matrix.d, identity.d);
+
 			writer.WriteAttr("tx", m_matrix.tx, identity.tx);
 			writer.WriteAttr("ty", m_matrix.ty, identity.ty);
 		}
 
 	public:
-		Matrix& m_matrix;
+		bool twip_scale = false;
+		const Matrix& m_matrix;
 	};
 }

@@ -48,6 +48,21 @@ namespace Animate::DOM
 			return ElementTag::DOMShape;
 		}
 
-		void SetAttributes(XFL::XFLWriter&) {}
+		void SetAttributes(XFL::XFLWriter& writer) {
+			writer.WriteAttr(
+				GetAtributeName(Attributes::IsDrawingObject),
+				isDrawing, false
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::IsFloating),
+				isFloater, false
+			);
+		
+		}
+
+	public:
+		bool isDrawing = false;
+		bool isFloater = false;
 	};
 }

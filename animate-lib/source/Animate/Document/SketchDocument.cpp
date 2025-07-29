@@ -91,9 +91,15 @@ namespace Animate::Document
 			item.WriteXFL(file, items);
 		}
 
+		std::launch policy = std::launch::deferred;
+
+#if WK_RELEASE
+			policy |= std::launch::async;
+#endif
+
 		wk::parallel::enumerate(symbols.begin(), symbols.end(), [&](auto item, size_t) {
 			item->WriteXFLSymbol(file);
-		});
+		}, policy);
 
 	}
 }

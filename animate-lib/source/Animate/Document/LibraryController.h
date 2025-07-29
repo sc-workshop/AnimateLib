@@ -31,6 +31,8 @@ namespace Animate::Document
 		Library::MediaBits& MakeBitmap(const Path& path);
 		Library::DocumentPage& MakeSymbol(const Path& path, Library::DocumentPage::SymbolType type);
 
+		Library::MediaBits& GetBitmap(const Library::LibraryItemID& id);
+
 		void GetItemValidNameAndParent(const std::u16string& path, std::u16string& name, Library::LibraryItemID& parent, const std::u16string& basename = u"Item");
 
 	private:

@@ -117,6 +117,22 @@ namespace Animate::Document
 		return result;
 	}
 
+	Library::MediaBits& LibraryController::GetBitmap(const Library::LibraryItemID& id)
+	{
+		auto it = std::find_if(m_document.mediaElements.begin(), m_document.mediaElements.end(), [&id](const auto& element)
+			{
+				if (!element->IsMediaBits()) return false;
+				if (element->GetID() != id) return false;
+				return true;
+			}
+		);
+
+		if (it == m_document.mediaElements.end())
+			throw wk::Exception("Failed to find bitmap symbol");
+
+		return (Library::MediaBits&)(**it);
+	}
+
 	void LibraryController::GetItemValidNameAndParent(const std::u16string& item_name, std::u16string& name, Library::LibraryItemID& parent, const std::u16string& basename)
 	{
 		if (item_name.find(u"/") != std::u16string::npos)
