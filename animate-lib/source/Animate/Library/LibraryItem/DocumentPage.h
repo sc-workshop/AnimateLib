@@ -3,6 +3,8 @@
 #include "Animate/Library/LibraryItem.h"
 #include "Animate/Pic/PicPage.h"
 
+#include "Animate/TypeTraits.h"
+
 namespace Animate::Document
 {
 	class LibraryController;
@@ -47,6 +49,13 @@ namespace Animate::Library
 
 		Pic::Page& GetPage() const;
 
+	public:
+		bool GetScale9() const { return m_scale9; }
+		Bound GetScale9Rect() const { return m_scale9_rect; }
+
+		void SetScale9(bool status) { m_scale9 = status; }
+		void SetScale9Rect(Bound rect) { m_scale9_rect = rect; }
+
 	protected:
 		void CreateSymbol(Document::SketchDocument& root);
 		void Create(Document::SketchDocument& root, bool is_scene);
@@ -57,5 +66,8 @@ namespace Animate::Library
 		time_t m_creation_time = 0;
 		time_t m_last_modify_time = 0;
 		wk::Ref<Pic::Page> m_page;
+
+		bool m_scale9;
+		Bound m_scale9_rect;
 	};
 }

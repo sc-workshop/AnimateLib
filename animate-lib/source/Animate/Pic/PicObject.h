@@ -110,7 +110,7 @@ namespace Animate::Pic
 		template<typename T = Object>
 		T& ChildAt(size_t index)
 		{
-			auto& object = m_childrens[index];
+			auto& object = m_childrens.at(index);
 			return (T&)*object;
 		}
 

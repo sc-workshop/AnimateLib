@@ -122,10 +122,31 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::LastModified),
 				last_modified
 			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::ScaleGridLeft),
+				scale_grid.left, 0.f
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::ScaleGridRight),
+				scale_grid.right, 0.f
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::ScaleGridBottom),
+				scale_grid.bottom, 0.f
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::ScaleGridTop),
+				scale_grid.top, 0.f
+			);
 		}
 
 	public:
 		size_t symbol_type;
 		time_t last_modified;
+		Bound scale_grid;
 	};
 }

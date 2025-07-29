@@ -33,6 +33,8 @@ namespace Animate::Library
 		InitializeDOMItem(item);
 		item.last_modified = m_last_modify_time;
 		item.symbol_type = (size_t)m_type;
+		if (m_scale9)
+			item.scale_grid = m_scale9_rect;
 
 		XFL::XFLWriter writer(item);
 		auto timeline = writer.CreateProperty(DOM::PropTag::Timeline);
