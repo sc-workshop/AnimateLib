@@ -32,6 +32,17 @@ namespace Animate::Pic
 		void WriteXFLStyle(XFL::XFLWriter& writer, const FillStyle& style, uint32_t index = 0) const;
 		void WriteXFLEdges(XFL::XFLWriter& writer) const;
 
+	public:
+		virtual bool GetMatrix(Matrix& matrix) const override {
+			matrix = m_matrix;
+			return true;
+		}
+
+		virtual bool SetMatrix(const Matrix& matrix) override {
+			m_matrix = matrix;
+			return true;
+		}
+
 	protected:
 		virtual Object* CloneObject()
 		{
@@ -39,6 +50,7 @@ namespace Animate::Pic
 		}
 
 	private:
+		Matrix m_matrix;
 		std::unordered_set<FillStyle> m_fill_styles;
 		std::vector<Edge> m_edges;
 	};

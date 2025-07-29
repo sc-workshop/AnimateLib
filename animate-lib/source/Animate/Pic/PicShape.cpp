@@ -23,6 +23,7 @@ namespace Animate::Pic
 		DOM::Shape shape;
 		XFL::XFLWriter shape_writer(writer, shape);
 
+		WriteXFLMatrix(shape_writer);
 		WriteXFLStyles(shape_writer);
 		WriteXFLEdges(shape_writer);
 	}
