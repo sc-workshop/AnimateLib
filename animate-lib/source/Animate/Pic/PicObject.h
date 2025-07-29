@@ -53,6 +53,7 @@ namespace Animate::Pic
 		virtual bool IsPicText() const { return false; };
 		virtual bool IsPicBitmap() const { return false; };
 		virtual bool IsPicTweenable() const { return false; };
+		virtual bool IsPicGroup() const { return false; };
 
 		Document::SketchDocument& OwnerDoc() const;
 		Object* Parent() const { return m_parent;  };
