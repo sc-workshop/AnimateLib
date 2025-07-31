@@ -29,9 +29,10 @@ namespace Animate::Library
 		void SetColorTransforEffectTint(Color tint, int16_t multiplier);
 
 		void SetColorTransformMode(ColorTransform::Type /*type*/) {}
+		ColorTransform::Type GetColorTransformMode() const { return m_matrix.transform_type; }
 
 	public:
-		void WriteXFL(XFL::XFLWriter& root) const;
+		void WriteXFLColor(XFL::XFLWriter& root) const;
 
 	private:
 		ColorTransform m_matrix;

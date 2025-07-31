@@ -22,7 +22,7 @@ namespace Animate::Pic
 	class Frame : public Object
 	{
 	public:
-		using Object::Object;
+		Frame();
 
 	public:
 		virtual bool IsPicFrame() const override { return true; };
@@ -59,5 +59,6 @@ namespace Animate::Pic
 
 	private:
 		uint32_t m_duration = 1;
+		Library::GraphicEffectInstance m_graphic_effect;
 	};
 }

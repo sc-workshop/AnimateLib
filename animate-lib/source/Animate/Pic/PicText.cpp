@@ -20,7 +20,11 @@ namespace Animate::Pic
 		XFL::XFLWriter text_writer(writer, text);
 
 		WriteXFLMatrix(text_writer);
-		m_graphic_effect.WriteXFL(text_writer);
+		if (m_graphic_effect.GetColorTransformMode() != ColorTransform::Type::None)
+		{
+			XFL::XFLProp color = text_writer.CreateProperty(DOM::PropTag::Color);
+			m_graphic_effect.WriteXFLColor(color);
+		}
 
 		WriteXFLTextRuns(text_writer);
 	}

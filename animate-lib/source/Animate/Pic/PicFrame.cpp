@@ -9,6 +9,11 @@
 
 namespace Animate::Pic
 {
+	Frame::Frame()
+	{
+		m_effect_instance = &m_graphic_effect;
+	}
+
 	void Frame::WriteXFL(XFL::XFLWriter& root, uint32_t index) const
 	{
 		DOM::DOMFrame frame;
@@ -23,6 +28,12 @@ namespace Animate::Pic
 		for (const Object& element : *this)
 		{
 			element.WriteXFL(elements, element_index++);
+		}
+
+		if (m_graphic_effect.GetColorTransformMode() != ColorTransform::Type::None)
+		{
+			XFL::XFLProp color = writer.CreateProperty(DOM::PropTag::FrameColor);
+			m_graphic_effect.WriteXFLColor(color);
 		}
 	}
 

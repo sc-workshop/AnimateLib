@@ -26,7 +26,7 @@ namespace Animate::DOM
 			auto& identity = Matrix::Identity();
 
 			if (twip_scale)
-				writer.WriteAttr("a", m_matrix.a * 20.f, 20.f);
+				writer.WriteAttr("a", m_matrix.a * 20.f, identity.a);
 			else
 				writer.WriteAttr("a", m_matrix.a, identity.a);
 
@@ -34,7 +34,7 @@ namespace Animate::DOM
 			writer.WriteAttr("c", m_matrix.c, identity.c);
 
 			if (twip_scale)
-				writer.WriteAttr("d", m_matrix.d * 20.f, 20.f);
+				writer.WriteAttr("d", m_matrix.d * 20.f, identity.d);
 			else
 				writer.WriteAttr("d", m_matrix.d, identity.d);
 

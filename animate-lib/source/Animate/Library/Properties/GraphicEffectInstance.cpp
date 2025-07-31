@@ -104,11 +104,8 @@ namespace Animate::Library
 		SetColorTransformMode(matrix.transform_type);
 	}
 
-	void GraphicEffectInstance::WriteXFL(XFL::XFLWriter& root) const
+	void GraphicEffectInstance::WriteXFLColor(XFL::XFLWriter& root) const
 	{
-		if (m_matrix.transform_type == ColorTransform::Type::None) return;
-
-		XFL::XFLProp prop = root.CreateProperty(DOM::PropTag::Color);
 		DOM::Color color;
 
 		// TODO: handle other transform types
@@ -133,7 +130,7 @@ namespace Animate::Library
 		}
 		
 
-		XFL::XFLWriter writer(prop, color);
+		XFL::XFLWriter writer(root, color);
 	}
 }
 

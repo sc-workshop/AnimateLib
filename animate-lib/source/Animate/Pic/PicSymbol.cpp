@@ -23,7 +23,12 @@ namespace Animate::Pic
 
 		XFL::XFLWriter writer(root, instance);
 		WriteXFLMatrix(writer);
-		m_graphic_effect.WriteXFL(writer);
+
+		if (m_graphic_effect.GetColorTransformMode() != ColorTransform::Type::None)
+		{
+			XFL::XFLProp color = root.CreateProperty(DOM::PropTag::Color);
+			m_graphic_effect.WriteXFLColor(color);
+		}
 	}
 }
 
