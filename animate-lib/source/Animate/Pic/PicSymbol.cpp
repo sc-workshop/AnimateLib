@@ -26,7 +26,7 @@ namespace Animate::Pic
 
 		if (m_graphic_effect.GetColorTransformMode() != ColorTransform::Type::None)
 		{
-			XFL::XFLProp color = root.CreateProperty(DOM::PropTag::Color);
+			XFL::XFLProp color = writer.CreateProperty(DOM::PropTag::Color);
 			m_graphic_effect.WriteXFLColor(color);
 		}
 	}
