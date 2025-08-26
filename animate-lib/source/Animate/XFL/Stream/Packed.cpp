@@ -1,6 +1,7 @@
 #include "Packed.h"
 
 #include "zip.h"
+#include "assert.h"
 
 namespace fs = std::filesystem;
 
@@ -66,7 +67,9 @@ namespace Animate::IO
 	bool PackedStream::OpenFile(const Path& path)
 	{
 		m_mutex.lock();
-		return zip_entry_open(m_context, path.string().c_str()) == 0;
+		auto code = zip_entry_open(m_context, path.string().c_str());
+		assert(code == 0 && "Failed to open zip entry");
+		return code == 0;
 	}
 
 	size_t PackedStream::WriteFile(const void* data, size_t length)

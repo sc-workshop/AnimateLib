@@ -2,7 +2,7 @@
 
 #include "core/platform/platform_info.h"
 
-#include "core/parallel/enumerate.h"
+#include "core/parallel/thread_pool.h"
 
 namespace Animate::Document
 {
@@ -83,6 +83,7 @@ namespace Animate::Document
 
 	void SketchDocument::WriteXFLSymbols(XFL::XFLFile& file, XFL::XFLWriter& writer) const
 	{
+		wk::ThreadPool pool;
 		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Symbols);
 
 		for (size_t i = 0; symbols.Length() > i; i++)
@@ -91,15 +92,10 @@ namespace Animate::Document
 			item.WriteXFL(file, items);
 		}
 
-		std::launch policy = std::launch::deferred;
-
-#if WK_RELEASE
-			policy |= std::launch::async;
-#endif
-
-		wk::parallel::enumerate(symbols.begin(), symbols.end(), [&](auto item, size_t) {
-			item->WriteXFLSymbol(file);
-		}, policy);
-
+		for (auto& symbol : symbols) {
+			pool.push([&symbol, &file]() {
+				symbol->WriteXFLSymbol(file);
+			});
+		}
 	}
 }
