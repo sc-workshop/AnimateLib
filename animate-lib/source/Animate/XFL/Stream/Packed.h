@@ -3,7 +3,7 @@
 #include "Stream.h"
 
 #include "core/memory/ref.h"
-#include "core/io/file_stream.h"
+#include "core/asset_manager/asset_manager.h"
 
 #include <mutex>
 
@@ -29,7 +29,7 @@ namespace Animate::IO
 	private:
 		std::mutex m_mutex;
 		std::vector<Path> m_written_files;
-		wk::Unique<wk::Stream> m_file;
+		wk::Ref<wk::Stream> m_file;
 		zip_t* m_context = nullptr;
 	};
 }

@@ -17,18 +17,19 @@ namespace Animate::IO
 
 	bool PackedStream::Open(const Path& path, OpenType type)
 	{
+		auto& manager = wk::AssetManager::Instance();
 		int error = 0;
 
 		if (type == Stream::OpenType::Write)
 		{
-			m_file = wk::CreateUnique<wk::OutputFileStream>(path);
+			m_file = manager.write_file(path);
 			m_context = zip_stream_openwitherror(
 				NULL, 0, ZIP_DEFAULT_COMPRESSION_LEVEL, 'w', &error
 			);
 		}
 		else
 		{
-			m_file = wk::CreateUnique<wk::InputFileStream>(path);
+			m_file = manager.load_file(path);
 			m_context = zip_stream_openwitherror(
 				(const char*)m_file->data(), m_file->length(), ZIP_DEFAULT_COMPRESSION_LEVEL, 'r', &error
 			);
