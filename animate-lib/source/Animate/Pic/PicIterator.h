@@ -31,7 +31,7 @@ namespace Animate::Pic
             : parent(parent), position(index) {
         }
 
-        reference operator*() const { return parent.ChildAt<T>(position); }
+        reference operator*() const { return parent.template ChildAt<T>(position); }
         pointer operator->() const { return &this->operator*(); }
 
         PicIterator& operator++() { ++position; return *this; }

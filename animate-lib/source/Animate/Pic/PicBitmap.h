@@ -34,7 +34,7 @@ namespace Animate::Pic
 		}
 
 	protected:
-		virtual Object* CloneObject()
+		virtual Object* CloneObject() override
 		{
 			return new Bitmap(*this);
 		}

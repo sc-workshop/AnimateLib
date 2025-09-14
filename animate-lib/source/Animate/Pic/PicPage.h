@@ -55,7 +55,7 @@ namespace Animate::Pic
 		Layer& AddLayer(bool a1, bool makeActive);
 		Layer& AddFolder();
 
-		virtual Object* CloneObject()
+		virtual Object* CloneObject() override
 		{
 			return new Page(*this);
 		}

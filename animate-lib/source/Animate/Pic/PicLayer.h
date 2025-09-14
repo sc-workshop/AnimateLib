@@ -66,7 +66,7 @@ namespace Animate::Pic
 	protected:
 		void Create();
 
-		virtual Object* CloneObject()
+		virtual Object* CloneObject() override
 		{
 			return new Layer(*this);
 		}

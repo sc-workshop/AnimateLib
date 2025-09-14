@@ -46,7 +46,7 @@ namespace Animate::Pic
 		void ApplyStyle(const TextStyle& style);
 			
 	protected:
-		virtual Object* CloneObject()
+		virtual Object* CloneObject() override
 		{
 			return new Text(*this);
 		}

@@ -23,12 +23,12 @@ namespace Animate::Pic
 		};
 
 	public:
-		virtual bool IsPicShape() const { return true; };
+		virtual bool IsPicShape() const override { return true; };
 
 	public:
 		void ConvertToDrawingObject() { m_is_object = true; }
 		void CreateEdge(const FillStyle& style, const std::string& edge, bool is_hole = false, bool merge_edges = true);
-		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const;
+		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 		void WriteXFLStyles(XFL::XFLWriter& writer) const;
 		void WriteXFLStyle(XFL::XFLWriter& writer, const FillStyle& style, uint32_t index = 0) const;
 		void WriteXFLEdges(XFL::XFLWriter& writer) const;
@@ -45,7 +45,7 @@ namespace Animate::Pic
 		}
 
 	protected:
-		virtual Object* CloneObject()
+		virtual Object* CloneObject() override
 		{
 			return new Shape(*this);
 		}

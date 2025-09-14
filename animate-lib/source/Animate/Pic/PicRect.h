@@ -16,7 +16,7 @@ namespace Animate::Pic
 		void SetPrimitiveFill(const FillStyle& style) { m_style = style; }
 
 	public:
-		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const;
+		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	protected:
 		virtual Object* CloneObject() override

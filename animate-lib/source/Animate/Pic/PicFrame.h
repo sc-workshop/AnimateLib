@@ -52,7 +52,7 @@ namespace Animate::Pic
 		Object& operator [](size_t index) { return ChildAt<Object>(index); }
 
 	protected:
-		virtual Object* CloneObject()
+		virtual Object* CloneObject() override
 		{
 			return new Frame(*this);
 		}

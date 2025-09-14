@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <algorithm>
 
 #include "core/memory/ref.h"
 #include "core/exception/exception.h"

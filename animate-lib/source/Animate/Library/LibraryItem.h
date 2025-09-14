@@ -13,6 +13,7 @@
 #include <string>
 #include <time.h>
 #include <mutex>
+#include <algorithm>
 
 namespace Animate::Document
 {

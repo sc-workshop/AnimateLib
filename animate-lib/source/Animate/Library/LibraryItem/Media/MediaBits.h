@@ -49,7 +49,7 @@ namespace Animate::Library
 		void CreateBits(const wk::RawImage& image);
 
 		virtual void WriteXFL(XFL::XFLFile& file, XFL::XFLWriter& writer) const override;
-		virtual void WriteXFLContent(XFL::XflIoFile& file) const;
+		virtual void WriteXFLContent(XFL::XflIoFile& file) const override;
 
 		void InitializeDOMItem(DOM::DOMBitmapItem& item) const;
 

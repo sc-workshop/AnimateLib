@@ -3,6 +3,8 @@
 #include "zip.h"
 #include "assert.h"
 
+#include <algorithm>
+
 namespace fs = std::filesystem;
 
 namespace Animate::IO

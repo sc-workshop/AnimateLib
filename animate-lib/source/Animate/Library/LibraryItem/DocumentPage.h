@@ -34,14 +34,14 @@ namespace Animate::Library
 		using LibraryItem::LibraryItem;
 
 	public:
-		virtual bool IsDocumentPage() const
+		virtual bool IsDocumentPage() const override
 		{
 			return true;
 		}
 
 	public:
-		virtual time_t GetModDateForLibrary() const { return m_last_modify_time; };
-		virtual void SetModDateForLibrary(time_t t) { m_last_modify_time = t; }
+		virtual time_t GetModDateForLibrary() const override { return m_last_modify_time; };
+		virtual void SetModDateForLibrary(time_t t) override { m_last_modify_time = t; }
 
 		virtual void WriteXFL(XFL::XFLFile& file, XFL::XFLWriter& writer) const override;
 		virtual void WriteXFLSymbol(XFL::XFLFile& file) const;

@@ -29,7 +29,7 @@ namespace Animate::Pic
 			return true;
 		}
 
-		virtual Object* CloneObject()
+		virtual Object* CloneObject() override
 		{
 			return new Group(*this);
 		}

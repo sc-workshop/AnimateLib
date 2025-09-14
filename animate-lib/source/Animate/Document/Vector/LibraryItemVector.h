@@ -26,8 +26,8 @@ namespace Animate::Document
 		using Pointer = T*;
 		using Value = P;
 
-		template<typename T>
-		using Container = std::vector<T>; // TODO: replace for std::list ?
+		template<typename Value>
+		using Container = std::vector<Value>; // TODO: replace for std::list ?
 
 	public:
 		LibraryItemsVector_t() = default;
@@ -114,7 +114,7 @@ namespace Animate::Document
 	public:
 		// Access operators
 
-		const Reference At(size_t index) const
+		Reference At(size_t index) const
 		{
 			return *m_symbols.at(index);
 		}
@@ -129,7 +129,7 @@ namespace Animate::Document
 			return At(index);
 		}
 
-		const Reference operator [](size_t index) const
+		Reference operator [](size_t index) const
 		{
 			return At(index);
 		}
