@@ -16,6 +16,7 @@ namespace Animate::Library
 
 	public:
 		MediaElem(Document::SketchDocument& document, const std::u16string& name = u"");
+		virtual ~MediaElem() = default;
 
 	public:
 		virtual bool IsMedia() const override

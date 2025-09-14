@@ -32,6 +32,7 @@ namespace Animate::Library
 
 	public:
 		using LibraryItem::LibraryItem;
+		virtual ~DocumentPage() = default;
 
 	public:
 		virtual bool IsDocumentPage() const override

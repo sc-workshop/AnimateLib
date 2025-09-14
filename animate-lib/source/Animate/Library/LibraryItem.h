@@ -26,6 +26,7 @@ namespace Animate::Library
 	{
 	public:
 		LibraryItem(Document::SketchDocument& document, std::optional<std::u16string> name = std::nullopt);
+		virtual ~LibraryItem() = default;
 
 	public:
 #pragma region Item types
@@ -99,7 +100,7 @@ namespace Animate::Library
 		virtual const LibraryItemID& GetID() const { return m_item_id; };
 		virtual const LibraryItemID& GetParentID() const { return m_parent_id; };
 
-		const bool HasNoParent() const { return m_parent_id == LibraryItemID::NoParent; };
+		bool HasNoParent() const { return m_parent_id == LibraryItemID::NoParent; };
 
 		virtual void SetItemName(const std::u16string& name);
 		virtual std::u16string GetItemName() const;

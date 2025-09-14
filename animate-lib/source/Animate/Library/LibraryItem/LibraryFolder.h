@@ -15,6 +15,7 @@ namespace Animate::Library
 	{
 	public:
 		using LibraryItem::LibraryItem;
+		virtual ~LibraryFolder() = default;
 
 	public:
 		virtual bool IsFolder() const override

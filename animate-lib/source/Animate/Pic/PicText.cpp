@@ -42,11 +42,11 @@ namespace Animate::Pic
 			// Textfield text
 			if (!m_characters.empty()) {
 				auto character_writer = textrun_writer.CreateProperty(DOM::PropTag::Characters);
-				size_t string_end_offset = string_offset + style.length;
+				/*size_t string_end_offset = string_offset + style.length;
 				if (!style.length)
 				{
 					string_end_offset = m_characters.size();
-				}
+				}*/
 
 				character_writer.SetValue(m_characters.substr(string_offset, string_offset + style.length));
 			}

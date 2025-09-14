@@ -21,6 +21,7 @@ namespace Animate::Library
 		};
 	public:
 		using MediaElem::MediaElem;
+		virtual ~MediaBits() = default;
 
 	public:
 		virtual bool IsMediaBits() const override
@@ -56,7 +57,7 @@ namespace Animate::Library
 		const Bitmap& GetBitmap() const { return m_bitmap; }
 
 	private:
-		time_t m_last_update = 0;
+		//time_t m_last_update = 0;
 		bool m_allow_smooth = false;
 		CompressionType m_compression = CompressionType::Lossless;
 		int m_quality = 50;
