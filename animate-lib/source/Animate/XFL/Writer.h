@@ -117,7 +117,7 @@ namespace Animate::XFL
 			if (value == default_value) return;
 
 			m_node.append_attribute(name)
-				.set_value(pugi::as_utf8((const wchar_t*)value.data()));
+				.set_value(wk::StringConverter::ToUTF8(value));
 		}
 
 		void SetValue(const std::string& str)
@@ -127,7 +127,7 @@ namespace Animate::XFL
 
 		void SetValue(const std::u16string& str)
 		{
-			m_node.set_value(pugi::as_utf8((const wchar_t*)str.data()));
+			m_node.set_value(wk::StringConverter::ToUTF8(str));
 		}
 
 	public:
