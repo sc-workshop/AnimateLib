@@ -20,6 +20,7 @@ namespace Animate::Pic
 		instance.libraryItemName = XFL::XFLWriter::MakePrefferedPath(m_page->GetItemPath());
 		instance.name = m_name;
 		instance.type = m_type;
+		instance.blendMode = m_graphic_effect.GetXFLBlendMode();
 
 		XFL::XFLWriter writer(root, instance);
 		WriteXFLMatrix(writer);

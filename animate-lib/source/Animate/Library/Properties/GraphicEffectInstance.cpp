@@ -132,5 +132,9 @@ namespace Animate::Library
 
 		XFL::XFLWriter writer(root, color);
 	}
+
+	GraphicEffectInstance::BlendMode GraphicEffectInstance::GetXFLBlendMode() const {
+		return m_blendMode;
+	}
 }
 

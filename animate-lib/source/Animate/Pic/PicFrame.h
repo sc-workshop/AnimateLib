@@ -23,7 +23,7 @@ namespace Animate::Pic
 	{
 	public:
 		enum class LabelType {
-			None,
+			None = 0,
 			Name,
 			Comment,
 			Anchor

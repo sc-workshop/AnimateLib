@@ -5,6 +5,7 @@
 
 #include "Animate/XFL/DOM/DOMElement.h"
 #include "Animate/TypeTraits.h"
+#include "Animate/XFL/DOM/Math/BlendMode.h"
 
 namespace Animate::DOM
 {
@@ -140,6 +141,11 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::Name),
 				name
 			);
+
+			BlendMode::Write(
+				writer, GetAtributeName(Attributes::BlendMode),
+				blendMode
+			);
 		}
 
 	public:
@@ -147,5 +153,7 @@ namespace Animate::DOM
 
 		String name;
 		Pic::Symbol::InstanceType type;
+		BlendMode::Mode blendMode = BlendMode::Mode::Normal;
+		
 	};
 }
