@@ -17,6 +17,11 @@ namespace Animate::Pic
 	void Frame::WriteXFL(XFL::XFLWriter& root, uint32_t index) const
 	{
 		DOM::DOMFrame frame;
+		if (m_labelType != LabelType::None && !m_label.empty()) {
+			frame.name = m_label;
+			frame.labelType = (int)m_labelType;
+		}
+		
 		frame.duration = m_duration;
 		frame.index = index;
 
@@ -35,6 +40,24 @@ namespace Animate::Pic
 			XFL::XFLProp color = writer.CreateProperty(DOM::PropTag::FrameColor);
 			m_graphic_effect.WriteXFLColor(color);
 		}
+	}
+
+	void Frame::SetLabel(String label, LabelType type)
+	{
+		if (m_label != label && m_labelType != type) {
+			m_label = label;
+			m_labelType = type;
+		}
+	}
+
+	String Frame::GetLabel()
+	{
+		return m_label;
+	}
+
+	Frame::LabelType Frame::GetLabelType()
+	{
+		return m_labelType;
 	}
 
 	Symbol& Frame::AddSymbolChildren(Library::DocumentPage& page)

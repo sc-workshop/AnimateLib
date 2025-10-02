@@ -22,6 +22,14 @@ namespace Animate::Pic
 	class Frame : public Object
 	{
 	public:
+		enum class LabelType {
+			None,
+			Name,
+			Comment,
+			Anchor
+		};
+
+	public:
 		Frame();
 
 	public:
@@ -31,6 +39,11 @@ namespace Animate::Pic
 	public:
 		uint32_t GetDuration() const { return m_duration; }
 		void SetDuration(uint32_t duration) { m_duration = duration; }
+		void SetLabel(String label, LabelType type);
+
+	public:
+		String GetLabel();
+		LabelType GetLabelType();
 
 	public:
 		template<typename T = Object, typename ... Args>
@@ -58,6 +71,8 @@ namespace Animate::Pic
 		}
 
 	private:
+		String m_label = "";
+		LabelType m_labelType = LabelType::None;
 		uint32_t m_duration = 1;
 		Library::GraphicEffectInstance m_graphic_effect;
 	};

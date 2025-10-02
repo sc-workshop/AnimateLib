@@ -109,9 +109,21 @@ namespace Animate::DOM
 			"propagateSkewYMap"
 		};
 
+		static inline std::array LabelTypes = {
+			"none",
+			"name",
+			"comment",
+			"anchor"
+		};
+
 		static const char* GetAtributeName(Attributes attribute)
 		{
 			return AttributeNames[(uint32_t)attribute];
+		}
+
+		static const char* GetLabelType(int type)
+		{
+			return LabelTypes[type];
 		}
 
 	public:
@@ -122,6 +134,16 @@ namespace Animate::DOM
 
 		void SetAttributes(XFL::XFLWriter& writer)
 		{
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Name),
+				name
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::LabelType),
+				GetLabelType(labelType), GetLabelType(0)
+			);
+
 			writer.WriteAttr(
 				GetAtributeName(Attributes::Index),
 				index
@@ -136,11 +158,11 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::KeyMode),
 				keyMode
 			);
-
-			// TODO: rest of props
 		}
 
 	public:
+		String name;
+		int labelType = 0;
 		uint32_t index = 0;
 		uint32_t duration = 0;
 		uint32_t keyMode = 9728;
