@@ -112,6 +112,11 @@ namespace Animate::DOM
 		void SetAttributes(XFL::XFLWriter& writer)
 		{
 			writer.WriteAttr(
+				GetAtributeName(Attributes::Name),
+				name
+			);
+
+			writer.WriteAttr(
 				GetAtributeName(Attributes::Top),
 				bounds.top
 			);
@@ -133,6 +138,7 @@ namespace Animate::DOM
 		}
 
 	public:
+		String name;
 		int type = 0; // 0 - Static Text,  1 - Dynamic Text, 2 - Input Text
 		Bound bounds;
 

@@ -30,6 +30,10 @@ namespace Animate::Pic
 		TextType GetTextType() const { return m_text_type; }
 		void SetTextType(TextType type) { m_text_type = type; }
 
+		virtual void SetPIInstanceName(const String& name) {
+			m_name = name;
+		};
+
 		virtual bool GetMatrix(Matrix& matrix) const override {
 			matrix = m_matrix;
 			return true;
@@ -56,6 +60,7 @@ namespace Animate::Pic
 		TextType m_text_type = TextType::Static;
 		List<TextStyle> m_styles;
 		String m_characters;
+		String m_name;
 
 		Matrix m_matrix;
 		Library::GraphicEffectInstance m_graphic_effect;

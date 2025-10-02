@@ -14,6 +14,7 @@ namespace Animate::Pic
 	void Text::WriteXFL(XFL::XFLWriter& writer, uint32_t) const
 	{
 		DOM::DOMAbstractText text;
+		text.name = m_name;
 		text.type = static_cast<uint8_t>(m_text_type);
 		text.bounds = m_text_bound;
 
