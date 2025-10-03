@@ -36,7 +36,7 @@ namespace Animate::Pic
 		TextType GetTextType() const { return m_text_type; }
 		void SetTextType(TextType type) { m_text_type = type; }
 
-		virtual void SetPIInstanceName(const String& name) {
+		virtual void SetPIInstanceName(const String& name) override {
 			m_name = name;
 		};
 

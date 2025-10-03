@@ -13,7 +13,7 @@ namespace Animate::IO
 	{
 		if (m_context)
 		{
-			zip_close(m_context);
+			zip_stream_close(m_context);
 		}
 	}
 
@@ -55,6 +55,7 @@ namespace Animate::IO
 
 		zip_stream_copy(m_context, &buffer, &length);
 		m_file->write(buffer, length);
+		free(buffer);
 	}
 
 	bool PackedStream::Exist(const Path& path)

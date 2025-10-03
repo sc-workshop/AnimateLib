@@ -73,6 +73,8 @@ namespace Animate::Pic
 				case TextStyle::FontStyle::Bold:
 					text_attrs.bold = true;
 					break;
+				default:
+					break;
 				}
 
 				if (m_text_type == TextType::Dynamic)
