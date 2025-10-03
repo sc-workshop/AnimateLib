@@ -58,6 +58,22 @@ namespace Animate::Pic
 				DOM::DOMTextAttrs text_attrs;
 				text_attrs.face = style.fontName;
 				text_attrs.fontSize = style.fontSize;
+				text_attrs.autoKern = style.autoKern;
+				text_attrs.color = style.fontColor;
+				text_attrs.url = style.url;
+				text_attrs.margin = style.margin;
+				text_attrs.indent = style.indent;
+				text_attrs.lineSpacing = style.lineSpacing;
+				text_attrs.lineHeight = style.lineHeight;
+
+				switch (style.fontStyle) {
+				case TextStyle::FontStyle::Italic:
+					text_attrs.italic = true;
+					break;
+				case TextStyle::FontStyle::Bold:
+					text_attrs.bold = true;
+					break;
+				}
 
 				if (m_text_type == TextType::Dynamic)
 				{

@@ -125,6 +125,11 @@ namespace Animate::DOM
 			);
 
 			writer.WriteAttr(
+				GetAtributeName(Attributes::Face),
+				url
+			);
+
+			writer.WriteAttr(
 				GetAtributeName(Attributes::FillColor),
 				color, false, {0, 0, 0, 0xFF}
 			);
@@ -178,6 +183,7 @@ namespace Animate::DOM
 		bool italic = false;
 		bool rotation = false;
 		String face;
+		String url;
 		ColorAlpha color;
 
 		float indent = 0.f;

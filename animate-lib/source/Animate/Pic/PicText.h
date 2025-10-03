@@ -9,6 +9,12 @@ namespace Animate::Pic
 	class Text : public Object
 	{
 	public:
+		enum class LineType {
+			SingleLine = 0,
+			MultiLine,
+			MultiLineNoWrap
+		};
+
 		enum class TextType : uint8_t
 		{
 			Static = 0,

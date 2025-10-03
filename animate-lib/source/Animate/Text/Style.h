@@ -6,10 +6,24 @@ namespace Animate
 {
 	class TextStyle
 	{
-		public:
-			size_t length = 0;
-			String fontName;
-			uint32_t fontSize = 12;
+	public:
+		enum class FontStyle {
+			Regular = 0,
+			Bold,
+			Italic
+		};
 
+	public:
+		size_t length = 0;
+		String fontName;
+		uint32_t fontSize = 12;
+		ColorAlpha fontColor;
+		FontStyle fontStyle = FontStyle::Regular;
+		bool autoKern = false;
+		RangeF margin = {0.f, 0.f };
+		float indent = 0.f;
+		float lineSpacing = 0.f;
+		float lineHeight = 0.f;
+		String url;
 	};
 }
