@@ -42,12 +42,12 @@ namespace Animate::Pic
 		m_locked = status;
 	}
 
-	size_t Layer::GetNumFrames()
+	size_t Layer::GetDuration()
 	{
 		size_t result = 0;
-		for (auto& layer : *this)
+		for (auto& frame : *this)
 		{
-			result += layer.GetDuration();
+			result += frame.GetDuration();
 		}
 		return result;
 	}

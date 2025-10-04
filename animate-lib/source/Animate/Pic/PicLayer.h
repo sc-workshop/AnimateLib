@@ -36,7 +36,7 @@ namespace Animate::Pic
 		void SetLocked(bool status = true);
 
 	public:
-		size_t GetNumFrames();
+		size_t GetDuration();
 		Frame& CreateFrame();
 
 	public:
