@@ -2,8 +2,6 @@
 
 #include "core/platform/platform_info.h"
 
-#include "core/parallel/thread_pool.h"
-
 namespace Animate::Document
 {
 	SketchDocument::SketchDocument() : m_controller(*this)
@@ -83,7 +81,6 @@ namespace Animate::Document
 
 	void SketchDocument::WriteXFLSymbols(XFL::XFLFile& file, XFL::XFLWriter& writer) const
 	{
-		wk::ThreadPool pool;
 		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Symbols);
 
 		for (size_t i = 0; symbols.Length() > i; i++)
@@ -92,10 +89,15 @@ namespace Animate::Document
 			item.WriteXFL(file, items);
 		}
 
-		for (auto& symbol : symbols) {
-			pool.push([&symbol, &file]() {
-				symbol->WriteXFLSymbol(file);
-			});
-		}
+		size_t count = symbols.Length();
+		auto begin = symbols.begin();
+		auto seq = s_save_pool.submit_sequence(0, count, [begin, &file](size_t i) {
+			auto it = begin;
+			std::advance(it, i);
+
+			(*it)->WriteXFLSymbol(file);
+
+		}, BS::pr::high);
+		seq.wait();
 	}
 }

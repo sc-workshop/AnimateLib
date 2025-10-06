@@ -10,6 +10,7 @@
 #include "core/math/rect.h"
 #include "core/memory/ref.h"
 #include "core/generic/non_copyable.h"
+#include "core/parallel/bs_thread_pool.hpp"
 
 #include "Animate/Document/LibraryController.h"
 #include "Animate/Library/LibraryItem/LibraryFolder.h"
@@ -23,6 +24,7 @@ namespace Animate::Document
 	using wk::Ref;
 	using wk::Unique;
 
+
 	/// <summary>
 	/// Document root class
 	/// </summary>
@@ -31,6 +33,9 @@ namespace Animate::Document
 	private:
 		friend LibraryController;
 		NON_COPYABLE(SketchDocument);
+
+	private:
+		static inline BS::thread_pool<0> s_save_pool;
 
 	public:
 		SketchDocument();
