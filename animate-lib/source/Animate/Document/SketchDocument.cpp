@@ -91,7 +91,7 @@ namespace Animate::Document
 
 		size_t count = symbols.Length();
 		auto begin = symbols.begin();
-		auto seq = s_save_pool.submit_sequence(0, count, [begin, &file](size_t i) {
+		auto seq = GetSavePool().submit_sequence(0, count, [begin, &file](size_t i) {
 			auto it = begin;
 			std::advance(it, i);
 

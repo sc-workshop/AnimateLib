@@ -34,8 +34,14 @@ namespace Animate::Document
 		friend LibraryController;
 		NON_COPYABLE(SketchDocument);
 
+	public:
+		static inline size_t s_SaveThreadsCount = std::thread::hardware_concurrency();
+
 	private:
-		static inline BS::thread_pool<0> s_save_pool;
+		static BS::thread_pool<0>& GetSavePool() {
+			static BS::thread_pool<0> pool(SketchDocument::s_SaveThreadsCount);
+			return pool;
+		}
 
 	public:
 		SketchDocument();
