@@ -1,5 +1,7 @@
 #include "PicObject.h"
 
+#include "Animate/XFL/DOM/Effect/GraphicEffect.h"
+#include "Animate/Effects/GlowEffect.h"
 #include "Animate/Document/SketchDocument.h"
 
 namespace Animate::Pic
@@ -31,6 +33,28 @@ namespace Animate::Pic
 		auto writer = root.CreateProperty(DOM::PropTag::Matrix);
 		DOM::DOMMatrix domMatrix(matrix);
 		XFL::XFLWriter(writer, domMatrix);
+	}
+
+	void Object::WriteXFLGraphicEffect(XFL::XFLWriter& root, Effect::GraphicEffect& effect) const
+	{
+		switch (effect.EffectType()) {
+		case Effect::GraphicEffect::Type::Glow:
+		{
+			Effect::GlowEffect& glow = (Effect::GlowEffect&)effect;
+			DOM::GraphicEffect writer;
+			writer.type = effect.EffectType();
+			writer.blurX = effect.m_blurX;
+			writer.blurY = effect.m_blurY;
+			writer.quality = (uint32_t)effect.m_quality;
+			writer.color = glow.GetColor();
+			writer.strength = effect.m_strength;
+
+			XFL::XFLWriter filter(root, writer);
+		}
+		break;
+		default:
+			throw wk::Exception("Not implemented");
+		}
 	}
 }
 

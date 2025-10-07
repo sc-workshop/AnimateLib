@@ -17,6 +17,7 @@ namespace Animate::Pic
 		text.name = m_name;
 		text.type = static_cast<uint8_t>(m_text_type);
 		text.bounds = m_text_bound;
+		text.lineType = (uint32_t)GetLineType();
 
 		XFL::XFLWriter text_writer(writer, text);
 
@@ -28,6 +29,15 @@ namespace Animate::Pic
 		}
 
 		WriteXFLTextRuns(text_writer);
+
+		auto effects = m_graphic_effect.GetGraphicEffectList();
+		if (!effects.empty()) {
+			auto effect_writer = text_writer.CreateProperty(DOM::PropTag::Filters);
+
+			for (auto effect : effects) {
+				WriteXFLGraphicEffect(effect_writer, *effect);
+			}
+		}
 	}
 
 	void Text::WriteXFLTextRuns(XFL::XFLWriter& writer) const
@@ -60,11 +70,12 @@ namespace Animate::Pic
 				text_attrs.fontSize = style.fontSize;
 				text_attrs.autoKern = style.autoKern;
 				text_attrs.color = style.fontColor;
-				text_attrs.url = style.url;
 				text_attrs.margin = style.margin;
 				text_attrs.indent = style.indent;
 				text_attrs.lineSpacing = style.lineSpacing;
 				text_attrs.lineHeight = style.lineHeight;
+				text_attrs.url = style.url;
+				text_attrs.aligment = (uint32_t)style.aligment;
 
 				switch (style.fontStyle) {
 				case TextStyle::FontStyle::Italic:

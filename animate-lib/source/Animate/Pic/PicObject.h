@@ -8,6 +8,7 @@
 #include "Animate/XFL/Writer.h"
 #include "Animate/XFL/DOM/Math/Matrix.h"
 #include "Animate/Library/Properties/GraphicEffectInstance.h"
+#include "Animate/Effects/GraphicEffect.h"
 #include "Animate/TypeTraits.h"
 
 namespace Animate::Document
@@ -73,6 +74,7 @@ namespace Animate::Pic
 		virtual bool GetMatrix(Matrix& /*matrix*/) const { return false; }
 		virtual bool SetMatrix(const Matrix& /*matrix*/) { return false; }
 		void WriteXFLMatrix(XFL::XFLWriter& wrtier) const;
+		void WriteXFLGraphicEffect(XFL::XFLWriter& wrtier, Effect::GraphicEffect& effect) const;
 
 		virtual void SetWidth(float) {};
 		virtual void SetHeight(float) {};

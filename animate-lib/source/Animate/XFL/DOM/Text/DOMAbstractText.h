@@ -85,9 +85,21 @@ namespace Animate::DOM
 			"includeOutlines",
 		};
 
+		static inline std::array TextLineType =
+		{
+			"single line",
+			"multiline",
+			"multiline no wrap"
+		};
+
 		static const char* GetAtributeName(Attributes attribute)
 		{
 			return AttributeNames[(uint32_t)attribute];
+		}
+
+		static const char* GetTextLineType(uint32_t value)
+		{
+			return TextLineType[value];
 		}
 
 	public:
@@ -135,11 +147,17 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::Height),
 				bounds.height
 			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::LineType),
+				GetTextLineType(lineType), GetTextLineType(0)
+			);
 		}
 
 	public:
 		String name;
 		int type = 0; // 0 - Static Text,  1 - Dynamic Text, 2 - Input Text
+		uint32_t lineType = 0;
 		Bound bounds;
 
 	};

@@ -13,12 +13,20 @@ namespace Animate
 			Italic
 		};
 
+		enum class Aligment {
+			Left = 0,
+			Center,
+			Right,
+			Justify
+		};
+
 	public:
 		size_t length = 0;
 		String fontName;
 		uint32_t fontSize = 12;
 		ColorAlpha fontColor;
 		FontStyle fontStyle = FontStyle::Regular;
+		Aligment aligment = Aligment::Left;
 		bool autoKern = false;
 		RangeF margin = {0.f, 0.f };
 		float indent = 0.f;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PicObject.h"
+#include "Animate/Library/Properties/AdvancedEffectInstance.h"
 
 #include "Animate/Text/Style.h"
 
@@ -36,6 +37,9 @@ namespace Animate::Pic
 		TextType GetTextType() const { return m_text_type; }
 		void SetTextType(TextType type) { m_text_type = type; }
 
+		LineType GetLineType() const { return m_line_type; }
+		void SetLineType(LineType type) { m_line_type = type; }
+
 		virtual void SetPIInstanceName(const String& name) override {
 			m_name = name;
 		};
@@ -64,11 +68,12 @@ namespace Animate::Pic
 	private:
 		Bound m_text_bound;
 		TextType m_text_type = TextType::Static;
+		LineType m_line_type = LineType::SingleLine;
 		List<TextStyle> m_styles;
 		String m_characters;
 		String m_name;
 
 		Matrix m_matrix;
-		Library::GraphicEffectInstance m_graphic_effect;
+		Library::AdvancedEffectInstance m_graphic_effect;
 	};
 }

@@ -51,6 +51,10 @@ namespace Animate::Library
 		void SetColorTransformMode(ColorTransform::Type /*type*/) {}
 		ColorTransform::Type GetColorTransformMode() const { return m_matrix.transform_type; }
 
+		virtual bool SupportsGraphicEffects() {
+			return false;
+		}
+
 	public:
 		void WriteXFLColor(XFL::XFLWriter& root) const;
 		BlendMode GetXFLBlendMode() const;

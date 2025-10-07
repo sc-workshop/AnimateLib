@@ -33,7 +33,7 @@ namespace Animate::DOM
 			BitmapSize,
 			Target,
 			Url,
-			Rotation,
+			Rotation
 		};
 
 		static inline std::array AttributeNames =
@@ -58,13 +58,13 @@ namespace Animate::DOM
 			"bitmapSize",
 			"target",
 			"url",
-			"rotation",
+			"rotation"
 		};
 
 		static inline std::array TextAligment =
 		{
-			"start",
-			"end",
+			//"start",
+			//"end",
 			"left",
 			"center",
 			"right",
@@ -78,7 +78,7 @@ namespace Animate::DOM
 
 		static const char* GetTextAligmentName(uint32_t value)
 		{
-			return TextAligment[(uint32_t)value];
+			return TextAligment[value];
 		}
 
 	public:
