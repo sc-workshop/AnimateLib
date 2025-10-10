@@ -31,6 +31,7 @@ namespace Animate::Pic
 	public:
 		virtual bool IsPicPage() const override { return true; };
 		void SetOwner(Library::DocumentPage& doc);
+		Library::DocumentPage& GetOwner(Library::DocumentPage& doc) const;
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	public:

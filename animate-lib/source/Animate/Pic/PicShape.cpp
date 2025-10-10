@@ -73,7 +73,7 @@ namespace Animate::Pic
 		auto& doc = OwnerDoc();
 		auto& controller = doc.GetController();
 
-		std::visit([&root, &controller](const auto& fill_style) {
+		std::visit([this, &root, &controller](const auto& fill_style) {
 			using T = std::decay_t<decltype(fill_style)>;
 
 			if constexpr (std::is_same_v<T, Fill::SolidFillStyle>)
@@ -85,10 +85,10 @@ namespace Animate::Pic
 			}
 			else if constexpr (std::is_same_v<T, Fill::BitmapFillStyle>)
 			{
-				const auto& bitmap = controller.GetBitmap(fill_style.bitmap);
-
+				auto& doc = OwnerDoc();
 				DOM::BitmapFill style;
-				style.bitmap = bitmap.GetItemPath();
+				style.bitmap = fill_style.bitmap->GetItemPath();
+				doc.AddSymbolReferenceToSymDependCache(*fill_style.bitmap);
 
 				XFL::XFLWriter style_writer(root, style);
 
@@ -100,7 +100,7 @@ namespace Animate::Pic
 					XFL::XFLWriter matrix_writer(matrix, domMatrix);
 				}
 			}
-			}, style);
+		}, style);
 	}
 
 	void Shape::WriteXFLEdges(XFL::XFLWriter & writer) const

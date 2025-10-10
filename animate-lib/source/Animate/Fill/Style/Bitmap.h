@@ -9,12 +9,12 @@ namespace Animate::Fill
 	class BitmapFillStyle
 	{
 	public:
-		Library::LibraryItemID bitmap;
+		Library::MediaBits* bitmap;
 		Matrix transform;
 
 		bool operator ==(const BitmapFillStyle& other) const
 		{
-			return bitmap == other.bitmap && transform == other.transform;
+			return bitmap->GetID() == bitmap->GetID() && transform == other.transform;
 		}
 	};
 }
@@ -23,7 +23,7 @@ namespace std {
 	template <>
 	struct hash<Animate::Fill::BitmapFillStyle> {
 		size_t operator()(const Animate::Fill::BitmapFillStyle& style) const {
-			auto path = style.bitmap.ToString();
+			auto path = style.bitmap->GetItemPath().string();
 
 			wk::hash::XxHash hasher;
 			hasher.update((const uint8_t*)path.data(), path.size());

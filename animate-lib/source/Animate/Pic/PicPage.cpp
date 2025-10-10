@@ -17,6 +17,11 @@ namespace Animate::Pic
 		Object::SetOwner(doc.GetSketchDoc());
 	}
 
+	Library::DocumentPage& Page::GetOwner(Library::DocumentPage& doc) const
+	{
+		return *m_ownerPage;
+	}
+
 	void Page::WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const
 	{
 		uint32_t index = 0;

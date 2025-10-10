@@ -36,10 +36,12 @@ namespace Animate::Library
 		if (m_scale9)
 			item.scale_grid = m_scale9_rect;
 
+		m_document.SetCurrentDocPageForSymDependCache(this);
 		XFL::XFLWriter writer(item);
 		auto timeline = writer.CreateProperty(DOM::PropTag::Timeline);
 		WriteXFLTimeline(timeline);
 
+		m_document.SetCurrentDocPageForSymDependCache(nullptr);
 		file.SaveSymbol(writer, GetItemPath());
 	}
 

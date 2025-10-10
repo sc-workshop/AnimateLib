@@ -44,6 +44,12 @@ namespace Animate::Library
 			if (folder)
 			{
 				m_item_path = folder->GetItemPath() / m_item_name;
+#ifdef  _WINDOWS
+				std::string path = m_item_path.string();
+				std::ranges::replace(path, '\\', '/');
+				m_item_path = path;
+#endif //  _WINDOWS
+
 			}
 			else
 			{

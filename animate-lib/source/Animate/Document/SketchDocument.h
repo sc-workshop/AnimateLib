@@ -18,6 +18,7 @@
 #include "Animate/Library/LibraryItem/Media/MediaBits.h"
 #include "Animate/Library/LibraryItem/DocumentPage.h"
 #include "Vector/LibraryItemVector.h"
+#include "Animate/Assets/SymDependCache.h"
 
 namespace Animate::Document
 {
@@ -56,6 +57,11 @@ namespace Animate::Document
 
 		const wk::Rect& GetPaperBounds() const { return m_bounds; };
 		void SetPaperBounds(const wk::Rect bound) { m_bounds = bound; };
+
+	public:
+		void SetCurrentDocPageForSymDependCache(const Library::LibraryItem* item);
+		bool WriteSymDependCacheToXFL(XFL::XFLFile& file) const;
+		void AddSymbolReferenceToSymDependCache(Library::LibraryItem& item);
 
 	public:
 		XFL::XFLWriter CreateXFLDOMWriter() const;
@@ -103,5 +109,6 @@ namespace Animate::Document
 		LibraryItemsVector<Library::MediaElem> mediaElements;
 		LibraryItemsVector<Library::DocumentPage> symbols;
 		LibraryItemsVector<Library::DocumentPage> scenes;
+		SymDependCache m_cache;
 	};
 }

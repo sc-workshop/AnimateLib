@@ -9,6 +9,24 @@ namespace Animate::Document
 
 	}
 
+	void SketchDocument::SetCurrentDocPageForSymDependCache(const Library::LibraryItem* item)
+	{
+		m_cache.SetCurrentDocPage(item);
+	}
+
+	bool SketchDocument::WriteSymDependCacheToXFL(XFL::XFLFile& file) const
+	{
+		if (m_cache)
+			return m_cache.WriteXFL(file);
+
+		return false;
+	}
+
+	void SketchDocument::AddSymbolReferenceToSymDependCache(Library::LibraryItem& item)
+	{
+		m_cache.AddSymbolReference(item);
+	}
+
 	XFL::XFLWriter SketchDocument::CreateXFLDOMWriter() const
 	{
 		DOM::FLDocument document;
@@ -23,7 +41,7 @@ namespace Animate::Document
 
 		{
 			std::stringstream versionInfo;
-			versionInfo << "Saved by Animate Lib ";
+			versionInfo << "Saved by Animate Lib (SC WORKSHOP) ";
 			versionInfo << document.platform;
 			versionInfo << " " << document.majorVersion << " ";
 			versionInfo << "build " << document.buildNumber;
@@ -48,6 +66,8 @@ namespace Animate::Document
 		WriteXFLFolders(file, writer);
 		WriteXFLMedia(file, writer);
 		WriteXFLSymbols(file, writer);
+
+		WriteSymDependCacheToXFL(file);
 		
 		file.SaveXFL(writer);
 	}

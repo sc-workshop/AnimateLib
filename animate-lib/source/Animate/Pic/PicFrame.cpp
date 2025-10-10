@@ -2,6 +2,7 @@
 
 #include "Animate/Library/LibraryItem/DocumentPage.h"
 #include "Animate/Library/LibraryItem/Media/MediaBits.h"
+#include "Animate/Document/SketchDocument.h"
 
 #include "Animate/Pic/PicBitmap.h"
 #include "Animate/Pic/PicSymbol.h"
@@ -32,6 +33,14 @@ namespace Animate::Pic
 		uint32_t element_index = 0;
 		for (const Object& element : *this)
 		{
+			if (element.IsPicSymbol()) {
+				auto& doc = element.OwnerDoc();
+				auto& symbol = (const Pic::Symbol&)element;
+				auto& page = symbol.GetSymbolPage();
+
+				doc.AddSymbolReferenceToSymDependCache(page);
+			}
+			
 			element.WriteXFL(elements, element_index++);
 		}
 

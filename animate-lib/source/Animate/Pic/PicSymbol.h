@@ -39,8 +39,8 @@ namespace Animate::Pic
 		void SetSymbolBehavior(InstanceType type) { m_type = type; }
 
 		void SetSymbolPage(Library::DocumentPage& page) { m_page = &page; }
-		Library::DocumentPage& GetSymbolPage() {
-			assert(m_page == nullptr);
+		Library::DocumentPage& GetSymbolPage() const {
+			assert(m_page != nullptr);
 			return *m_page;
 		}
 

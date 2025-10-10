@@ -40,7 +40,7 @@ namespace Animate::Pic
 		}
 
 	private:
-		Library::MediaBits* m_mediBits;
+		Library::MediaBits* m_mediaBits;
 		Matrix m_matrix;
 	};
 }
