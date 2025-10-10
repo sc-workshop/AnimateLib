@@ -10,6 +10,6 @@ namespace Animate::XFL
 	class XflIoFile : public wk::BufferStream
 	{
 	public:
-		void CompressChunked(void* buffer, size_t length, uint16_t chunk_size);
+		void CompressChunked(void* buffer, size_t length);
 	};
 }

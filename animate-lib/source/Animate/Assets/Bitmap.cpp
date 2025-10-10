@@ -30,7 +30,7 @@ namespace Animate
 
         if (should_compress)
         {
-            file.CompressChunked(image.data(), image.data_length(), 4096 * 4);
+            file.CompressChunked(image.data(), image.data_length());
         }
         else
         {
