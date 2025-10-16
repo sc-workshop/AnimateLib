@@ -16,6 +16,7 @@ namespace Animate::Pic
         uint32_t index = 0;
         for (const auto& member : m_childrens)
         {
+            member->SetMatrix(m_matrix);
             member->WriteXFL(members, index++);
         }
     }

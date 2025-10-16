@@ -41,8 +41,8 @@ namespace Animate::Pic
 
 	public: // Constructor
 		virtual ~Object() = default;
-		void SetOwner(Object& parent);
-		void SetOwner(Document::SketchDocument& document);
+		virtual void SetOwner(Object& parent);
+		virtual void SetOwner(Document::SketchDocument& document);
 
 	public: // Object types
 		virtual bool IsPicPage() const { return false; };
@@ -56,10 +56,10 @@ namespace Animate::Pic
 		virtual bool IsPicTweenable() const { return false; };
 		virtual bool IsPicGroup() const { return false; };
 
-		Document::SketchDocument& OwnerDoc() const;
+		Document::SketchDocument* OwnerDoc() const;
 		Object* Parent() const { return m_parent;  };
 
-		Object* Clone()
+		Object* Clone() const
 		{
 			Object* result = CloneObject();
 			result->CloneChildrens();
@@ -87,6 +87,14 @@ namespace Animate::Pic
 		T& AddChild(Args&&... args)
 		{
 			auto object = wk::CreateRef<T>(std::forward<Args>(args)...);
+			object->SetOwner(*this);
+			m_childrens.push_back(object);
+			return *object;
+		}
+
+		Object& AddReference(const Object& obj)
+		{
+			auto object = wk::Ref<Object>(obj.Clone());
 			object->SetOwner(*this);
 			m_childrens.push_back(object);
 			return *object;
@@ -151,7 +159,7 @@ namespace Animate::Pic
 
 		size_t ChildrenCount() const { return m_childrens.size(); }
 
-		virtual Object* CloneObject() = 0;
+		virtual Object* CloneObject() const = 0;
 
 		void CloneChildrens()
 		{

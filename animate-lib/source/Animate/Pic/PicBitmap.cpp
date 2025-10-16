@@ -9,8 +9,10 @@ namespace Animate::Pic
 	{
 		if (!m_mediaBits) return;
 
-		auto& doc = OwnerDoc();
-		doc.AddSymbolReferenceToSymDependCache(*m_mediaBits);
+		auto doc = OwnerDoc();
+
+		if (doc)
+			doc->AddSymbolReferenceToSymDependCache(*m_mediaBits);
 
 		DOM::DOMBitmapInstance instance;
 		instance.libraryItemName = XFL::XFLWriter::MakePrefferedPath(m_mediaBits->GetItemPath());

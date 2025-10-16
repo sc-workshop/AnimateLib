@@ -9,19 +9,23 @@ namespace Animate::Pic
 	void Object::SetOwner(Document::SketchDocument& document)
 	{
 		m_owner = &document;
-		m_parent = nullptr;
+		for (auto& child : m_childrens)
+		{
+			child->SetOwner(document);
+		}
 	}
 
 	void Object::SetOwner(Object& parent)
 	{
-		m_owner = &parent.OwnerDoc();
 		m_parent = &parent;
+
+		auto doc = parent.OwnerDoc();
+		if (doc) SetOwner(*doc);
 	}
 
-	Document::SketchDocument& Object::OwnerDoc() const
+	Document::SketchDocument* Object::OwnerDoc() const
 	{
-		assert(m_owner != nullptr);
-		return *m_owner;
+		return m_owner;
 	}
 
 	void Object::WriteXFLMatrix(XFL::XFLWriter& root) const

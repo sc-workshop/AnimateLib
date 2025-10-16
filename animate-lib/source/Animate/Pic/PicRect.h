@@ -19,7 +19,7 @@ namespace Animate::Pic
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	protected:
-		virtual Object* CloneObject() override
+		virtual Object* CloneObject() const override
 		{
 			return new Rectangle(*this);
 		}

@@ -33,12 +33,12 @@ namespace Animate::Pic
 		uint32_t element_index = 0;
 		for (const Object& element : *this)
 		{
-			if (element.IsPicSymbol()) {
-				auto& doc = element.OwnerDoc();
+			if (element.IsPicSymbol() && element.OwnerDoc()) {
+				auto doc = element.OwnerDoc();
 				auto& symbol = (const Pic::Symbol&)element;
 				auto& page = symbol.GetSymbolPage();
 
-				doc.AddSymbolReferenceToSymDependCache(page);
+				doc->AddSymbolReferenceToSymDependCache(page);
 			}
 			
 			element.WriteXFL(elements, element_index++);

@@ -19,6 +19,11 @@ namespace Animate::Pic
 			return AddChild<T>(std::forward<Args>(args)...);
 		}
 
+		Object& AddElementReference(const Object& obj)
+		{
+			return AddReference(obj);
+		}
+
 		virtual bool GetMatrix(Matrix& matrix) const override {
 			matrix = m_matrix;
 			return true;
@@ -29,10 +34,16 @@ namespace Animate::Pic
 			return true;
 		}
 
-		virtual Object* CloneObject() override
+		virtual Object* CloneObject() const override
 		{
 			return new Group(*this);
 		}
+
+	public:
+		Iterator<Object> begin() { return Iterator<Object>::CreateBegin(*this); }
+		Iterator<Object> end() { return Iterator<Object>::CreateEnd(*this); }
+		ConstIterator<Object> begin() const { return ConstIterator<Object>::CreateBegin(*this); }
+		ConstIterator<Object> end() const { return ConstIterator<Object>::CreateEnd(*this); }
 
 	private:
 		Matrix m_matrix;

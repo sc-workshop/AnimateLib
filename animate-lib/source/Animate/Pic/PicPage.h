@@ -31,7 +31,7 @@ namespace Animate::Pic
 	public:
 		virtual bool IsPicPage() const override { return true; };
 		void SetOwner(Library::DocumentPage& doc);
-		Library::DocumentPage& GetOwner(Library::DocumentPage& doc) const;
+		Library::DocumentPage* GetOwner() const;
 		virtual void WriteXFL(XFL::XFLWriter& writer, uint32_t /*index*/) const override;
 
 	public:
@@ -56,7 +56,7 @@ namespace Animate::Pic
 		Layer& AddLayer(bool a1, bool makeActive);
 		Layer& AddFolder();
 
-		virtual Object* CloneObject() override
+		virtual Object* CloneObject() const override
 		{
 			return new Page(*this);
 		}

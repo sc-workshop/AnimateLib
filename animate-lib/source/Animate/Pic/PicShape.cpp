@@ -70,9 +70,10 @@ namespace Animate::Pic
 		fill_style.index = index;
 
 		XFL::XFLWriter root(writer, fill_style);
-		auto& doc = OwnerDoc();
-		auto& controller = doc.GetController();
+		auto doc = OwnerDoc();
+		if (!doc) return;
 
+		auto& controller = doc->GetController();
 		std::visit([this, &root, &controller](const auto& fill_style) {
 			using T = std::decay_t<decltype(fill_style)>;
 
@@ -85,10 +86,10 @@ namespace Animate::Pic
 			}
 			else if constexpr (std::is_same_v<T, Fill::BitmapFillStyle>)
 			{
-				auto& doc = OwnerDoc();
+				auto doc = OwnerDoc();
 				DOM::BitmapFill style;
 				style.bitmap = fill_style.bitmap->GetItemPath();
-				doc.AddSymbolReferenceToSymDependCache(*fill_style.bitmap);
+				doc->AddSymbolReferenceToSymDependCache(*fill_style.bitmap);
 
 				XFL::XFLWriter style_writer(root, style);
 

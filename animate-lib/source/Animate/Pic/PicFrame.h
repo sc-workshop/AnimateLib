@@ -52,6 +52,11 @@ namespace Animate::Pic
 			return AddChild<T>(std::forward<Args>(args)...);
 		}
 
+		Object& AddElementReference(const Object& obj)
+		{
+			return AddReference(obj);
+		}
+
 		Bitmap& AddBitmapChildren(Library::MediaBits& bits);
 		Symbol& AddSymbolChildren(Library::DocumentPage& page);
 
@@ -65,7 +70,7 @@ namespace Animate::Pic
 		Object& operator [](size_t index) { return ChildAt<Object>(index); }
 
 	protected:
-		virtual Object* CloneObject() override
+		virtual Object* CloneObject() const override
 		{
 			return new Frame(*this);
 		}
