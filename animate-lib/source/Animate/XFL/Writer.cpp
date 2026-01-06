@@ -83,6 +83,6 @@ namespace Animate::XFL
 		}
 
 		XMLWriter writer(stream, path);
-		m_root->print(writer);
+		m_root->save(writer, "", pugi::format_raw);
 	}
 }

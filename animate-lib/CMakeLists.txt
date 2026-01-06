@@ -8,7 +8,7 @@ target_include_directories(${TARGET} PUBLIC source)
 target_link_libraries(${TARGET} PUBLIC
     wk::core
     pugixml::pugixml
-    zip
+    libzip::zip
     ZLIB::ZLIB
 )
 

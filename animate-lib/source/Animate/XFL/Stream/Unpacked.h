@@ -14,7 +14,7 @@ namespace Animate::IO
 	{
 	public:
 		virtual bool Open(const Path& path, OpenType type);
-		virtual void Flush() {};
+		virtual void Close() {};
 		virtual bool Exist(const Path& path);
 		virtual bool Writable();
 

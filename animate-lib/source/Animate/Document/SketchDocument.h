@@ -33,6 +33,8 @@ namespace Animate::Document
 	{	
 	private:
 		friend LibraryController;
+		friend Library::MediaElem;
+
 		NON_COPYABLE(SketchDocument);
 
 	public:
@@ -42,6 +44,10 @@ namespace Animate::Document
 		static BS::thread_pool<0>& GetSavePool() {
 			static BS::thread_pool<0> pool(SketchDocument::s_SaveThreadsCount);
 			return pool;
+		}
+
+		size_t& GetMediaCounter() {
+			return m_media_counter;
 		}
 
 	public:
@@ -103,6 +109,7 @@ namespace Animate::Document
 		wk::ColorRGB m_backgroundColor = {0xFF, 0xFF, 0XFF};
 		wk::Rect m_bounds{0, 0, 550, 450};
 		LibraryController m_controller;
+		mutable size_t m_media_counter = 0;
 
 	private:
 		LibraryItemsVector<Library::LibraryFolder> libraryFolders;

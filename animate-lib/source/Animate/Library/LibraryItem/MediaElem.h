@@ -11,9 +11,6 @@ namespace Animate::Library
 	/// </summary>
 	class MediaElem : public LibraryItem
 	{
-	private:
-		static inline size_t MediaCounter = 0;
-
 	public:
 		MediaElem(Document::SketchDocument& document, const std::u16string& name = u"");
 		virtual ~MediaElem() = default;

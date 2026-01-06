@@ -33,8 +33,7 @@ namespace Animate::XFL
 		}
 
 		document.Save("DOMDocument.xml", *m_stream);
-
-		m_stream->Flush();
+		m_stream->Close();
 	}
 
 	void XFLFile::SaveSymbol(XFLWriter& document, const Path& path)

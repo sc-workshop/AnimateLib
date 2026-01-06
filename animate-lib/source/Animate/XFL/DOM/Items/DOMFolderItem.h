@@ -41,6 +41,6 @@ namespace Animate::DOM
 		}
 
 	public:
-		bool is_expanded;
+		bool is_expanded = false;
 	};
 }

@@ -82,10 +82,12 @@ namespace Animate::Document
 			item.WriteXFL(file, items);
 		}
 	}
+
 	void SketchDocument::WriteXFLMedia(XFL::XFLFile& file, XFL::XFLWriter& writer) const
 	{
 		XFL::XFLProp items = writer.CreateProperty(DOM::PropTag::Media);
 
+		m_media_counter = 0;
 		for (size_t i = 0; mediaElements.Length() > i; i++)
 		{
 			auto& item = mediaElements[i];

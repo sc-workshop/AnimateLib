@@ -39,7 +39,7 @@ namespace Animate::IO
 			Write(path, stream.data(), stream.length());
 		}
 
-		virtual void Flush() = 0;
+		virtual void Close() = 0;
 		virtual bool Exist(const Path& path) = 0;
 		virtual bool Writable() = 0;
 

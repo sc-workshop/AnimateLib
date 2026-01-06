@@ -15,10 +15,10 @@ namespace Animate::Library
 		time_t creation_time;
 		time(&creation_time);
 
-		m_media_filename = "M " + std::to_string(MediaCounter++) + " " + std::to_string(creation_time) + ".dat";
+		m_media_filename = "M " + std::to_string(m_document.GetMediaCounter()++) + " " + std::to_string(creation_time) + ".dat";
 	}
 
-	void MediaElem::UpdateFromSource()
+	void MediaElem::UpdateFromSource()	
 	{
 		time(&m_last_source_update);
 	}
