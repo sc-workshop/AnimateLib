@@ -58,6 +58,7 @@ namespace Animate::Pic
 		virtual void SetHeight(float value) override;
 
 		void ApplyStyle(const TextStyle& style);
+		void SetText(const String& text) { m_characters = text; }
 			
 	protected:
 		virtual Object* CloneObject() const override

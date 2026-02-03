@@ -122,12 +122,12 @@ namespace Animate::XFL
 
 		void SetValue(const std::string& str)
 		{
-			m_node.set_value(str);
+			m_node.append_child(pugi::node_pcdata).set_value(str);
 		}
 
 		void SetValue(const std::u16string& str)
 		{
-			m_node.set_value(wk::StringConverter::ToUTF8(str));
+			m_node.append_child(pugi::node_pcdata).set_value(wk::StringConverter::ToUTF8(str));
 		}
 
 	public:

@@ -53,13 +53,8 @@ namespace Animate::Pic
 			// Textfield text
 			if (!m_characters.empty()) {
 				auto character_writer = textrun_writer.CreateProperty(DOM::PropTag::Characters);
-				/*size_t string_end_offset = string_offset + style.length;
-				if (!style.length)
-				{
-					string_end_offset = m_characters.size();
-				}*/
-
-				character_writer.SetValue(m_characters.substr(string_offset, string_offset + style.length));
+				String textRunCharacters = m_characters.substr(string_offset, string_offset + style.length);
+				character_writer.SetValue(textRunCharacters);
 			}
 
 			// Textfield style
@@ -120,8 +115,7 @@ namespace Animate::Pic
 	{
 		m_styles.clear();
 		auto& style = m_styles.emplace_back(reference_style);
-		style.length = 0;
-
+		style.length = m_characters.length();
 	}
 
 }
