@@ -2,6 +2,7 @@
 
 #include "core/generic/non_copyable.h"
 #include "core/memory/ref.h"
+#include "core/algorithm/find.hpp"
 
 #include "Animate/Library/LibraryItem.h"
 #include "Animate/Library/Properties/LibraryItemID.h"
@@ -80,7 +81,7 @@ namespace Animate::Document
 
 		Pointer Find(std::function<bool(Value&)> cond)
 		{
-			auto it = std::find_if(std::execution::par_unseq, m_symbols.begin(), m_symbols.end(), cond);
+            auto it = wk::find_if_parallel(m_symbols.begin(), m_symbols.end(), cond);
 
 			if (it != m_symbols.end())
 			{
