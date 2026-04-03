@@ -101,7 +101,7 @@ namespace Animate::DOM
 
 			writer.WriteAttr(
 				GetAtributeName(Attributes::AutoKern),
-				autoKern, false
+				autoKern, true
 			);
 
 			writer.WriteAttr(

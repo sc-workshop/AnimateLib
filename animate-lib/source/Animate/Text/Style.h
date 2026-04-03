@@ -27,7 +27,7 @@ namespace Animate
 		ColorAlpha fontColor;
 		FontStyle fontStyle = FontStyle::Regular;
 		Aligment aligment = Aligment::Left;
-		bool autoKern = false;
+		bool autoKern = true;
 		RangeF margin = {0.f, 0.f };
 		float indent = 0.f;
 		float lineSpacing = 0.f;
