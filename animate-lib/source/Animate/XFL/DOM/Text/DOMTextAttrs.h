@@ -146,7 +146,7 @@ namespace Animate::DOM
 
 			writer.WriteAttr<float>(
 				GetAtributeName(Attributes::LineSpacing),
-				lineSpacing, 0.f
+				lineSpacing, 2.f
 			);
 
 			writer.WriteAttr<float>(
