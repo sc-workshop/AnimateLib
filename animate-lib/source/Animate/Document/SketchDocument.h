@@ -41,8 +41,8 @@ namespace Animate::Document
 		static inline size_t s_SaveThreadsCount = std::thread::hardware_concurrency();
 
 	private:
-		static BS::thread_pool<0>& GetSavePool() {
-			static BS::thread_pool<0> pool(SketchDocument::s_SaveThreadsCount);
+		static BS::light_thread_pool& GetSavePool() {
+            static BS::light_thread_pool pool(SketchDocument::s_SaveThreadsCount);
 			return pool;
 		}
 

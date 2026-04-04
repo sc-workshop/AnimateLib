@@ -113,13 +113,22 @@ namespace Animate::Document
 
 		size_t count = symbols.Length();
 		auto begin = symbols.begin();
-		auto seq = GetSavePool().submit_sequence(0, count, [begin, &file](size_t i) {
-			auto it = begin;
-			std::advance(it, i);
+		
+		// For debug purposes export symbol one by one
+        if constexpr (WK_DEBUG) {
+            for (auto& item : symbols)
+			{
+				item->WriteXFLSymbol(file);
+            }
+        } else {
+            auto& pool = GetSavePool();
+            auto seq = pool.submit_sequence(0, count, [begin, &file](size_t i) {
+                auto it = begin;
+                std::advance(it, i);
 
-			(*it)->WriteXFLSymbol(file);
-
-		}, BS::pr::high);
-		seq.wait();
+                (*it)->WriteXFLSymbol(file);
+            });
+            seq.wait();
+		}
 	}
 }
