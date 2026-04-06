@@ -51,6 +51,7 @@ namespace Animate::Document
 
 		document.frameRate = GetFrameRate();
 		document.backgroundColor = GetBackgoundColor();
+		document.doc_type = m_doc_type;
 
 		document.width = std::abs(m_bounds.x - m_bounds.width);
 		document.height = std::abs(m_bounds.y - m_bounds.height);
@@ -68,7 +69,7 @@ namespace Animate::Document
 		WriteXFLSymbols(file, writer);
 
 		WriteSymDependCacheToXFL(file);
-		
+
 		file.SaveXFL(writer);
 	}
 
@@ -92,10 +93,10 @@ namespace Animate::Document
 		{
 			auto& item = mediaElements[i];
 			item.WriteXFL(file, items);
-		
+
 			XFL::XflIoFile media_file;
 			item.WriteXFLContent(media_file);
-		
+
 			fs::path media_path = item.GetXFLMediaPath();
 			file.SaveBinary(media_path, media_file);
 		}
@@ -113,22 +114,23 @@ namespace Animate::Document
 
 		size_t count = symbols.Length();
 		auto begin = symbols.begin();
-		
+
 		// For debug purposes export symbol one by one
-        if constexpr (WK_DEBUG) {
-            for (auto& item : symbols)
+		if constexpr (WK_DEBUG) {
+			for (auto& item : symbols)
 			{
 				item->WriteXFLSymbol(file);
-            }
-        } else {
-            auto& pool = GetSavePool();
-            auto seq = pool.submit_sequence(0, count, [begin, &file](size_t i) {
-                auto it = begin;
-                std::advance(it, i);
+			}
+		}
+		else {
+			auto& pool = GetSavePool();
+			auto seq = pool.submit_sequence(0, count, [begin, &file](size_t i) {
+				auto it = begin;
+				std::advance(it, i);
 
-                (*it)->WriteXFLSymbol(file);
-            });
-            seq.wait();
+				(*it)->WriteXFLSymbol(file);
+				});
+			seq.wait();
 		}
 	}
 }

@@ -50,10 +50,10 @@ namespace Animate::XFL
 			std::is_arithmetic_v<T> ||
 			std::is_pointer_v<T>
 			, bool> = true>
-		void WriteAttr(const std::string & name, const T & value, const T& default_value, const T& min, const T& max)
+		void WriteAttr(const std::string & name, const T & value, const T & default_value, const T & min, const T & max)
 		{
 			if (value == default_value) return;
-			
+
 			T finalValue = std::max<T>(std::min<T>(value, max), min);
 
 			m_node.append_attribute(name)
@@ -67,12 +67,12 @@ namespace Animate::XFL
 			std::is_arithmetic_v<T> ||
 			std::is_pointer_v<T>
 			, bool> = true>
-		void WriteAttr(const std::string& name, const T& value, const T& default_value)
+		void WriteAttr(const std::string & name, const T & value, const T & default_value)
 		{
 			if (value == default_value) return;
 
 			m_node.append_attribute(name)
-					.set_value(value);
+				.set_value(value);
 		}
 
 		template<
@@ -88,7 +88,7 @@ namespace Animate::XFL
 				.set_value(value);
 		}
 
-		void WriteAttr(const std::string& name, const wk::ColorRGB& value, const wk::ColorRGB default_value = {0xFF, 0xFF, 0xFF})
+		void WriteAttr(const std::string& name, const wk::ColorRGB& value, const wk::ColorRGB default_value = { 0xFF, 0xFF, 0xFF })
 		{
 			if (value == default_value) return;
 
@@ -118,6 +118,29 @@ namespace Animate::XFL
 
 			m_node.append_attribute(name)
 				.set_value(wk::StringConverter::ToUTF8(value));
+		}
+
+		void WriteAttr(const std::string& name, const GUID& value)
+		{
+			std::stringstream ss;
+			ss << wk::StringConverter::ToHex(value.data1) << "-"
+				<< wk::StringConverter::ToHex(value.data2) << "-"
+				<< wk::StringConverter::ToHex(value.data3) << "-";
+
+			for (size_t i = 0; i < value.data4.size(); i++)
+			{
+				if (i == 2)
+				{
+					ss << "-";
+				}
+
+				ss << wk::StringConverter::ToHex(value.data4[i]);
+			}
+
+			std::string result = ss.str();
+			std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+
+			WriteAttr(name, result);
 		}
 
 		void SetValue(const std::string& str)
@@ -156,7 +179,7 @@ namespace Animate::XFL
 
 			return result;
 		}
-		
+
 	private:
 		void InitializeNode(DOM::DOMElement& element, bool isRoot = false);
 
@@ -176,7 +199,7 @@ namespace Animate::XFL
 			std::transform(result.begin(), result.end(), result.begin(),
 				[](uint8_t c) { return (uint8_t)std::toupper(c); });
 
-			
+
 			attr.set_value(std::string("#") + result);
 		}
 

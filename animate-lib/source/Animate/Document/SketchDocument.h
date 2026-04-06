@@ -30,7 +30,7 @@ namespace Animate::Document
 	/// Document root class
 	/// </summary>
 	class SketchDocument
-	{	
+	{
 	private:
 		friend LibraryController;
 		friend Library::MediaElem;
@@ -42,7 +42,7 @@ namespace Animate::Document
 
 	private:
 		static BS::light_thread_pool& GetSavePool() {
-            static BS::light_thread_pool pool(SketchDocument::s_SaveThreadsCount);
+			static BS::light_thread_pool pool(SketchDocument::s_SaveThreadsCount);
 			return pool;
 		}
 
@@ -64,6 +64,8 @@ namespace Animate::Document
 		const wk::Rect& GetPaperBounds() const { return m_bounds; };
 		void SetPaperBounds(const wk::Rect bound) { m_bounds = bound; };
 
+		void SetDocumentType(const DocumentType& doc) { m_doc_type = doc; };
+
 	public:
 		void SetCurrentDocPageForSymDependCache(const Library::LibraryItem* item);
 		bool WriteSymDependCacheToXFL(XFL::XFLFile& file) const;
@@ -77,7 +79,7 @@ namespace Animate::Document
 		void WriteXFLSymbols(XFL::XFLFile& file, XFL::XFLWriter& writer) const;
 
 	public:
-		LibraryController& GetController() { return m_controller;  }
+		LibraryController& GetController() { return m_controller; }
 
 	private:
 		template<typename T, typename ... Args>
@@ -93,7 +95,7 @@ namespace Animate::Document
 		}
 
 		template<typename T, typename... Args>
-		T& CreateSymbol (Args&&... args)
+		T& CreateSymbol(Args&&... args)
 		{
 			return symbols.Add<T>(std::forward<Args>(args)...);
 		}
@@ -106,10 +108,11 @@ namespace Animate::Document
 
 	private:
 		int m_frameRate = 24;
-		wk::ColorRGB m_backgroundColor = {0xFF, 0xFF, 0XFF};
-		wk::Rect m_bounds{0, 0, 550, 450};
+		wk::ColorRGB m_backgroundColor = { 0xFF, 0xFF, 0XFF };
+		wk::Rect m_bounds{ 0, 0, 550, 450 };
 		LibraryController m_controller;
 		mutable size_t m_media_counter = 0;
+		DocumentType m_doc_type{};
 
 	private:
 		LibraryItemsVector<Library::LibraryFolder> libraryFolders;

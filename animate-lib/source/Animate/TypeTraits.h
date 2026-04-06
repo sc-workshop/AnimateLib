@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <filesystem>
+#include <array>
 
 #include "core/math/color_rgb.h"
 #include "core/math/color_rgba.h"
@@ -35,4 +36,16 @@ namespace Animate
 	using RangeF = wk::Point_t<float>;
 
 	using Point2D = wk::Point_t<float>;
-} 
+
+	struct GUID {
+		uint32_t data1;
+		uint16_t data2;
+		uint16_t data3;
+		std::array<uint8_t, 8> data4;
+	};
+	
+	struct DocumentType {
+		std::string name;
+		GUID documentId;
+	};
+}

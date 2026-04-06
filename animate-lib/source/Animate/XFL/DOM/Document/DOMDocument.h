@@ -283,6 +283,18 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::BuildNumber),
 				buildNumber
 			);
+
+			if (!doc_type.name.empty()) {
+				writer.WriteAttr(
+					GetAtributeName(Attributes::FiletypeName),
+					doc_type.name
+				);
+
+				writer.WriteAttr(
+					GetAtributeName(Attributes::FiletypeGUID),
+					doc_type.documentId
+				);
+			}
 		}
 
 	public:
@@ -295,6 +307,7 @@ namespace Animate::DOM
 		int buildNumber = 0;
 		int frameRate = 0;
 		wk::ColorRGB backgroundColor = BackgroundColor_Default;
+		DocumentType doc_type;
 
 		uint32_t width = 0;
 		uint32_t height = 0;
