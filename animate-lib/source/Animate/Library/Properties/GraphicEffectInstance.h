@@ -44,6 +44,9 @@ namespace Animate::Library
 
 		void SetBlendMode(BlendMode mode) { m_blendMode = mode; }
 
+		void SetVisible(bool visible) { m_visible = visible; }
+		bool Visible() const { return m_visible; }
+
 		void SetColorTransforEffectAlpha(int16_t alpha);
 		void SetColorTransforEffectBrightness(int16_t brightness);
 		void SetColorTransforEffectTint(Color tint, int16_t multiplier);
@@ -62,5 +65,6 @@ namespace Animate::Library
 	private:
 		BlendMode m_blendMode = BlendMode::Normal;
 		ColorTransform m_matrix;
+		bool m_visible = true;
 	};
 }

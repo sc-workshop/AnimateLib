@@ -142,6 +142,11 @@ namespace Animate::DOM
 				name
 			);
 
+			writer.WriteAttr(
+				GetAtributeName(Attributes::IsVisible),
+				visible, true
+			);
+
 			BlendMode::Write(
 				writer, GetAtributeName(Attributes::BlendMode),
 				blendMode
@@ -154,6 +159,6 @@ namespace Animate::DOM
 		String name;
 		Pic::Symbol::InstanceType type;
 		BlendMode::Mode blendMode = BlendMode::Mode::Normal;
-		
+		bool visible;
 	};
 }

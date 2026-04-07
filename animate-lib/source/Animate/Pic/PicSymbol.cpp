@@ -21,6 +21,7 @@ namespace Animate::Pic
 		instance.name = m_name;
 		instance.type = m_type;
 		instance.blendMode = m_graphic_effect.GetXFLBlendMode();
+		instance.visible = m_graphic_effect.Visible();
 
 		XFL::XFLWriter writer(root, instance);
 		WriteXFLMatrix(writer);
