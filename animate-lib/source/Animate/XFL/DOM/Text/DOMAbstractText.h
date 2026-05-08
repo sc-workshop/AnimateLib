@@ -109,7 +109,7 @@ namespace Animate::DOM
 			{
 			case 0:
 				return ElementTag::DOMStaticText;
-			
+
 			case 1:
 				return ElementTag::DOMDynamicText;
 
@@ -152,6 +152,11 @@ namespace Animate::DOM
 				GetAtributeName(Attributes::LineType),
 				GetTextLineType(lineType), GetTextLineType(0)
 			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::IsSelectable),
+				isSelectable, true
+			);
 		}
 
 	public:
@@ -159,6 +164,6 @@ namespace Animate::DOM
 		int type = 0; // 0 - Static Text,  1 - Dynamic Text, 2 - Input Text
 		uint32_t lineType = 0;
 		Bound bounds;
-
+		bool isSelectable = true;
 	};
 }

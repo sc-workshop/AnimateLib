@@ -19,7 +19,8 @@ namespace Animate::Pic
 		auto frames = writer.CreateProperty(DOM::PropTag::Frames);
 		for (const Frame& frame : *this)
 		{
-			frame.WriteXFL(frames, index++);
+			frame.WriteXFL(frames, index);
+			index += frame.GetDuration();
 		}
 	}
 

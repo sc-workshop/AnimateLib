@@ -18,6 +18,7 @@ namespace Animate::Pic
 		text.type = static_cast<uint8_t>(m_text_type);
 		text.bounds = m_text_bound;
 		text.lineType = (uint32_t)GetLineType();
+		text.isSelectable = m_isSelectable;
 
 		XFL::XFLWriter text_writer(writer, text);
 

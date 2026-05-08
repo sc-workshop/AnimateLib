@@ -40,6 +40,9 @@ namespace Animate::Pic
 		LineType GetLineType() const { return m_line_type; }
 		void SetLineType(LineType type) { m_line_type = type; }
 
+		bool GetIsSelectable() const { return m_isSelectable; }
+		void SetSelectable(bool status) { m_isSelectable = status; }
+
 		virtual void SetPIInstanceName(const String& name) override {
 			m_name = name;
 		};
@@ -73,6 +76,7 @@ namespace Animate::Pic
 		List<TextStyle> m_styles;
 		String m_characters;
 		String m_name;
+		bool m_isSelectable;
 
 		Matrix m_matrix;
 		Library::AdvancedEffectInstance m_graphic_effect;
