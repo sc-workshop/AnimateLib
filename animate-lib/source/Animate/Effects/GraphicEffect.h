@@ -32,18 +32,34 @@ namespace Animate::Effect {
 		virtual ~GraphicEffect() = default;
 		virtual Type EffectType() = 0;
 
-		void SetBlurX(uint8_t value) { m_blurX = value; }
-		void SetBlurY(uint8_t value) { m_blurY = value; }
+		void SetBlurX(float value) {
+			if (value >= 0.0 && value <= 255.0)
+				m_blurX = value;
+		}
+		float GetBlurX() const { return m_blurX; }
+
+		void SetBlurY(float value) {
+			if (value >= 0.0 && value <= 255.0)
+				m_blurY = value;
+		}
+		float GetBlurY() const { return m_blurY; }
+
 		void SetQuality(Quality value) { m_quality = value; }
-		void SetStrength(float value) { m_strength = value; }
+		Quality GetQuality() const { return m_quality; }
+
+		void SetStrength(uint32_t value) {
+			if (value <= 25500)
+				m_strength = value;
+		}
+		uint32_t GetStrength() const { return m_strength; }
 
 	public:
 		static GraphicEffect* CreateEffect(Type type);
 
 	protected:
-		uint8_t m_blurX = 4;
-		uint8_t m_blurY = 4;
+		float m_blurX = 4;
+		float m_blurY = 4;
 		Quality m_quality = Quality::Low;
-		float m_strength = 1.f;
+		uint32_t m_strength = 100;
 	};
 }

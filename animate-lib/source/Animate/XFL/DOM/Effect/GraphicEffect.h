@@ -92,12 +92,12 @@ namespace Animate::DOM
 
 		void SetAttributes(XFL::XFLWriter& writer)
 		{
-			writer.WriteAttr<uint32_t>(
-				GetAtributeName(Attributes::BlurX), blurX, 4
+			writer.WriteAttr(
+				GetAtributeName(Attributes::BlurX), blurX, 4.f
 			);
 
-			writer.WriteAttr<uint32_t>(
-				GetAtributeName(Attributes::BlurY), blurY, 4
+			writer.WriteAttr(
+				GetAtributeName(Attributes::BlurY), blurY, 4.f
 			);
 
 			writer.WriteAttr<uint32_t>(
@@ -109,7 +109,7 @@ namespace Animate::DOM
 			);
 
 			writer.WriteAttr(
-				GetAtributeName(Attributes::Color), color, false
+				GetAtributeName(Attributes::Color), color, false, ColorAlpha(0x0, 0x0, 0x0, 0xFF)
 			);
 
 			writer.WriteAttr(
@@ -119,16 +119,26 @@ namespace Animate::DOM
 			writer.WriteAttr(
 				GetAtributeName(Attributes::Strength), strength, 1.f, 0.f, 255.f
 			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Distance), distance, 5.f, -255.f, 255.f
+			);
+
+			writer.WriteAttr(
+				GetAtributeName(Attributes::Angle), angle, 45.f, 0.f, 360.f
+			);
 		}
 
 	public:
 		Effect::GraphicEffect::Type type;
 
 		bool isEnabled = true;
-		uint8_t blurX = 4;
-		uint8_t blurY = 4;
+		float blurX = 4.f;
+		float blurY = 4.f;
 		uint32_t quality = 1;
 		ColorAlpha color;
 		float strength = 1.f;
+		float distance = 5.0f;
+		float angle = 45.0f;
 	};
 }

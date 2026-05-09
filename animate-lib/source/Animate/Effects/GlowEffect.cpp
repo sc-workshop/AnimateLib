@@ -2,4 +2,3 @@
 
 namespace Animate::Effect {
 }
-

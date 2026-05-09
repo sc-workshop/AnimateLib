@@ -2,6 +2,7 @@
 
 #include "Animate/XFL/DOM/Effect/GraphicEffect.h"
 #include "Animate/Effects/GlowEffect.h"
+#include "Animate/Effects/DropShadowEffect.h"
 #include "Animate/Document/SketchDocument.h"
 
 namespace Animate::Pic
@@ -41,24 +42,35 @@ namespace Animate::Pic
 
 	void Object::WriteXFLGraphicEffect(XFL::XFLWriter& root, Effect::GraphicEffect& effect) const
 	{
+		DOM::GraphicEffect writer;
+		writer.type = effect.EffectType();
+
+		writer.blurX = effect.GetBlurX();
+		writer.blurY = effect.GetBlurY();
+		writer.quality = (uint32_t)effect.GetQuality();
+		writer.strength = (float)effect.GetStrength() / 100.f;
+
 		switch (effect.EffectType()) {
 		case Effect::GraphicEffect::Type::Glow:
 		{
 			Effect::GlowEffect& glow = (Effect::GlowEffect&)effect;
-			DOM::GraphicEffect writer;
-			writer.type = effect.EffectType();
-			writer.blurX = effect.m_blurX;
-			writer.blurY = effect.m_blurY;
-			writer.quality = (uint32_t)effect.m_quality;
 			writer.color = glow.GetColor();
-			writer.strength = effect.m_strength;
+		}
+		break;
+		case Effect::GraphicEffect::Type::DropShadow:
+		{
+			Effect::DropShadowEffect& dropShadow = (Effect::DropShadowEffect&)effect;
 
-			XFL::XFLWriter filter(root, writer);
+			writer.color = dropShadow.GetColor();
+			writer.distance = dropShadow.GetDistance();
+			writer.angle = dropShadow.GetAngle();
 		}
 		break;
 		default:
 			throw wk::Exception("Not implemented");
 		}
+
+		XFL::XFLWriter filter(root, writer);
 	}
 }
 
