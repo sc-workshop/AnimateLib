@@ -130,7 +130,15 @@ namespace Animate::Document
 
 				(*it)->WriteXFLSymbol(file);
 				});
+			// Wait for every task to finish first so that no worker is still
+			// touching file (a local variable) by the time we return.
 			seq.wait();
+			// Then drain exceptions. The pool stores any exception thrown by a
+			// task inside the task's std::promise; seq.wait() (= future::wait)
+			// alone silently drops them, and the caller happily wrote
+			// DOMDocument.xml as if every symbol was saved - which is why some
+			// LIBRARY/*.xml entries went missing in Release builds.
+			seq.get();
 		}
 	}
 }

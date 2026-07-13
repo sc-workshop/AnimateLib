@@ -3,39 +3,48 @@
 namespace Animate {
 	void SymDependCache::SetCurrentDocPage(const Library::LibraryItem* item)
 	{
+		// s_docPage is thread_local, so storing it is inherently thread-safe.
 		s_docPage = item;
+
+		// Make sure the page itself is registered in m_symbols under the shared
+		// lock so that AddSymbolReference() can find it later from any thread.
 		if (item)
 			AddSymbol(*item);
 	}
 
 	SymDependInfo* SymDependCache::AddSymbol(const Library::LibraryItem& item)
 	{
-		//const auto& page = dynamic_cast<const Library::DocumentPage&>(item);
-		//if (page && !page.IsSymbol()) return nullptr;
-
-		{
-			auto it = m_symbols.find((Library::LibraryItem*)&item);
-			if (it != m_symbols.end()) {
-				return &(it->second);
-			}
-		}
-		
-		{
-			std::lock_guard guard(m_mut);
-			auto [value, isNew] = m_symbols.try_emplace(&item);
-			return &(value->second);
-		}
+		// Every access to m_symbols must be done while holding m_mut: the cache
+		// is mutated concurrently from the parallel symbol writer pool in
+		// SketchDocument::WriteXFLSymbols(), and std::map provides no
+		// concurrent reader/writer guarantees.
+		std::lock_guard guard(m_mut);
+		auto [it, isNew] = m_symbols.try_emplace((Library::LibraryItem*)&item);
+		return &(it->second);
 	}
 
 	void SymDependCache::AddSymbolReference(const Library::LibraryItem& item)
 	{
-		auto symbol = AddSymbol(item);
-		if (!symbol) return;
+		SymDependInfo* node = nullptr;
+		Library::LibraryItem const * referenced = (Library::LibraryItem const *)&item;
 
-		auto& node = m_symbols.at(s_docPage);
+		// Lookup of both the referenced item and the current thread's parent
+		// page (s_docPage) must share the lock with try_emplace, otherwise we
+		// get a data race on the red-black tree of std::map.
+		{
+			std::lock_guard guard(m_mut);
+			m_symbols.try_emplace(referenced);
 
-		std::lock_guard<std::mutex> guard(node.mt);
-		node.references.insert(&item);
+			auto parent = m_symbols.find(s_docPage);
+			if (parent == m_symbols.end())
+				return; // The parent page was never registered - shouldn't happen
+			node = &parent->second;
+		}
+
+		// Updating the reference set is protected per-symbol, allowing real
+		// parallelism for symbols that belong to different parents.
+		std::lock_guard<std::mutex> guard(node->mt);
+		node->references.insert(referenced);
 	}
 
 	bool SymDependCache::WriteXFL(XFL::XFLFile& file) const
