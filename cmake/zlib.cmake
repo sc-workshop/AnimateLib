@@ -1,6 +1,8 @@
 include(FetchContent)
 
-find_package(ZLIB QUIET)
+if (USE_SYSTEM_ZLIB)
+    find_package(ZLIB QUIET)
+endif()
 
 if (NOT ZLIB_FOUND)
     FetchContent_Declare(

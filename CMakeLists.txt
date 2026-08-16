@@ -5,7 +5,7 @@ project(animate-lib)
 
 # options
 option(AN_BUILD_TOOL "Build test tool" OFF)
-
+option(USE_SYSTEM_ZLIB "Use system zlib" ON)
 
 # dependencies
 include(FetchContent)
