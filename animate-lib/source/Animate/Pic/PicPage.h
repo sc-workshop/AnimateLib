@@ -36,6 +36,7 @@ namespace Animate::Pic
 
 	public:
 		Layer& AddNewLayer(const String& name, bool is_folder = false, bool add_above = true, std::optional<std::reference_wrapper<Layer>> parent = std::nullopt);
+		Layer& BreakApartLayer(Page& page, size_t index, bool add_above, std::optional<std::reference_wrapper<Layer>> parent, bool copy = true);
 		void SetLayerWithNamingRules(Layer& layer, const String& name);
 		void CopyLayers(size_t begin_index, size_t count = 1);
 		int64_t PasteLayers(int64_t begin_index = -1, bool add_above = true);
@@ -53,6 +54,7 @@ namespace Animate::Pic
 		Layer& operator [](size_t index) { return ChildAt<Layer>(index); }
 	
 	protected:
+		void AddNewLayer(Layer& layer, bool add_above, std::optional<std::reference_wrapper<Layer>> parent);
 		Layer& AddLayer(bool a1, bool makeActive);
 		Layer& AddFolder();
 
@@ -62,6 +64,6 @@ namespace Animate::Pic
 		}
 
 	private:
-		Library::DocumentPage* m_ownerPage;
+		Library::DocumentPage* m_ownerPage = nullptr;
 	};
 }

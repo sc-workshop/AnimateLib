@@ -92,12 +92,22 @@ namespace Animate::Pic
 			return *object;
 		}
 
+		template<typename T = Object, typename ... Args>
+		wk::Ref<T> GetReference(size_t index) {
+			return std::dynamic_pointer_cast<T>(m_childrens.at(index));
+		}
+
 		Object& AddReference(const Object& obj)
 		{
 			auto object = wk::Ref<Object>(obj.Clone());
-			object->SetOwner(*this);
-			m_childrens.push_back(object);
-			return *object;
+			return AddReference(object);
+		}
+
+		Object& AddReference(const wk::Ref<Object>& obj)
+		{
+			obj->SetOwner(*this);
+			m_childrens.push_back(obj);
+			return *obj;
 		}
 
 		template<typename T = Object, typename ... Args>
@@ -113,6 +123,12 @@ namespace Animate::Pic
 		T& AddChildAt(size_t index, T* ptr)
 		{
 			auto object = wk::Ref<T>(ptr);
+			return AddChildAt<T>(index, object);
+		}
+
+		template<typename T = Object>
+		T& AddChildAt(size_t index, wk::Ref<T> object)
+		{
 			object->SetOwner(*this);
 			m_childrens.insert(m_childrens.begin() + index, object);
 			return *object;
@@ -128,17 +144,34 @@ namespace Animate::Pic
 		template<typename T = Object>
 		const T& ChildAt(size_t index) const
 		{
-			const auto& object = m_childrens[index];
+			const auto& object = m_childrens.at(index);
 			return (const T&)*object;
+		}
+
+		template<typename T = Object>
+		wk::Ref<T> MoveChildren(size_t index)
+		{
+			auto ref = GetReference<T>(index);
+			auto result = std::move(ref);
+			m_childrens.erase(m_childrens.begin() + index);
+
+			return result;
 		}
 
 		void MoveChildrens(size_t from, size_t to)
 		{
-			if (from == to || from >= m_childrens.size() || to >= m_childrens.size())
+			const auto size = m_childrens.size();
+
+			if (from >= size || to > size || from == to)
 				return;
-			auto object = m_childrens[from];
+
+			auto object = GetReference(from);
 			m_childrens.erase(m_childrens.begin() + from);
-			m_childrens.insert(m_childrens.begin() + to, object);
+
+			if (to > from)
+				--to;
+
+			m_childrens.insert(m_childrens.begin() + to, std::move(object));
 		}
 
 		bool GetChildrenIndex(const Object& obj, size_t& index) const

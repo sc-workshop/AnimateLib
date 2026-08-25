@@ -35,28 +35,31 @@ namespace Animate::Pic
 	{
 		Layer& layer = is_folder ? AddFolder() : AddLayer(false, false);
 
-		if (parent)
-		{
-			if (layer.IsCameraLayer())
-			{
-				
-			}
-			else
-			{
-				MoveLayer(layer, parent.value(), add_above);
-			}
-		}
-		else if (ChildrenCount() > 0 && add_above)
-		{
-			MoveLayer(layer, (*this)[0], add_above);
-		}
-
+		AddNewLayer(layer, add_above, parent);
 		if (!name.empty())
 		{
 			SetLayerWithNamingRules(layer, name);
 		}
+		return layer;  
+	}
 
-		return layer;
+	Layer& Page::BreakApartLayer(Page& page, size_t index, bool add_above, std::optional<std::reference_wrapper<Layer>> parent, bool copy)
+	{
+		Layer* target = nullptr;
+		if (copy)
+		{
+			auto layer = page.GetReference<Layer>(index);
+			auto layer_copy = (Layer*)layer->Clone();
+			target = &AddChildAt<Layer>(0, layer_copy);
+			
+		}
+		else {
+			auto layer = page.MoveChildren<Layer>(index);
+			target = &AddChildAt<Layer>(0, layer);
+		}
+
+		AddNewLayer(*target, add_above, parent);
+		return *target;
 	}
 
 	void Page::SetLayerWithNamingRules(Layer& layer, const String& name)
@@ -122,6 +125,25 @@ namespace Animate::Pic
 
 		if (target.IsAttachedToMask())
 			layer.AttachMask(*target.ClippedBy());
+	}
+
+	void Page::AddNewLayer(Layer& layer, bool add_above, std::optional<std::reference_wrapper<Layer>> parent)
+	{
+		if (parent)
+		{
+			if (layer.IsCameraLayer())
+			{
+
+			}
+			else
+			{
+				MoveLayer(layer, parent.value(), add_above);
+			}
+		}
+		else if (ChildrenCount() > 0 && add_above)
+		{
+			MoveLayer(layer, (*this)[0], add_above);
+		}
 	}
 
 	Layer& Page::AddLayer(bool /*a1*/, bool /*makeActive*/)

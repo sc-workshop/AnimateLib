@@ -138,7 +138,7 @@ namespace Animate::XFL
 			}
 
 			std::string result = ss.str();
-			std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+			std::transform(result.begin(), result.end(), result.begin(), [](char c) { return static_cast<char>(std::toupper(c)); });
 
 			WriteAttr(name, result);
 		}
